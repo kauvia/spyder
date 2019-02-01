@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { NavLink, Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import Application from './components/Application'
+import Login from './components/Login'
 
-import Home from './components/Home'
-import Activity from './components/Activity'
-import Food from './components/Food'
-import Settings from './components/Settings'
 
 class App extends Component {
   componentDidMount(){
@@ -14,21 +12,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header>
-          <ul>
-            <li><NavLink to='/'>Home</NavLink></li>
-            <li><NavLink to='/food'>Food</NavLink></li>
-            <li><NavLink to='/activity'>ACTIVITY</NavLink></li>
-            <li><NavLink to='/settings'>setting</NavLink></li>
-          </ul>
-        </header>
-        <Switch>
-          <Route exact path='/' component={ Home } />
-          <Route path='/food' component={ Food } />
-          <Route path='/activity' component={ Activity } />
-          <Route path='/settings' component={ Settings } />
-        </Switch>
-
+        <Router>
+          <Switch>
+            <Route exact path='/' component={ Login } />
+            <Route path='/spyder/:id' component={ Application } />
+          </Switch>
+        </Router>
       </div>
     );
   }
@@ -39,4 +28,4 @@ const mapStateToProps = (state) => {
       store: state
   }
 }
-export default withRouter(connect(mapStateToProps)(App));
+export default connect(mapStateToProps)(App);
