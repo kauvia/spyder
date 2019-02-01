@@ -10,10 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_01_061548) do
+ActiveRecord::Schema.define(version: 2019_02_01_103314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exercises", force: :cascade do |t|
+    t.string "name"
+    t.integer "reps"
+    t.integer "duration"
+    t.float "calories_burnt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_exercises_on_user_id"
+  end
+
+  create_table "foods", force: :cascade do |t|
+    t.string "name"
+    t.float "calories"
+    t.float "carbs"
+    t.float "proteins"
+    t.float "fats"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_foods_on_user_id"
+  end
+
+  create_table "stats", force: :cascade do |t|
+    t.float "height"
+    t.float "weight"
+    t.float "target_weight"
+    t.integer "age"
+    t.string "gender"
+    t.string "activity_level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_stats_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +63,7 @@ ActiveRecord::Schema.define(version: 2019_02_01_061548) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "exercises", "users"
+  add_foreign_key "foods", "users"
+  add_foreign_key "stats", "users"
 end
