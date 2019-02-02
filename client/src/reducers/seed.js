@@ -1,6 +1,6 @@
 const store = {
     user: {
-        email: "jon@gmail.com",
+        username: "jon@gmail.com",
         height: 200.2,              //cm
         weight: 99.1,               //kg
         target_weight: 22,          

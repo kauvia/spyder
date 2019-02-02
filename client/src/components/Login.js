@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-
+import axios from "axios";
 class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: "",
+			username: "",
 			password: "",
 			message: "",
 			isNewAccount: false,
@@ -13,7 +13,16 @@ class Login extends Component {
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.testAuth = this.testAuth.bind(this);
 	}
+	testAuth(e) {
+		axios.get("/test",{headers:{Authorization : `${localStorage.getItem("token")}`}}).then(res => console.log(res));
+	}
+	testLogout = e => {
+		localStorage.clear();
+		axios.delete("/users/sign_out").then(res => console.log(res));
+	};
+
 	handleSubmit(e) {
 		e.preventDefault();
 		if (this.state.isNewAccount) {
@@ -30,7 +39,7 @@ class Login extends Component {
 	}
 	handleChange(e) {
 		let target = e.target;
-		if ("email" === target.name) {
+		if ("username" === target.name) {
 			this.setState({ [target.name]: target.value });
 		} else if ("password" === target.name) {
 			this.setState({ [target.name]: target.value });
@@ -40,45 +49,43 @@ class Login extends Component {
 		console.log(this.state);
 	}
 	dbCreateUser() {
-		fetch("/users/new", {
+		fetch("/users", {
 			method: "POST",
 			mode: "cors",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify(this.state)
-		}).then(res =>
-			res.json().then(res => {
-				if (res.success) {
-					localStorage.setItem("isLoggedIn", "true");
-					localStorage.setItem("token", res.token);
-					this.setState({ isLoggedIn: true });
-				} else {
-					this.setState({ message: res.message });
-				}
+			body: JSON.stringify({
+				user: { username: "tesadd", password: "password" }
 			})
-		);
-	}
-	dbLogIn() {
-		fetch("/login", {
-			method: "POST",
-			mode: "cors",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(this.state)
-		}).then(res =>
+		}).then(res => {
+			res.headers.forEach(console.log);
 			res.json().then(res => {
 				console.log(res);
-				if (res.success) {
+				// if (res.success) {
+				// 	localStorage.setItem("isLoggedIn", "true");
+				// 	localStorage.setItem("token", res.token);
+				// 	this.setState({ isLoggedIn: true });
+				// } else {
+				// 	this.setState({ message: res.message });
+				// }
+			});
+		});
+	}
+	dbLogIn() {
+		axios
+			.post("users/sign_in", { user: { username: "a", password: "password" } })
+			.then(res => {
+				console.log(res);
+
+				if (res.status === 200) {
 					localStorage.setItem("isLoggedIn", "true");
-					localStorage.setItem("token", res.token);
-					this.setState({ isLoggedIn: true });
+					localStorage.setItem("token", res.headers.authorization);
+					// this.setState({ isLoggedIn: true });
 				} else {
-					this.setState({ message: res.message });
+					this.setState({ message: "wrong username or password" });
 				}
-			})
-		);
+			});
 	}
 	render() {
 		if (this.state.isLoggedIn) {
@@ -89,19 +96,22 @@ class Login extends Component {
 					className="d-flex justify-content-center align-items-center"
 					style={{ height: 100 + "vh" }}
 				>
+					<button onClick={this.testLogout}>TESTING LOGOUT</button>
+
+					<button onClick={this.testAuth}>TESTING FOR AUTH</button>
 					<form
 						onSubmit={this.handleSubmit}
 						onChange={this.handleChange}
 						style={{ width: 250 + "px" }}
 					>
 						<div className="form-group">
-							<label htmlFor="inputEmail">Email</label>
+							<label htmlFor="inputUsername">Username</label>
 							<input
-								name="email"
+								name="username"
 								type="text"
 								className="form-control"
-								id="inputEmail"
-								placeholder="Enter email address"
+								id="inputUsername"
+								placeholder="Enter username"
 							/>
 						</div>
 						<div className="form-group">
