@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-class Activity extends Component {
+class FoodList extends Component {
     render(){
         return(
-            <div id="activity">
-                Activity
+            <div id="foodlist">
+                foodList_ log
             </div>
         )
     }
@@ -15,4 +15,4 @@ const mapStateToProps = (state) => {
         store: state
     }
 }
-export default connect(mapStateToProps)(Activity);
+export default connect(mapStateToProps)(FoodList);
