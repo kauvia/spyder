@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { NavLink, Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
+import Cookies from 'universal-cookie'
+import axios from 'axios'
 
 import Home from './components/Home'
 import Activity from './components/Activity'
@@ -9,7 +11,13 @@ import Settings from './components/Settings'
 
 class Application extends Component {
     componentDidMount(){
-        console.log(this.props.store)
+        console.log(this.props)
+        const cookies = new Cookies();
+        let cookie = {hash: cookies.get('hash'), id: cookies.get('id')}
+        axios.post(`/user/${this.props.store.user.email}`, {cookie})
+        .then( res => {
+            this.props.redux(1, res)
+        })
     }
     render(){
         return(
@@ -37,4 +45,18 @@ const mapStateToProps = (state) => {
         store: state
     }
 }
-export default connect(mapStateToProps)(Application);
+const mapDispatchToProps = (dispatch) => {
+    return{
+        redux: (key, data) => {
+            switch (key) {
+                case 1:
+                    dispatch({type: 'ADD_PACKAGE', data})
+                    break;
+            
+                default:
+                    break;
+            }
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Application);

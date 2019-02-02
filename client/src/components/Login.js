@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 class Login extends Component {
@@ -7,20 +8,22 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            sEmail: '', sPassword: '', sPasswordConfirm: ''
+            sEmail: '', sPassword: '', sPasswordConfirm: '',
+            redirect: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.check = this.check.bind(this)
+        this.helper = this.helper.bind(this)
     }
-    componentDidMount(){
-        console.log(this.check('passwordConfirm'))
-    }
-    check = (type) => {
+    helper = (type) => {
         switch (type) {
             case 'passwordConfirm':
                 if(this.state.sPassword === this.state.sPasswordConfirm){
                     return true
+                }else {return false};
+            case 'redirect':
+                if(this.state.redirect){
+                    return <Redirect to={`/spyder/${this.state.email}`} />
                 }else {return false};
             default:
                 return false
@@ -28,20 +31,27 @@ class Login extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        //  ========================= SUBMISSION OF LOGIN FORM  =========================
         if(e.target.id === "loginForm"){
-            axios.post('/', {email: this.state.email, password: this.state.password})
-            .then( res => {console.log(res)})   // RECEIVE INFO - REDIRECT TO HOME PAGE
-            this.setState({...this.state, email:'', password: ''})
+            axios.post('/login', {email: this.state.email, password: this.state.password})
+            .then( res => {                 // RECEIVE INFO - REDIRECT TO HOME PAGE
+                if(res.success_msg){
+                    this.setState({...this.state, email:'', password: '', redirect: true})
+                }else { this.setState({...this.state, email:'', password: '', redirect: false}) }
+            })   
+        // =================== SUBMISSION OF SIGNUP FORM =========================
         }else if(e.target.id === "signUpForm"){
-            if(this.check('passwordConfirm')){
+            if(this.helper('passwordConfirm')){
                 axios.post('/signup', {email: this.state.eEmail, password: this.state.sPassword})
-                .then( res => {console.log(res)})   // RECEIVE INFO - REDIRECT TO NEW HOME PAGE
-                                                    // WRONG INFO - ERROR MESSAGE
-                this.setState({...this.state, sEmail:'', sPassword: '', sPasswordConfirm: ''})
+                .then(res => {              // RECEIVE INFO - REDIRECT TO NEW HOME PAGE
+                    if(res.success_msg){
+                        this.setState({...this.state, sEmail:'', sPassword: '', sPasswordConfirm: '', redirect: true})
+                    }else { this.setState({...this.state, sEmail:'', sPassword: '', sPasswordConfirm: '', redirect: false}) }
+                })   
             }else{ this.setState({...this.state, sEmail:'', sPassword: '', sPasswordConfirm: ''}) }
         }
     }
-    handleChange = (e) => {
+    handleChange = (e) => {                 // change to switch if time permits
         if(e.target.name === "email"){
             this.setState({ ...this.state, email: e.target.value })
         }else if(e.target.name === "password"){
@@ -57,6 +67,7 @@ class Login extends Component {
     render(){
         return(
             <div id="login">
+            { this.helper('redirect') }
                 <form id="loginForm" onSubmit={this.handleSubmit}>
                     <input type="text" name="email" onChange={this.handleChange} value={this.state.email}></input>
                     <input type="text" name="password" onChange={this.handleChange} value={this.state.password}></input>
