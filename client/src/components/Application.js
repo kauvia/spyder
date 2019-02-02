@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavLink, Switch, Route, withRouter } from 'react-router-dom'
+import { NavLink, Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Home from './components/Home'
@@ -37,4 +37,4 @@ const mapStateToProps = (state) => {
         store: state
     }
 }
-export default withRouter(connect(mapStateToProps)(Application));
+export default connect(mapStateToProps)(Application);
