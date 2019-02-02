@@ -7,6 +7,15 @@ const rootReducer = (state = initState, action) => {
             user_log: action.data.user_log
         }
     }
+    if(action.type === "ADD_FOOD_LOG"){
+        return{
+            ...state,
+            user_log: [
+                ...state.user_log,
+                action.data
+            ]
+        }
+    }
     return state
 }
 export default rootReducer
