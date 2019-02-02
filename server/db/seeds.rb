@@ -13,9 +13,9 @@ Stat.destroy_all
 
 
 User.create!([
-    {email: "abc@abc.com", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil},
-    {email: "bbc@bbc.bbc", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil},
-    {email: "car@car.car", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil}
+    {username: "a", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil},
+    {username: "abc", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil},
+    {username: "123", password: "password", password_confirmation: "password", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil}
   ])
 
   Food.create(name:"Hokkien Mee",calories:500,carbs:20,proteins:20,fats:20,:user_id=>1)
