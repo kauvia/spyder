@@ -42,6 +42,19 @@ const store = {
                 {name: "jog", reps: 1, duration: 23, calories_burnt: 393.0}
             ]
         },
-    ]
+    ],
+    food_excercise_models: {
+        food: [
+            {name: "Hokkien Mee", calories: 203.2, carbs: 344.3, proteins: 34.2, fats: 233.2},
+            {name: "Hokkien Mee", calories: 203.2, carbs: 344.3, proteins: 34.2, fats: 233.2},
+            {name: "Hokkien Mee", calories: 203.2, carbs: 344.3, proteins: 34.2, fats: 233.2},
+            {name: "Hokkien Mee", calories: 203.2, carbs: 344.3, proteins: 34.2, fats: 233.2},
+            {name: "Hokkien Mee", calories: 203.2, carbs: 344.3, proteins: 34.2, fats: 233.2}
+        ],
+        excercise: [
+            {name: "jog", reps: 1, duration: 1, calories_burnt_perunit: 393.0}
+        ]
+    }
 }
+       
 export default store
