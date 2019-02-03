@@ -10,4 +10,29 @@ class ExercisesController < ApplicationController
     }
     end
 
+    def new
+      render :json => {
+        "user info"=>current_user.id,
+        "exercise"=>current_user.exercise
+    }
+    end
+
+    def create
+    end
+
+    def edit
+    end
+
+    def update
+    end
+
+    def destroy
+    end
+
+  private
+
+    def exercise_params
+      params.require(:exercise).permit(:name, :exercise_ids => [])
+    end
+
 end
