@@ -21,26 +21,17 @@ class ExercisesController < ApplicationController
         current_user.exercise.create(name: params.name, reps: params.reps, duration: params.duration, calories_burnt: params.calories_burnt)
     end
 
-    def show
-        render :json => {"exercise"=>current_user.exercise}
-    end
-
-    def edit
-        render :json => {"exercise"=>current_user.exercise}
-    end
-
     def update
-        render :json => {"exercise"=>current_user.exercise}
-
         if exercise.update(exercise_params)
             redirect_to @exercise
         else
             render 'edit'
+
+        render :json => {"exercise"=>current_user.exercise}
     end
 
     def destroy
-        render :json => {"exercise"=>current_user.exercise}
-        exercise.destroy
+        current_user.exercise.destroy
 
         redirect_to exercise_path
     end

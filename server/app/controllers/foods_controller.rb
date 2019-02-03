@@ -22,26 +22,17 @@ class FoodsController < ApplicationController
         # :defaults => { :format => 'json' }
     end
 
-    def show
-        render :json => {"food"=>current_user.food}
-    end
-
-    def edit
-        render :json => {"food"=>current_user.food}
-    end
-
     def update
-        render :json => {"food"=>current_user.food}
-
         if food.update(food_params)
             redirect_to @food
         else
             render 'edit'
+
+        render :json => {"food"=>current_user.food}
     end
 
     def destroy
-        render :json => {"food"=>current_user.food}
-        food.destroy
+        current_user.food.destroy
 
         redirect_to food_path
     end
