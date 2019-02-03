@@ -39,7 +39,7 @@ class StatsController < ApplicationController
   private
 
     def stat_params
-      params.require(:stat).permit(:name, :stat_ids => [])
+      params.require(:stat).permit(:height, :weight, :target_weight, :age, :gender, :activity_level, :stat_ids => [])
     end
 
 end
