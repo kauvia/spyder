@@ -18,15 +18,32 @@ class FoodsController < ApplicationController
     end
 
     def create
+        current_user.food.create(name: params.name, calories: params.calories, carbs: params.carbs, proteins: params.proteins, fats: params.fats)
+        # :defaults => { :format => 'json' }
+    end
+
+    def show
+        render :json => {"food"=>current_user.food}
     end
 
     def edit
+        render :json => {"food"=>current_user.food}
     end
 
     def update
+        render :json => {"food"=>current_user.food}
+
+        if food.update(food_params)
+            redirect_to @food
+        else
+            render 'edit'
     end
 
     def destroy
+        render :json => {"food"=>current_user.food}
+        food.destroy
+
+        redirect_to food_path
     end
 
   private
