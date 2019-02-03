@@ -26,6 +26,7 @@ class ExercisesController < ApplicationController
             redirect_to @exercise
         else
             render 'edit'
+        end
 
         render :json => {"exercise"=>current_user.exercise}
     end

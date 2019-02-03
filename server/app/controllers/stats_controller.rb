@@ -26,6 +26,7 @@ class StatsController < ApplicationController
             redirect_to @stat
         else
             render 'edit'
+        end
 
         render :json => {"stat"=>current_user.stat}
     end

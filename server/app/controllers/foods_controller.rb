@@ -27,6 +27,7 @@ class FoodsController < ApplicationController
             redirect_to @food
         else
             render 'edit'
+        end
 
         render :json => {"food"=>current_user.food}
     end
