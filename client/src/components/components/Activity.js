@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 class Activity extends Component {
     render(){
@@ -9,4 +10,9 @@ class Activity extends Component {
         )
     }
 }
-export default Activity
+const mapStateToProps = (state) => {
+    return{
+        store: state
+    }
+}
+export default connect(mapStateToProps)(Activity);
