@@ -36,8 +36,6 @@ class Food extends Component {
             <div id="food">
                 Food
 
-                <button onClick={handledattechhgnage}></button>
-
                 {/* log new food for the day */}
                 <form onSubmit={this.handleSubmit}>
                     <input type="text" name="name" onChange={this.handleChange} value={this.state.food.name}></input>

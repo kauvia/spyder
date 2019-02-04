@@ -8,7 +8,7 @@ import './App.css'
 
 class App extends Component {
   componentDidMount(){
-    console.log(this.props.store)
+    // console.log(this.props.store)
   }
   render() {
     return (
