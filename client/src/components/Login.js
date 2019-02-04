@@ -17,6 +17,7 @@ class Login extends Component {
 	}
 	testAuth(e) {
 		axios.get("/test",{headers:{Authorization : `${localStorage.getItem("token")}`}}).then(res => console.log(res));
+	
 	}
 	testLogout = e => {
 		localStorage.clear();
@@ -81,7 +82,7 @@ class Login extends Component {
 				if (res.status === 200) {
 					localStorage.setItem("isLoggedIn", "true");
 					localStorage.setItem("token", res.headers.authorization);
-					// this.setState({ isLoggedIn: true });
+					 this.setState({ isLoggedIn: true });
 				} else {
 					this.setState({ message: "wrong username or password" });
 				}

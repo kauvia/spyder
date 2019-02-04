@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-class Setting extends Component {
+class Stats extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -47,4 +47,4 @@ const mapStateToProps = (state) => {
         store: state
     }
 }
-export default connect(mapStateToProps)(Setting);
+export default connect(mapStateToProps)(Stats);

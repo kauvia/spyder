@@ -15,8 +15,8 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path='/' component={ Login } />
-            <Route path='/spyder/:id' component={ Application } />
+            <Route exact path='/login' component={ Login } />
+            <Route path='/' component={ Application } />
           </Switch>
         </Router>
       </div>
