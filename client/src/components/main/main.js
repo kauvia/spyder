@@ -13,7 +13,7 @@ class Main extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userData: null,
+			userData: {food:null,exercise:null,stat:null},
 			doRedirect: false,
 			loading: false
 		};
@@ -21,11 +21,13 @@ class Main extends Component {
 	}
 	componentDidMount() {
 		api("GET", "/users/validate").then(res => {
-
 			if (!res.data.success) {
 				this.setState({ doRedirect: true });
-			} else {
 				localStorage.clear();
+			} else {
+				api("GET","/test").then(res=>{
+					this.setState({userData:res.data})
+				})
 			}
 		});
 		// create today's date (save to redux store)
@@ -40,8 +42,6 @@ class Main extends Component {
 		}
 		let dateToday = `${today.getFullYear().toString()}-${month}-${date}`;
 
-		console.log(dateToday, month);
-		console.log(new Date());
 		// axios init package
 		axios
 			.get("/test", {
@@ -87,7 +87,7 @@ class Main extends Component {
 					</header>
 					<Switch>
 						<Route exact path={`/`} component={Home} />
-						<Route path={`/food`} component={Food} />
+						<Route path={`/food`} render={props => <Food foodHistory={this.state.userData.food} {...props}/>} />
 						<Route path={`/activity`} component={Activity} />
 						<Route path={`/stats`} component={Stats} />
 					</Switch>
