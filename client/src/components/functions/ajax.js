@@ -11,7 +11,7 @@ const api = (method, url, data, token = true) => {
 			}).then(val => {
 				resolve(val);
 			}).catch(err=>{
-				resolve(err);
+				resolve({data:{success:false}});
 			});
 		});
 	} else if (token) {
@@ -23,7 +23,7 @@ const api = (method, url, data, token = true) => {
 			}).then(val => {
 				resolve(val);
 			}).catch(err=>{
-				resolve(err);
+				resolve({data:{success:false}});
 			});
 		});
 	} else {
@@ -36,7 +36,7 @@ const api = (method, url, data, token = true) => {
 			}).then(val => {
 				resolve(val);
 			}).catch(err=>{
-				resolve(err);
+				resolve({data:{success:false}});
 			});
 		});
     }
