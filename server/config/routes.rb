@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   patch '/stats/:id' => 'stats#update'
   delete '/stats/:id' => 'stats#destroy'
-  
+
   get '/test' => 'test#index'
 
 end
