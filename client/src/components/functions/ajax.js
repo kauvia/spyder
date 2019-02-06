@@ -10,6 +10,8 @@ const api = (method, url, data, token = true) => {
 				headers: { Authorization: `${localStorage.getItem("token")}` }
 			}).then(val => {
 				resolve(val);
+			}).catch(err=>{
+				resolve({data:{success:false}});
 			});
 		});
 	} else if (token) {
@@ -20,6 +22,8 @@ const api = (method, url, data, token = true) => {
 				headers: { Authorization: `${localStorage.getItem("token")}` }
 			}).then(val => {
 				resolve(val);
+			}).catch(err=>{
+				resolve({data:{success:false}});
 			});
 		});
 	} else {
@@ -31,6 +35,8 @@ const api = (method, url, data, token = true) => {
 				headers: { Authorization: `${localStorage.getItem("token")}` }
 			}).then(val => {
 				resolve(val);
+			}).catch(err=>{
+				resolve({data:{success:false}});
 			});
 		});
     }
