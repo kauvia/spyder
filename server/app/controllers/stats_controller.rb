@@ -5,8 +5,7 @@ class StatsController < ApplicationController
       p current_user.id
       p current_user.stat
       render :json => {
-        "user info"=>current_user.id,
-        "stat"=>current_user.stat
+        "stat"=>current_user.stat.sort_by(&:created_at)
     }
     end
 
