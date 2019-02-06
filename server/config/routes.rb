@@ -6,6 +6,8 @@ Rails.application.routes.draw do
               }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  get '/users/validate' => 'users#validate'
+
   get '/foods' => 'foods#index', as: 'foods'
   get '/foods/new' => 'foods#new', as: 'new_food'
   post '/foods' => 'foods#create'

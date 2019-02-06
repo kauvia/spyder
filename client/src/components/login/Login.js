@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
+import { api } from "../functions";
 class Login extends Component {
 	constructor(props) {
 		super(props);
@@ -13,16 +13,17 @@ class Login extends Component {
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.testAuth = this.testAuth.bind(this);
 	}
-	testAuth(e) {
-		axios.get("/test",{headers:{Authorization : `${localStorage.getItem("token")}`}}).then(res => console.log(res));
-	
+	componentDidMount() {
+		if (localStorage.length >0 ){
+		api("GET", "/users/validate").then(res => {
+			if (res.data.success){
+				this.setState({ isLoggedIn: true });
+			} else {
+				localStorage.clear()
+			}
+		});}
 	}
-	testLogout = e => {
-		localStorage.clear();
-		axios.delete("/users/sign_out").then(res => console.log(res));
-	};
 
 	handleSubmit(e) {
 		e.preventDefault();
@@ -47,46 +48,63 @@ class Login extends Component {
 		} else if ("isNewAccount" === target.name) {
 			this.setState({ [target.name]: target.checked });
 		}
-		console.log(this.state);
 	}
 	dbCreateUser() {
-		fetch("/users", {
-			method: "POST",
-			mode: "cors",
-			headers: {
-				"Content-Type": "application/json"
+		api(
+			"POST",
+			"users",
+			{
+				user: { username: this.state.username, password: this.state.password }
 			},
-			body: JSON.stringify({
-				user: { username: "tesadd", password: "password" }
-			})
-		}).then(res => {
-			res.headers.forEach(console.log);
-			res.json().then(res => {
-				console.log(res);
-				// if (res.success) {
-				// 	localStorage.setItem("isLoggedIn", "true");
-				// 	localStorage.setItem("token", res.token);
-				// 	this.setState({ isLoggedIn: true });
-				// } else {
-				// 	this.setState({ message: res.message });
-				// }
-			});
+			false
+		).then(val => {
+			if (val.status === 200) {
+				api(
+					"POST",
+					"users/sign_in",
+					{
+						user: {
+							username: this.state.username,
+							password: this.state.password
+						}
+					},
+					false
+				).then(val => {
+					if (val.status === 200) {
+						localStorage.setItem("isLoggedIn", "true");
+						localStorage.setItem("token", val.headers.authorization);
+						this.setState({ isLoggedIn: true });
+					}
+				});
+			} else {
+				this.setState({
+					message: "Sorry. Invalid username or password. Please try again."
+				});
+			}
 		});
 	}
 	dbLogIn() {
-		axios
-			.post("users/sign_in", { user: { username: "a", password: "password" } })
-			.then(res => {
-				console.log(res);
-
-				if (res.status === 200) {
-					localStorage.setItem("isLoggedIn", "true");
-					localStorage.setItem("token", res.headers.authorization);
-					 this.setState({ isLoggedIn: true });
-				} else {
-					this.setState({ message: "wrong username or password" });
+		api(
+			"POST",
+			"users/sign_in",
+			{
+				user: {
+					username: this.state.username,
+					password: this.state.password
 				}
-			});
+			},
+			false
+		).then(val => {
+			if (val.status === 200) {
+				localStorage.setItem("isLoggedIn", "true");
+				localStorage.setItem("token", val.headers.authorization);
+				this.setState({ isLoggedIn: true });
+			} else {
+				this.setState({
+					message: "Sorry. Invalid username or password. Please try again."
+				});
+			}
+		});
 	}
 	render() {
 		if (this.state.isLoggedIn) {
@@ -97,9 +115,6 @@ class Login extends Component {
 					className="d-flex justify-content-center align-items-center"
 					style={{ height: 100 + "vh" }}
 				>
-					<button onClick={this.testLogout}>TESTING LOGOUT</button>
-
-					<button onClick={this.testAuth}>TESTING FOR AUTH</button>
 					<form
 						onSubmit={this.handleSubmit}
 						onChange={this.handleChange}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import Application from './components/Application'
-import Login from './components/Login'
+import Login from './components/login/Login'
 import './App.css'
 
 
