@@ -26,50 +26,73 @@ class Food extends Component {
 	render() {
 		return (
 			<div id="food">
+                <AddFood></AddFood>
 				<FoodHistory foodHistory={this.props.foodHistory} />
 			</div>
 		);
 	}
 }
 
+class AddFood extends Component{
+    constructor(props){
+        super(props);
+        this.state = {}
+    }
+    render(){
+        return(<div><button>Add Food</button></div>)
+    }
+}
+
 class FoodHistory extends Component {
-    constructor(props) {
+	constructor(props) {
 		super(props);
 		this.state = {
-            counter:20
-        };
-        this.handleScroll=this.handleScroll.bind(this)
+			counter: 20
+		};
+		this.handleScroll = this.handleScroll.bind(this);
 	}
 	componentDidMount() {
 		api("GET", "test").then(val => {
-            let tester = val.data.food[954].created_at
-            console.log(tester)
-            let test = moment(tester).fromNow();
-            console.log(test);
-            moment().calendar(moment(tester))
-            console.log(moment(tester))
+			let tester = val.data.food[954].created_at;
+			console.log(tester);
+			let test = moment(tester).fromNow();
+			console.log(test);
+			moment().calendar(moment(tester));
+			console.log(moment(tester));
 		});
-
-    }
-    handleScroll(e){
-        let box = e.target
-  //      console.log(box.scrollTop)
-        console.log(box.scrollTop > box.scrollHeight-box.offsetHeight)
-  //      console.log()
-        if (box.scrollTop > box.scrollHeight-box.offsetHeight){
-            this.setState({counter:this.state.counter+20})
-        }
-    }
+	}
+	handleScroll(e) {
+		let box = e.target;
+		//      console.log(box.scrollTop)
+		console.log(box.scrollTop > box.scrollHeight - box.offsetHeight);
+		//      console.log()
+		if (box.scrollTop > box.scrollHeight - box.offsetHeight) {
+			this.setState({ counter: this.state.counter + 20 });
+		}
+	}
 	render() {
-		if (this.props.foodHistory){
-		return <div style={{overflow:"scroll", height:"400px"}} onScroll={this.handleScroll}>{this.props.foodHistory.map((val,idx)=>{
-            if (idx < this.state.counter){
-                return <div key={"food"+idx}>{val.name}     {moment(val.created_at).fromNow()} </div>
-
-            }
-		})}</div>}else {return <div>Loading</div>}
-
-
+		if (this.props.foodHistory) {
+			return (
+				<div> <button>Months</button>
+					<div
+						style={{ overflow: "scroll", height: "400px" }}
+						onScroll={this.handleScroll}
+					>
+						{this.props.foodHistory.map((val, idx) => {
+							if (idx < this.state.counter) {
+								return (
+									<div key={"food" + idx}>
+										{val.name} {moment(val.created_at).fromNow()}{" "}
+									</div>
+								);
+							}
+						})}
+					</div>
+				</div>
+			);
+		} else {
+			return <div>Loading</div>;
+		}
 	}
 }
 
