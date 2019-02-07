@@ -18,7 +18,7 @@ class FoodsController < ApplicationController
     end
 
     def create
-       current_user.food.create(name: params.name, calories: params.calories, carbs: params.carbs, proteins: params.proteins, fats: params.fats)
+       current_user.food.create(name: params[:name], calories: params[:calories], carbs: params[:carbs], proteins: params[:proteins], fats: params[:fats])
         # :defaults => { :format => 'json' }
     end
 
