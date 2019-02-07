@@ -1,38 +1,48 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { api } from '../functions';
+import AllowanceContainer from '../Allowance-Container/AllowanceContainer'
 
 class Stats extends Component {
     constructor(props){
         super(props)
+        this.state = {
+            statHistory : {}
+        }
 }
     componentDidMount() {
-        console.log(this.props)
+        api("GET", "stats").then(val => {this.setState({ statHistory : val.data.stat }); console.log(this.state)})
+        // console.log(this.props.statistory)
     }
 
     render(){
-        if (this.props.statHistory) {
+        if (Object.keys(this.state.statHistory).length > 0) {
             return (
                 <div>
-                    Height: {this.props.statHistory[0].height}cm<br/>
-                    Weight: {this.props.statHistory[0].weight}kg<br />
-                    Target Weight: {this.props.statHistory[0].weight}kg<br />
-                    Activity Level: {this.props.statHistory[0].activity_level}<br />
+                    <AllowanceContainer statHistory = {this.state.statHistory}/>
+                    Height: {this.state.statHistory[0].height}cm<br/>
+                    Weight: {this.state.statHistory[0].weight}kg<br />
+                    Target Weight: {this.state.statHistory[0].weight}kg<br />
+                    Activity Level: {this.state.statHistory[0].activity_level}<br />
 
                     <button>Edit Stats</button>
                 </div>
             )
         } else {
             return (
-                <div>Loading stats...</div>
+                <div>
+                    <AllowanceContainer />
+                    Loading stats...
+                </div>
             )
         }
     }
 }
 
-const mapStateToProps = (state) => {
-    return{
-        store: state
-    }
-}
+// const mapStateToProps = (state) => {
+//     return{
+//         store: state
+//     }
+// }
 
-export default connect(mapStateToProps)(Stats);
+export default Stats;

@@ -81,7 +81,7 @@ class Main extends Component {
 								<NavLink to={`/activity`}>ACTIVITY</NavLink>
 							</li>
 							<li>
-								<NavLink to={`/stats`}>stats</NavLink>
+								<NavLink to={`/stats`}>Stats</NavLink>
 							</li>
 						</ul>
 					</header>
