@@ -89,7 +89,7 @@ class Main extends Component {
 						<Route exact path={`/`} component={Home} />
 						<Route path={`/food`} render={props => <Food foodHistory={this.state.userData.food} {...props}/>} />
 						<Route path={`/activity`} component={Activity} />
-						<Route path={`/stats`} component={Stats} />
+						<Route path={`/stats`} render={props => <Stats statHistory={this.state.userData.stat} {...props}/>} />
 					</Switch>
 				</div>
 			);
