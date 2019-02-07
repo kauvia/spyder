@@ -81,14 +81,14 @@ class AllowanceContainer extends Component {
 
     }
 
-
-    componentDidMount() {
-        // this.calculateAllowance();
+    componentDidUpdate() {
+        if (this.state.updated === false) {
+            this.calculateAllowance();
+        }
     }
 
     render() {
         if (this.props.statHistory) {
-            if (this.state.updated !== true) {this.calculateAllowance()}
 
                 return (
                 <div>
