@@ -1,50 +1,62 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { api } from '../functions'
+import AllowanceContainer from '../Allowance-Container/AllowanceContainer'
+import EditStats from './EditStats'
 
 class Stats extends Component {
     constructor(props){
         super(props)
         this.state = {
-            email: 'hidden', height: 'hidden', weight: 'hidden', target_weight:'hidden', age: 'hidden', gender: 'hidden',activity_level: 'hidden'
+            statHistory: {},
+            showEditForm: false
         }
+
         this.handleClick = this.handleClick.bind(this)
-        this.createSettingsList = this.createSettingsList.bind(this)
+
     }
-    handleClick = (e) => {
-        // if(this.state[e.target.className] === 'hidden'){
-        //     this.setState({...this.state, [e.target.className]: ''})
-        // }else{
-        //     this.setState({...this.state, [e.target.className]: 'hidden'})
-        // }
-        console.log(e.target)
+
+    componentDidMount() {
+        api("GET", "stats").then(val => {this.setState({ statHistory: val.data.stat }); console.log(this.state)})
     }
-    createSettingsList = (letter) => {
-        console.log(Object.keys(this.props.store.user))
-        return(
-            Object.keys(this.props.store.user).map( ele => {
-                return(
-                    <div key={ele} onClick={this.handleClick}>
-                        {this.props.store.user[ele]}
-                        {/* <div key={`${ele}Form`} className={this.state[key]} >
-                            BEBBEBEBE
-                        </div> */}
-                    </div>
-                )
-            }) 
-        )
+
+    handleClick(e) {
+        this.setState({ showEditForm: true })
     }
+
     render(){
-        return(
-            <div id="settings">
-                SETTINGS <br /><br />
-                { this.createSettingsList("h") }
-            </div>
-        )
+        if (Object.keys(this.state.statHistory).length > 0) {
+            return (
+                <div>
+                    <header style={{border: '2px solid black'}}><AllowanceContainer statHistory = {this.state.statHistory}/></header>
+
+                    Height: {this.state.statHistory[0].height}cm<br/>
+                    Weight: {this.state.statHistory[0].weight}kg<br />
+                    Target Weight: {this.state.statHistory[0].target_weight}kg<br />
+                    Activity Level: {this.state.statHistory[0].activity_level}<br />
+
+                    <button onClick={this.handleClick}>Edit Stats</button>
+
+                    {this.state.showEditForm && <EditStats />}
+
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <header style={{border: '2px solid black'}}><AllowanceContainer /></header>
+
+                    Loading stats...
+                </div>
+            )
+        }
     }
 }
-const mapStateToProps = (state) => {
-    return{
-        store: state
-    }
-}
-export default connect(mapStateToProps)(Stats);
+
+// const mapStateToProps = (state) => {
+//     return{
+//         store: state
+//     }
+// }
+
+export default Stats;
