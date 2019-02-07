@@ -8,7 +8,6 @@ class Activity extends Component {
     constructor(props){
         super(props);
         this.state = {
-            currentDate: '', dayOffSet: 0,
             activity:{
                 name:'', repsDuration: '', calories_burnt:'', reps: true
             }
@@ -18,13 +17,11 @@ class Activity extends Component {
         this.handleDate = this.handleDate.bind(this);
     }
     componentDidUpdate(){
-        console.log(this.props.store)
         if(this.props.store.date !== undefined && this.state.currentDate == ''){
             this.setState({...this.state, currentDate: this.props.store.date})
         }
     }
     handleDate = () => {
-        console.log(this.state.currentDate)
         
     }
     handleChange = (e) => {
@@ -48,20 +45,6 @@ class Activity extends Component {
                 let today = this.props.store.user_log.exercise.sort( (a, b) => {
                     return(new Moment(a.created_at).format('YYYYMMDD') - new Moment(b.created_at).format('YYYYMMDD'))
                 })
-                console.log(today)
-                break;
-            case "previousDay":
-                let offset = parseInt(this.state.dayOffSet)
-                offset = offset - 1
-                this.setState({...this.state, dayOffSet: offset})
-                break;
-            case "nextDay":
-                let offsetnext = parseInt(this.state.dayOffSet)
-                offsetnext = offsetnext + 1
-                this.setState({...this.state, dayOffSet: offsetnext})
-                break;
-            case "today":
-                this.setState({...this.state, dayOffSet: 0})
                 break;
             default:
                 break;
@@ -71,7 +54,6 @@ class Activity extends Component {
         e.preventDefault()
         switch (e.target.id) {
             case "newActivityForm":
-                console.log(this.state)
                 // axios.post()
                 break;
             default:
@@ -79,6 +61,11 @@ class Activity extends Component {
         }
     }
     render(){
+
+        let stuff;
+        if(this.props.store.user_log.exercise !==undefined ){
+            stuff = <ActivityHistory activities={this.props.store.user_log.exercise} />
+        }
         return(
             <div id="activity">
                 <div>
@@ -92,13 +79,7 @@ class Activity extends Component {
                         <input type="submit" value="+" />
                     </form>
                     <button name="click" onClick={this.handleChange}>PRINT EXCERCISE FOR CURRENT DATE</button><br />
-                    <button name="click" onClick={this.handleDate}>handleDate</button>
-                    <div>
-                        <button name="previousDay" onClick={this.handleChange}>Prev Day</button>
-                        <button name="today" onClick={this.handleChange}>Today</button>
-                        <button name="nextDay" onClick={this.handleChange}>Next Day</button>
-                    </div>
-                    <ActivityHistory activities={this.props.store.user_log.exercise} />
+                    {stuff}
                 </div>
             </div>
         )

@@ -1,24 +1,28 @@
 import React,{ Component } from 'react'
-import { duration } from 'moment';
+import moment from 'moment';
 class ActivityHistoryItem extends Component{
     constructor(props){
         super(props)
         this.state={
-            activity: this.props.activity,
-            durationReps: null,
-
+            datedList: props.activities
         }
+        this.generateList = this.generateList.bind(this)
     }
-    componentDidMount(){
-        if(this.state.activity.reps === null){
-            this.setState({...this.state, durationReps: `${this.state.activity.duration} mins`})
-        }else{this.setState({...this.state, durationReps: `${this.state.activity.reps} reps`})}
+    generateList = () => {
+        return this.state.datedList.map(ele => {
+            let activityLength;
+            if(ele.reps === null){activityLength = ele.duration}else{activityLength = ele.reps}
+            return(
+                <p key={ele.id}>
+                    {ele.name} {activityLength}
+                </p>
+            )   
+        })
     }
     render(){
         return(
             <div>
-                { this.state.activity.name }<br />
-                { this.state.durationReps }
+                {this.generateList()}
             </div>
         )
     }
