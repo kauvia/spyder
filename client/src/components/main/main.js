@@ -27,6 +27,7 @@ class Main extends Component {
 			} else {
 				api("GET","/test").then(res=>{
 					this.setState({userData:res.data})
+					console.log(this.state)
 				})
 			}
 		});
@@ -87,7 +88,7 @@ class Main extends Component {
 					</header>
 					<Switch>
 						<Route exact path={`/`} component={Home} />
-						<Route path={`/food`} render={props => <Food foodHistory={this.state.userData.food} {...props}/>} />
+						<Route path={`/food`} render={props => <Food {...props}/>} />
 						<Route path={`/activity`} component={Activity} />
 						<Route path={`/stats`} component={Stats} />
 					</Switch>

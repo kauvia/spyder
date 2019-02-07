@@ -1,12 +1,12 @@
 class FoodsController < ApplicationController
     before_action :authenticate_user!
+    respond_to :json
+
 
     def index
-      p current_user.id
-      p current_user.stat
+
       render :json => {
-        "user info"=>current_user.id,
-        "food"=>current_user.food
+        'food' => current_user.food.order(created_at: :desc)
     }
     end
 
@@ -18,7 +18,7 @@ class FoodsController < ApplicationController
     end
 
     def create
-       current_user.food.create(name: params.name, calories: params.calories, carbs: params.carbs, proteins: params.proteins, fats: params.fats)
+       current_user.food.create(name: params[:name], calories: params[:calories], carbs: params[:carbs], proteins: params[:proteins], fats: params[:fats])
         # :defaults => { :format => 'json' }
     end
 
