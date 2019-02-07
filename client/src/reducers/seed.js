@@ -52,7 +52,17 @@ const store = {
             {name: "Hokkien Mee", calories: 203.2, carbs: 344.3, proteins: 34.2, fats: 233.2}
         ],
         excercise: [
-            {name: "jog", reps: 1, duration: 1, calories_burnt_perunit: 393.0}
+            {name: "jog", reps: null, duration: 1, calories_burnt_perunit: 393.0},
+            {name: "pull ups", reps: 1, duration: null, calories_burnt_perunit: 787.0},
+            {name: "crunches", reps: 1, duration: null, calories_burnt_perunit: 888.0},
+            {name: "push ups", reps: 1, duration: null, calories_burnt_perunit: 445.0},
+            {name: "extreme ironing", reps: 1, duration: null, calories_burnt_perunit: 889.0},
+            {name: "deadlift", reps: 1, duration: null, calories_burnt_perunit: 56.0},
+            {name: "chess", reps: null, duration: 1, calories_burnt_perunit: 866.0},
+            {name: "golf", reps: null, duration: 1, calories_burnt_perunit: 223.0},
+            {name: "e sports", reps: null, duration: 1, calories_burnt_perunit: 112.0},
+            {name: "tennis", reps: null, duration: 1, calories_burnt_perunit: 344.0},
+            {name: "rows", reps: 1, duration: 1, calories_burnt_perunit: 211.0}
         ]
     }
 }
