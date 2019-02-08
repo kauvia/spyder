@@ -17,7 +17,7 @@ class AllowanceContainer extends Component {
 
             console.log(this.props.statHistory)
             let currentStat = this.props.statHistory[0];
-            //hahahahaha
+            
             // Harris-Benedict Formula
 
             // check for gender to calculate BMR

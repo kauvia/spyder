@@ -7,9 +7,9 @@ class EditStats extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            height: 0,
-            weight: 0,
-            target_weight: 0,
+            height: null,
+            weight: null,
+            target_weight: null,
             activity_level: "",
             heightMessage: "",
             weightMessage: ""
