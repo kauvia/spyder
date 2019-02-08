@@ -12,7 +12,8 @@ class EditStats extends Component {
             target_weight: null,
             activity_level: "",
             heightMessage: "",
-            weightMessage: ""
+            weightMessage: "",
+            targetWeightMessage: ""
         };
         this.handleAddItem = this.handleAddItem.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -27,9 +28,14 @@ class EditStats extends Component {
             this.setState({
                 heightMessage: "Please enter a height between 100cm and 250cm."
             });
-        } else if (this.state.weight > 400 || this.state.target_weight < 20) {
+        } else if (this.state.weight > 400 || this.state.weight < 20) {
             this.setState({
-                weightMessage: "Please enter an appropriate weight!"
+                weightMessage: "Please enter an appropriate weight between 20kg and 400kg!"
+                
+            });
+        } else if (this.state.target_weight > 400 || this.state.target_weight < 20) {
+            this.setState({
+                targetWeightMessage: "Please enter an appropriate weight between 20kg and 400kg!"
             });
         } else {
             api("POST", "/stats", {
@@ -73,7 +79,7 @@ class EditStats extends Component {
 						</div>
                         Target Weight: <input name="target_weight" type="text" placeholder={this.props.statHistory.target_weight}/>kg<br />
                         <div style={{ fontSize: 12 + "px", height: 15 + "px" }}>
-							{this.state.weightMessage}
+							{this.state.targetWeightMessage}
 						</div>
                         Activity Level: <input name="activity_level" type="text" placeholder={this.props.statHistory.activity_level}/>
                         <input type="submit" value="Edit Stats"/>

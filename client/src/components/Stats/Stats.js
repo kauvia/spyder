@@ -28,7 +28,7 @@ class Stats extends Component {
         if (Object.keys(this.state.statHistory).length > 0) {
             return (
                 <div>
-                    <header style={{border: '2px solid black'}}><AllowanceContainer statHistory = {this.state.statHistory}/></header>
+                    <header style={{border: '2px solid black'}}><AllowanceContainer statHistory={this.state.statHistory}/></header>
 
                     Height: {this.state.statHistory[0].height}cm<br/>
                     Weight: {this.state.statHistory[0].weight}kg<br />
@@ -52,11 +52,5 @@ class Stats extends Component {
         }
     }
 }
-
-// const mapStateToProps = (state) => {
-//     return{
-//         store: state
-//     }
-// }
 
 export default Stats;
