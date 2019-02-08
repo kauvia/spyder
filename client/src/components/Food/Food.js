@@ -1,46 +1,96 @@
 import React, { Component } from "react";
 import { api } from "../functions";
 import moment from "moment";
+import "./Food.css";
+import dummy from "./dummy";
+import Calendar from "react-calendar";
 
 class Food extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentDay: new Date(),
-			food: {
-				name: "",
-				calories: "",
-				carbs: "",
-				protiens: "",
-				fats: "",
-				time: Date.now()
-			}
+			foodHistory: null,
+			query: "",
+			displaySearch: false
 		};
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-	componentDidMount() {}
-	handleSubmit(e) {}
-	handleChange(e) {}
+		this.handleSearch = this.handleSearch.bind(this);
 
+		this.handleAddItem = this.handleAddItem.bind(this);
+	}
+	componentDidMount() {
+		//get food history and save in state
+		api("GET", "foods").then(val => {
+			this.setState({ foodHistory: val.data.food });
+		});
+	}
+	handleChange(e) {
+		let target = e.target;
+		if ("query" === target.name) {
+			this.setState({ [target.name]: target.value });
+			console.log(this.state);
+		}
+	}
+
+	handleSearch(e) {
+		e.preventDefault();
+		this.setState({
+			results: dummy
+		});
+		this.setState({ displaySearch: true });
+	}
+	handleAddItem(e) {
+		api();
+		let queryIdx = parseInt(e.target.id);
+		api("POST", "/foods", dummy[queryIdx]).then(val => {
+			this.setState({ displaySearch: false });
+		});
+	}
 	render() {
 		return (
 			<div id="food">
-                <AddFood></AddFood>
-				<FoodHistory foodHistory={this.props.foodHistory} />
+				<div>
+					<form
+						className="form-inline "
+						onSubmit={this.handleSearch}
+						onChange={this.handleChange}
+					>
+						<div className="input-group">
+							<input
+								name="query"
+								className="form-control"
+								type="search"
+								placeholder="Add food"
+								aria-label="Search"
+							/>
+							<div className="input-group-append">
+								<button className="btn btn-outline-dark" type="submit">
+									Search
+								</button>
+							</div>
+						</div>
+					</form>
+					{this.state.displaySearch && (
+						<div id="SearchDisplay">
+							{this.state.results.map((val, idx) => {
+								return (
+									<div
+										id={idx + "result"}
+										key={"result" + idx}
+										onClick={this.handleAddItem}
+									>
+										{val.name} {val.Calories}
+									</div>
+								);
+							})}
+						</div>
+					)}
+				</div>
+
+				<FoodHistory foodHistory={this.state.foodHistory} />
 			</div>
 		);
 	}
-}
-
-class AddFood extends Component{
-    constructor(props){
-        super(props);
-        this.state = {}
-    }
-    render(){
-        return(<div><button>Add Food</button></div>)
-    }
 }
 
 class FoodHistory extends Component {
@@ -52,14 +102,7 @@ class FoodHistory extends Component {
 		this.handleScroll = this.handleScroll.bind(this);
 	}
 	componentDidMount() {
-		api("GET", "test").then(val => {
-			let tester = val.data.food[954].created_at;
-			console.log(tester);
-			let test = moment(tester).fromNow();
-			console.log(test);
-			moment().calendar(moment(tester));
-			console.log(moment(tester));
-		});
+		console.log(this.props);
 	}
 	handleScroll(e) {
 		let box = e.target;
@@ -70,23 +113,59 @@ class FoodHistory extends Component {
 			this.setState({ counter: this.state.counter + 20 });
 		}
 	}
+	magic() {
+		let history = this.props.foodHistory;
+		let dayCounter = 0;
+		let dayArray = [];
+		let innerArray = [];
+
+		for (let i = 0; i < this.props.foodHistory.length; i++) {
+			if (dayCounter === moment().diff(history[i].created_at, "days")) {
+				innerArray.push(history[i]);
+			} else {
+				dayArray.push(innerArray);
+				innerArray = [];
+				dayCounter = moment().diff(history[i].created_at, "days");
+				innerArray.push(history[i]);
+			}
+		}
+		return (
+			<div>
+				{dayArray.map((val, idx) => {
+					return (
+						<div style={{ border: "5px solid black" }}>
+							{val.map((val, idx) => {
+								return (
+									<div key={"food" + val.id} id={val.id}>
+										{val.name}
+									</div>
+								);
+							})}
+						</div>
+					);
+				})}
+			</div>
+		);
+	}
 	render() {
 		if (this.props.foodHistory) {
 			return (
-				<div> <button>Months</button>
+				<div>
+					<Calendar/>
 					<div
 						style={{ overflow: "scroll", height: "400px" }}
 						onScroll={this.handleScroll}
 					>
-						{this.props.foodHistory.map((val, idx) => {
+						{this.magic()}
+						{/* {this.props.foodHistory.map((val, idx) => {
 							if (idx < this.state.counter) {
 								return (
 									<div key={"food" + idx}>
-										{val.name} {moment(val.created_at).fromNow()}{" "}
+										{val.name} {moment(val.created_at).fromNow()}
 									</div>
 								);
 							}
-						})}
+						})} */}
 					</div>
 				</div>
 			);

@@ -1,12 +1,12 @@
 class FoodsController < ApplicationController
     before_action :authenticate_user!
+    respond_to :json
+
 
     def index
-      p current_user.id
-      p current_user.stat
+
       render :json => {
-        "user info"=>current_user.id,
-        "food"=>current_user.food
+        'food' => current_user.food.order(created_at: :desc)
     }
     end
 

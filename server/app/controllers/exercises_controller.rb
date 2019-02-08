@@ -18,7 +18,9 @@ class ExercisesController < ApplicationController
     end
 
     def create
+      
         current_user.exercise.create(name: params[:name], reps: params[:reps], duration: params[:duration], calories_burnt: params[:calories_burnt])
+
     end
 
     def update
