@@ -3,6 +3,7 @@ import { api } from "../functions";
 import moment from "moment";
 import "./Food.css";
 import dummy from "./dummy";
+import Calendar from "react-calendar";
 
 class Food extends Component {
 	constructor(props) {
@@ -45,7 +46,6 @@ class Food extends Component {
 			this.setState({ displaySearch: false });
 		});
 	}
-
 	render() {
 		return (
 			<div id="food">
@@ -151,6 +151,7 @@ class FoodHistory extends Component {
 		if (this.props.foodHistory) {
 			return (
 				<div>
+					<Calendar/>
 					<div
 						style={{ overflow: "scroll", height: "400px" }}
 						onScroll={this.handleScroll}
