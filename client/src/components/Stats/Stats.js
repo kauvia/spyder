@@ -37,7 +37,7 @@ class Stats extends Component {
 
                     <button onClick={this.handleClick}>Edit Stats</button>
 
-                    {this.state.showEditForm && <EditStats />}
+                    {this.state.showEditForm && <EditStats statHistory={this.state.statHistory[0]}/>}
 
                 </div>
             )
