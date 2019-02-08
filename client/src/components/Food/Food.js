@@ -14,12 +14,14 @@ class Food extends Component {
 			displaySearch: false,
 			counter: 20,
 			foodArr: [],
-			selectedDateArr: []
+			selectedDateArr: [],
+			displayCalendar: false
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleCalendar = this.handleCalendar.bind(this);
 		this.handleAddItem = this.handleAddItem.bind(this);
+		this.handleToggleCalendar = this.handleToggleCalendar.bind(this);
 	}
 	componentDidMount() {
 		//get food history and save in state
@@ -51,7 +53,7 @@ class Food extends Component {
 		});
 	}
 	handleCalendar(e) {
-		console.log(this.state);
+		this.setState({selectedDate:e})
 		let tempArr = [];
 		let selectedDate = moment(e).startOf("day");
 		let foodArr = this.state.foodArr;
@@ -64,6 +66,12 @@ class Food extends Component {
 			}
 		}
 		this.setState({ selectedDateArr: tempArr });
+		this.setState({displayCalendar:false})
+	}
+	handleToggleCalendar() {
+		this.state.displayCalendar
+			? this.setState({ displayCalendar: false })
+			: this.setState({ displayCalendar: true });
 	}
 	sortFoodHistory() {
 		let history = this.state.foodHistory;
@@ -132,8 +140,12 @@ class Food extends Component {
 						</div>
 					)}
 				</div>
-				<Calendar onChange={this.handleCalendar} value={this.state.date} />
-
+				{this.state.displayCalendar && (
+					<Calendar onChange={this.handleCalendar} value={this.state.date} />
+				)}
+				{!this.state.displayCalendar && (
+					<div onClick={this.handleToggleCalendar}>hello</div>
+				)}
 				<FoodHistory foodHistory={this.state.selectedDateArr} />
 			</div>
 		);
