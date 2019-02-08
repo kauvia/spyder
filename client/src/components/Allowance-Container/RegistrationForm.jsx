@@ -138,7 +138,6 @@ class RegistrationForm extends Component {
               Tell us about yourself! We need this data to calculate your daily
               calorie allowance.
             </h5>
-            <br />
             Age*: <input name="age" type="text" />
             <br />
             <div style={{ fontSize: "12px", height: "15px" }}>
