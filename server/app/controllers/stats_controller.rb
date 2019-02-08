@@ -17,7 +17,7 @@ class StatsController < ApplicationController
     end
 
     def create
-        current_user.stat.create(height: params[:height], weight:params.weight, target_weight: params.target_weight, age: params.age, gender: params.gender, activity_level: params.activity_level)
+        current_user.stat.create(height: params[:height], weight: params[:weight], target_weight: params[:target_weight], age: params[:age], gender: params[:gender], activity_level: params[:activity_level])
     end
 
     def update
