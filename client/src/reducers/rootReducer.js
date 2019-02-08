@@ -33,6 +33,17 @@ const rootReducer = (state = initState, action) => {
             ]
         }
     }
+    if(action.type === "ADD_ACTIVITY"){
+        let exercises = state.user_log.exercise
+        exercises.unshift(action.data)
+        return{
+            ...state,
+            user_log: {
+                ...state.user_log,
+                exercise: exercises
+            }
+        }
+    }
     return state
 }
 export default rootReducer

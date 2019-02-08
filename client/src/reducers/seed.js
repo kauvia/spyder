@@ -6,7 +6,8 @@ const store = {
         target_weight: 22,          
         age: 99,                    //yrs
         gender: "male",
-        activity_level: "awesome"   // pls change this...
+        activity_level: "awesome",   // pls change this...
+        user_id: 22
     },
     user_log: [
         {
