@@ -1,0 +1,9 @@
+#SearchDisplay {
+    position: absolute;
+    left: 0px;
+    /* top:0px; */
+    background-color: grey;
+    height: 400px;
+    width:400px;
+    border: 5px solid black;
+}
