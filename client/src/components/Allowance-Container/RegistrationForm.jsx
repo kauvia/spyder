@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { api } from "../functions";
+import { ETIME } from "constants";
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class RegistrationForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    //check if inserted ht/wt is reasonable
+    //check if inserted ht/wt/age is reasonable
     if (this.state.height < 100 || this.state.height > 250) {
       this.setState({ heightMessage: "Please enter a height between 100cm and 250cm." });
     } else if (this.state.weight > 400 || this.state.weight < 20) {
@@ -59,8 +60,16 @@ class RegistrationForm extends Component {
     } else if ("age" === e.target.name) {
       this.setState({ [e.target.name]: e.target.value });
     } else if ("gender" === e.target.name) {
-      this.setState({ [e.target.name]: e.target.value });
+        this.setState({ [e.target.name]: e.target.value });
     }
+  }
+
+  handleGender(e) {
+      this.setState({ [e.target.name]: e.target.value});
+  }
+
+  handleActivityLevel(e) {
+      this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -74,7 +83,14 @@ class RegistrationForm extends Component {
             <h5>Tell us about yourself! We need this data to calculate your daily calorie allowance.</h5><br />
             Age*: <input name="age" type="text" /><br />
             <div style={{ fontSize: '12px', height: '15px'}}>{this.state.ageMessage}</div>
-            Gender*: <input name="gender" type="text" /><br />
+
+            <label>
+                Gender: 
+                <select name="gender" onGender={this.handleGender}>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </label>
             <hr />
 
             <h5>Current stats:</h5>
@@ -82,7 +98,15 @@ class RegistrationForm extends Component {
             <div style={{ fontSize: '12px', height: '15px'}}>{this.state.heightMessage}</div>
             Weight: <input name="weight" type="text"/>kg<br />
             <div style={{ fontSize: '12px', height: '15px'}}>{this.state.weightMessage}</div>
-            Activity Level: <input name="activity_level" type="text"/>
+
+            <label>
+                Activity Level:
+                <select name="activity_level" onActivityLevel={this.handleActivityLevel}>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </label>
             <hr />
 
             <h5>Set your goal!</h5>
