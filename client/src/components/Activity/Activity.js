@@ -121,15 +121,15 @@ class Activity extends Component {
             <div id="activity">
                 <div>
                     <form id="newActivityForm" onSubmit={this.handleSubmit}>
-                        <input readonly={this.state.disable} type="text" name="name" onChange={this.handleChange} value={this.state.activity.name} />
+                        <input readonly={this.state.activity.disable} type="text" name="name" onChange={this.handleChange} value={this.state.activity.name} />
                         <label>Activity</label><br />
                         <input type="text" name="repsDuration" onChange={this.handleChange} value={this.state.activity.repsDuration} />
                         <label>Reps / Duration (mins)</label><br />
-                        <input readonly={this.state.disable} type="text" name="calories_burnt" onChange={this.handleChange} value={this.state.activity.calories_burnt} />
+                        <input readonly={this.state.activity.disable} type="text" name="calories_burnt" onChange={this.handleChange} value={this.state.activity.calories_burnt} />
                         <label>Calories</label><br />
                         <label> REPS ACTIVITY </label>
                         <label class="switch">
-                        <input readonly={this.state.disable} type="checkbox" name="reps" onChange={this.handleChange} checked={this.state.activity.reps}  />
+                        <input readonly={this.state.activity.disable} type="checkbox" name="reps" onChange={this.handleChange} checked={this.state.activity.reps}  />
                         <span class="slider"></span>
                         </label><br />
                         <input type="submit" value="+" />
