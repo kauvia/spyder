@@ -15,7 +15,8 @@ class Food extends Component {
 			counter: 20,
 			foodArr: [],
 			selectedDateArr: [],
-			displayCalendar: false
+			displayCalendar: false,
+			selectedDate: `${new Date()}`,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
@@ -46,14 +47,13 @@ class Food extends Component {
 		this.setState({ displaySearch: true });
 	}
 	handleAddItem(e) {
-		api();
 		let queryIdx = parseInt(e.target.id);
 		api("POST", "/foods", dummy[queryIdx]).then(val => {
 			this.setState({ displaySearch: false });
 		});
 	}
 	handleCalendar(e) {
-		this.setState({selectedDate:e})
+		this.setState({selectedDate:`${e}`})
 		let tempArr = [];
 		let selectedDate = moment(e).startOf("day");
 		let foodArr = this.state.foodArr;
@@ -141,12 +141,12 @@ class Food extends Component {
 					)}
 				</div>
 				{this.state.displayCalendar && (
-					<Calendar onChange={this.handleCalendar} value={this.state.date} />
+					<Calendar onChange={this.handleCalendar} value={this.state.date} maxDate={new Date()} />
 				)}
 				{!this.state.displayCalendar && (
-					<div onClick={this.handleToggleCalendar}>hello</div>
+					<div onClick={this.handleToggleCalendar}>{this.state.selectedDate}</div>
 				)}
-				<FoodHistory foodHistory={this.state.selectedDateArr} />
+				<FoodHistory foodHistory={this.state.selectedDateArr}/>
 			</div>
 		);
 	}
