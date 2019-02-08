@@ -107,7 +107,7 @@ class AllowanceContainer extends Component {
         <div>
           {this.state.allowance} - {this.state.food} + {this.state.exercise} ={" "}
           {this.state.left} <br />
-          allowance food exercise left
+          allowance food exercise remaining
           <br />
         </div>
       );
@@ -115,8 +115,7 @@ class AllowanceContainer extends Component {
       return (
         <div>
           ?? - ?? + ?? = ?? <br />
-          allowance food exercise left <button onClick={this.handleClick}>!!!!</button> <br />
-          PLEASE UPDATE YOUR STATS FOR UR CALORIE ALLOWANCE TO BE CALCULATED
+          allowance food exercise remaining <button onClick={this.handleClick}>!!!!</button> <br />
           {this.state.showRegistrationForm && <RegistrationForm />}
         </div>
       );
