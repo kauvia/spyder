@@ -14,18 +14,21 @@ class Food extends Component {
 			displaySearch: false,
 			counter: 20,
 			foodArr: [],
-			selectedDateArr:[],
+			selectedDateArr: [],
+			displayCalendar: false,
+			selectedDate: `${new Date()}`,
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
-		this.handleCalendar = this.handleCalendar.bind(this)
+		this.handleCalendar = this.handleCalendar.bind(this);
 		this.handleAddItem = this.handleAddItem.bind(this);
+		this.handleToggleCalendar = this.handleToggleCalendar.bind(this);
 	}
 	componentDidMount() {
 		//get food history and save in state
 		api("GET", "foods").then(val => {
 			this.setState({ foodHistory: val.data.food });
-			this.magic()
+			this.sortFoodHistory();
 		});
 	}
 	handleChange(e) {
@@ -44,48 +47,58 @@ class Food extends Component {
 		this.setState({ displaySearch: true });
 	}
 	handleAddItem(e) {
-		api();
 		let queryIdx = parseInt(e.target.id);
 		api("POST", "/foods", dummy[queryIdx]).then(val => {
 			this.setState({ displaySearch: false });
 		});
 	}
-	handleCalendar(e){
+	handleCalendar(e) {
+		this.setState({selectedDate:`${e}`})
 		let tempArr = [];
-		let selectedDate = moment(e)
-		let foodArr=this.state.foodArr
-		for (let item in foodArr){
-			let tempDate = moment (foodArr[item][0].created_at)
-			if (selectedDate.diff(tempDate,"days")===0){
-				tempArr = foodArr[item]
+		let selectedDate = moment(e).startOf("day");
+		let foodArr = this.state.foodArr;
+		for (let item in foodArr) {
+			if (foodArr[item].length > 0) {
+				let tempDate = moment(foodArr[item][0].created_at).startOf("day");
+				if (selectedDate.diff(tempDate, "days") === 0) {
+					tempArr = foodArr[item];
+				}
 			}
 		}
-		this.setState({selectedDateArr:tempArr})
-
+		this.setState({ selectedDateArr: tempArr });
+		this.setState({displayCalendar:false})
 	}
-	magic() {
+	handleToggleCalendar() {
+		this.state.displayCalendar
+			? this.setState({ displayCalendar: false })
+			: this.setState({ displayCalendar: true });
+	}
+	sortFoodHistory() {
 		let history = this.state.foodHistory;
 		let dayCounter = 0;
 		let dayArray = [];
 		let innerArray = [];
-
+		let currentDate = new Date();
+		currentDate = moment(currentDate).startOf("day");
+		console.log(currentDate);
 
 		for (let i = 0; i < history.length; i++) {
-			if (dayCounter === moment().diff(history[i].created_at, "days")) {
+			let tempDate = moment(history[i].created_at).startOf("day");
+			if (dayCounter === currentDate.diff(tempDate, "days")) {
 				innerArray.push(history[i]);
 			} else {
 				dayArray.push(innerArray);
 				innerArray = [];
-				dayCounter = moment().diff(history[i].created_at, "days");
+				dayCounter = currentDate.diff(tempDate, "days");
 				innerArray.push(history[i]);
 			}
-			if (i === history.length-1){
-				if (innerArray.length >0){
-					dayArray.push(innerArray)
+			if (i === history.length - 1) {
+				if (innerArray.length > 0) {
+					dayArray.push(innerArray);
 				}
 			}
 		}
-		this.setState({foodArr:dayArray})
+		this.setState({ foodArr: dayArray });
 	}
 	render() {
 		return (
@@ -127,9 +140,13 @@ class Food extends Component {
 						</div>
 					)}
 				</div>
-				<Calendar onChange={this.handleCalendar} value={this.state.date}/>
-
-				<FoodHistory foodHistory={this.state.selectedDateArr} />
+				{this.state.displayCalendar && (
+					<Calendar onChange={this.handleCalendar} value={this.state.date} maxDate={new Date()} />
+				)}
+				{!this.state.displayCalendar && (
+					<div onClick={this.handleToggleCalendar}>{this.state.selectedDate}</div>
+				)}
+				<FoodHistory foodHistory={this.state.selectedDateArr}/>
 			</div>
 		);
 	}
@@ -138,14 +155,10 @@ class Food extends Component {
 class FoodHistory extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-
-		};
+		this.state = {};
 		this.handleScroll = this.handleScroll.bind(this);
 	}
-	componentDidMount() {
-
-	}
+	componentDidMount() {}
 	handleScroll(e) {
 		let box = e.target;
 		//      console.log(box.scrollTop)
@@ -156,29 +169,23 @@ class FoodHistory extends Component {
 		}
 	}
 
-	handleAddItem(){
-	
+	handleAddItem() {}
 
-	}
-	
 	render() {
 		if (this.props.foodHistory) {
-			console.log(this.props)
+			console.log(this.props);
 			return (
 				<div>
 					<div
 						style={{ overflow: "scroll", height: "400px" }}
 						onScroll={this.handleScroll}
 					>
-					
 						{this.props.foodHistory.map((val, idx) => {
-	
-								return (
-									<div key={"food" + idx}>
-										{val.name} {moment(val.created_at).fromNow()} {val.created_at}
-									</div>
-								);
-						
+							return (
+								<div key={"food" + idx}>
+									{val.name} {moment(val.created_at).fromNow()} {val.created_at}
+								</div>
+							);
 						})}
 					</div>
 				</div>
