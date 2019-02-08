@@ -9,20 +9,19 @@ class Activity extends Component {
         super(props);
         this.state = {
             activity:{
-                name:'', repsDuration: '', calories_burnt:'', reps: true
-            }
+                name: null, repsDuration: null, calories_burnt: null, reps: false,
+                disable: false, useModel: false, selectModel: false
+            },
+            model: {}
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleDate = this.handleDate.bind(this);
+        this.models = this.models.bind(this);
     }
     componentDidUpdate(){
         if(this.props.store.date !== undefined && this.state.currentDate == ''){
             this.setState({...this.state, currentDate: this.props.store.date})
         }
-    }
-    handleDate = () => {
-        
     }
     handleChange = (e) => {
         switch (e.target.name) {
@@ -32,19 +31,58 @@ class Activity extends Component {
                 }})
                 break;
             case "repsDuration":
-                this.setState({...this.state, activity:{
+                if(this.state.model !== undefined && this.state.activity.useModel === true){
+                    let rd = e.target.value;
+                    let cal = parseInt(rd) * parseFloat(this.state.model.calories_burnt_perunit)
+                    this.setState({...this.state, activity:{
+                    ...this.state.activity, repsDuration: rd, calories_burnt: cal
+                }})
+                }else{
+                    this.setState({...this.state, activity:{
                     ...this.state.activity, repsDuration: e.target.value
                 }})
+                }
                 break;
             case "calories_burnt":
                 this.setState({...this.state, activity:{
                     ...this.state.activity, calories_burnt: e.target.value
                 }})
                 break;
-            case "click":
-                let today = this.props.store.user_log.exercise.sort( (a, b) => {
-                    return(new Moment(a.created_at).format('YYYYMMDD') - new Moment(b.created_at).format('YYYYMMDD'))
-                })
+            case "reps":
+                this.setState({...this.state, activity:{
+                    ...this.state.activity, reps: e.target.checked
+                }})
+                break;
+            case "useModel":
+                if(e.target.checked == true){
+                    this.setState({...this.state, activity:{
+                    ...this.state.activity, useModel: true, disable: "readonly", selectModel: true
+                    }})
+                }else if(e.target.checked == false){
+                    this.setState({...this.state, activity:{
+                    ...this.state.activity, useModel: false, disable: false, selectModel: false
+                    }})
+                }
+                
+                break;
+            case "selectModel":
+                if(this.state.activity.selectModel){
+                    this.setState({...this.state, activity:{
+                        ...this.state.activity, selectModel: false
+                        }})
+                }else {
+                    this.setState({...this.state, activity:{
+                        ...this.state.activity, selectModel: true, useModel: true, disable: "readonly", selectModel: true
+                        }})
+                }
+                break;
+            case "model":
+                let model = this.props.store.food_exercise_models.exercise[e.target.value]
+                let reps = model.reps
+                this.setState({...this.state, activity:{
+                        ...this.state.activity, selectModel: false, name: model.name, repsDuration: 1, calories_burnt: model.calories_burnt_perunit, reps: reps
+                        }, model: model })
+                console.log(this.state)
                 break;
             default:
                 break;
@@ -54,14 +92,27 @@ class Activity extends Component {
         e.preventDefault()
         switch (e.target.id) {
             case "newActivityForm":
+                this.setState({...this.state, activity:{
+                    ...this.state.activity, name:'', repsDuration: '', calories_burnt:'', reps: false
+                }})
                 // axios.post()
                 break;
             default:
                 break;
         }
     }
+    models = () => {
+        if(this.state.activity.selectModel){
+            return this.props.store.food_exercise_models.exercise.map( (ele, num) => {
+                return(
+                    <button name="model" value={num} key={ele.name} onClick={this.handleChange}>
+                        {ele.name}
+                    </button>
+                )
+            })
+        }
+    }
     render(){
-
         let stuff;
         if(this.props.store.user_log.exercise !==undefined ){
             stuff = <ActivityHistory activities={this.props.store.user_log.exercise} />
@@ -70,16 +121,28 @@ class Activity extends Component {
             <div id="activity">
                 <div>
                     <form id="newActivityForm" onSubmit={this.handleSubmit}>
-                        <input type="text" name="name" onChange={this.handleChange} value={this.state.activity.name} />
+                        <input readonly={this.state.disable} type="text" name="name" onChange={this.handleChange} value={this.state.activity.name} />
                         <label>Activity</label><br />
                         <input type="text" name="repsDuration" onChange={this.handleChange} value={this.state.activity.repsDuration} />
-                        <label>Reps / Duration</label><br />
-                        <input type="text" name="calories_burnt" onChange={this.handleChange} value={this.state.activity.calories_burnt} />
+                        <label>Reps / Duration (mins)</label><br />
+                        <input readonly={this.state.disable} type="text" name="calories_burnt" onChange={this.handleChange} value={this.state.activity.calories_burnt} />
                         <label>Calories</label><br />
+                        <label> REPS ACTIVITY </label>
+                        <label class="switch">
+                        <input readonly={this.state.disable} type="checkbox" name="reps" onChange={this.handleChange} checked={this.state.activity.reps}  />
+                        <span class="slider"></span>
+                        </label><br />
                         <input type="submit" value="+" />
                     </form>
-                    <button name="click" onClick={this.handleChange}>PRINT EXCERCISE FOR CURRENT DATE</button><br />
-                    {stuff}
+                    <label> Use Models </label>
+                        <label class="switch">
+                        <input type="checkbox" name="useModel" onChange={this.handleChange} checked={this.state.activity.useModel}  />
+                        <span class="slider"></span>
+                    </label><br />
+                    <button name="selectModel" onClick={this.handleChange}>Choose Another Exercise</button> <br />
+                    { this.models() }
+                    {/* <button onClick={this.models}>model</button> */}
+                    { stuff }
                 </div>
             </div>
         )
