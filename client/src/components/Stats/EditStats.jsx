@@ -10,7 +10,7 @@ class EditStats extends Component {
       height: null,
       weight: null,
       target_weight: null,
-      activity_level: "",
+      activity_level: " ",
       heightMessage: "",
       weightMessage: "",
       targetWeightMessage: "",
