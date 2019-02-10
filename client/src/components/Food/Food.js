@@ -5,13 +5,16 @@ import "./Food.css";
 import dummy from "./dummy";
 import Calendar from "react-calendar";
 import Navbar from "../navbar";
-import AllowanceContainer from '../Allowance-Container/AllowanceContainer'
+import AllowanceContainer from "../Allowance-Container/AllowanceContainer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class Food extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			foodHistory: null,
+			allowance: null,
 			query: "",
+			results: [],
 			displaySearch: false,
 			foodArr: [],
 			selectedDateArr: [],
@@ -20,22 +23,37 @@ class Food extends Component {
 				.startOf("day")
 				.format()}`
 		};
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSearch = this.handleSearch.bind(this);
-		this.handleCalendar = this.handleCalendar.bind(this);
-		this.handleAddItem = this.handleAddItem.bind(this);
-		this.handleToggleCalendar = this.handleToggleCalendar.bind(this);
 	}
 	componentDidMount() {
-		//get food history and save in state
+		this.updateFromDb();
+	}
+	updateFromDb() {
 		api("GET", "foods").then(val => {
 			this.setState({ foodHistory: val.data.food });
 			this.sortFoodHistory();
 			this.updateSelectedDateHistory(this.state.selectedDate);
 		});
+
+		api("GET", "allowance").then(val => {
+			this.setState({ allowance: val.data });
+		});
 	}
-	handleChange(e) {
-		console.log(this.state.selectedDate);
+	addFoodItem = e => {
+		console.log(e);
+		api("POST", "/foods", {
+			food: e,
+			date: this.state.selectedDate
+		}).then(val => {
+			this.updateFromDb();
+			this.setState({ displaySearch: false, results: [] });
+		});
+	};
+	deleteFoodItem = e => {
+		api("DELETE", "/foods", { id: e }).then(val => {
+			this.updateFromDb();
+		});
+	};
+	handleChange = e => {
 		let target = e.target;
 		if ("query" === target.name) {
 			this.setState({ [target.name]: target.value });
@@ -55,22 +73,24 @@ class Food extends Component {
 			this.setState({ selectedDate: newDate });
 			this.updateSelectedDateHistory(newDate);
 		}
-	}
-
-	handleSearch(e) {
+		if ("search" === target.dataset.id) {
+			this.state.displaySearch
+				? this.setState({ displaySearch: false, results: [] })
+				: this.setState({ displaySearch: true });
+		}
+		if ("toggleCalendar" === target.dataset.id) {
+			this.state.displayCalendar
+				? this.setState({ displayCalendar: false })
+				: this.setState({ displayCalendar: true });
+		}
+	};
+	handleSearch = e => {
 		e.preventDefault();
 		this.setState({
 			results: dummy
 		});
-		this.setState({ displaySearch: true });
-	}
-	handleAddItem(e) {
-		let queryIdx = parseInt(e.target.id);
-		api("POST", "/foods", dummy[queryIdx]).then(val => {
-			this.setState({ displaySearch: false });
-		});
-	}
-	handleCalendar(e) {
+	};
+	handleCalendar = e => {
 		this.setState({ selectedDate: `${e}` });
 		let tempArr = [];
 		let selectedDate = moment(e).startOf("day");
@@ -85,7 +105,7 @@ class Food extends Component {
 		}
 		this.setState({ selectedDateArr: tempArr });
 		this.setState({ displayCalendar: false });
-	}
+	};
 	updateSelectedDateHistory(val) {
 		let tempArr = [];
 		let selectedDate = moment(val).startOf("day");
@@ -99,11 +119,6 @@ class Food extends Component {
 			}
 		}
 		this.setState({ selectedDateArr: tempArr });
-	}
-	handleToggleCalendar() {
-		this.state.displayCalendar
-			? this.setState({ displayCalendar: false })
-			: this.setState({ displayCalendar: true });
 	}
 	sortFoodHistory() {
 		let history = this.state.foodHistory;
@@ -132,22 +147,15 @@ class Food extends Component {
 		}
 		this.setState({ foodArr: dayArray });
 	}
+
 	render() {
 		return (
 			<div>
+				{/* NAVBAR AND ALLOWANCE */}
 				<Navbar />
-				<AllowanceContainer/>
-				<div
-					id="food-container"
-					className="container"
-					style={{
-						width: "500px",
-						height: "500px",
-						border: "2px solid black",
-						backgroundColor: "antiquewhite",
-						color: "black"
-					}}
-				>
+				<AllowanceContainer data={this.state.allowance} />
+				<div id="food-container" className="container">
+					{/* CALENDAR AND CONTROLS */}
 					<div
 						id="food-date-container"
 						className="row text-center"
@@ -155,12 +163,18 @@ class Food extends Component {
 						onClick={this.handleChange}
 					>
 						<div className="col-3" data-id="arrowBack">
-							{"<<<"}
+							<FontAwesomeIcon
+								icon="angle-double-left"
+								style={{ color: "gray" }}
+								size="2x"
+								data-id="arrowBack"
+							/>
 						</div>
 						<div
 							id="date-navigator"
 							className="col-6"
-							onClick={this.handleToggleCalendar}
+							data-id="toggleCalendar"
+							onClick={this.handleChange}
 						>
 							{moment(this.state.selectedDate).diff(
 								moment(new Date()),
@@ -169,19 +183,29 @@ class Food extends Component {
 							{moment(this.state.selectedDate).diff(
 								moment(new Date()),
 								"days"
-							) !== 0 && `${moment(this.state.selectedDate).format("LL")}`}
+							) !== 0 && `${moment(this.state.selectedDate).format("LL")}`}{" "}
+							<FontAwesomeIcon icon="calendar-alt" style={{ color: "gray" }} />
 						</div>
 						{moment(this.state.selectedDate).diff(
 							moment(new Date()),
 							"days"
 						) !== 0 && (
 							<div className="col-3" data-id="arrowNext">
-								{">>>"}
+								<FontAwesomeIcon
+									icon="angle-double-right"
+									style={{ color: "gray" }}
+									size="2x"
+									data-id="arrowNext"
+								/>
 							</div>
 						)}
 					</div>
+					{/* SHOW CALENDAR */}
 					{this.state.displayCalendar && (
-						<div className="row text-center" style={{ position: "absolute" }}>
+						<div
+							className="row text-center"
+							style={{ position: "absolute", zIndex: 1 }}
+						>
 							<div className="col-12">
 								<Calendar
 									onChange={this.handleCalendar}
@@ -191,100 +215,232 @@ class Food extends Component {
 							</div>
 						</div>
 					)}
+
+					{/* SEARCH AND ADD FOOD ITEMS */}
+
 					<div className="container">
 						<div className="row">
-							<div>Add Food Item</div>
+							<div
+								onClick={this.handleChange}
+								className="history-items"
+								data-id="search"
+							>
+								<FontAwesomeIcon icon="plus-circle" style={{ color: "gray" }} />{" "}
+								Add Food Item
+							</div>
+
+							{/* SEARCH BOX */}
+
+							{this.state.displaySearch && (
+								<div
+									id="SearchDisplay"
+									className="container"
+									style={{ zIndex: 2 }}
+								>
+									<div className="row">
+										<form
+											className="form-inline "
+											onSubmit={this.handleSearch}
+											onChange={this.handleChange}
+										>
+											<div className="input-group">
+												<input
+													name="query"
+													className="form-control"
+													type="search"
+													placeholder="Search example 'potato'"
+													aria-label="Search"
+												/>
+												<div className="input-group-append">
+													<button
+														className="btn btn-outline-light"
+														type="submit"
+													>
+														Search
+													</button>
+												</div>
+											</div>
+										</form>
+									</div>
+									{this.state.results.map((val, idx) => {
+										return (
+											<FoodSearchItem
+												data={val}
+												key={"search" + idx}
+												addFoodItem={this.addFoodItem}
+											/>
+										);
+									})}
+									<div className="row">
+										<div className="col" />
+										<div
+											className="col"
+											onClick={this.handleChange}
+											data-id="search"
+										>
+											<FontAwesomeIcon
+												icon="times-circle"
+												style={{ color: "red" }}
+											/>{" "}
+											Cancel
+										</div>{" "}
+										<div className="col" />
+									</div>
+								</div>
+							)}
 						</div>
-						<FoodHistory foodHistory={this.state.selectedDateArr} />
+
+						{/* SHOW FOOD HISTORY OF SELECTED DATE					 */}
+
+						{this.state.selectedDateArr && (
+							<div>
+								{this.state.selectedDateArr.map((val, idx) => {
+									return (
+										<FoodHistoryItem
+											data={val}
+											key={"food" + idx}
+											deleteFoodItem={this.deleteFoodItem}
+										/>
+									);
+								})}
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
-			// 	{/* <div>
-			// 		<form
-			// 			className="form-inline "
-			// 			onSubmit={this.handleSearch}
-			// 			onChange={this.handleChange}
-			// 		>
-			// 			<div className="input-group">
-			// 				<input
-			// 					name="query"
-			// 					className="form-control"
-			// 					type="search"
-			// 					placeholder="Add food"
-			// 					aria-label="Search"
-			// 				/>
-			// 				<div className="input-group-append">
-			// 					<button className="btn btn-outline-dark" type="submit">
-			// 						Search
-			// 					</button>
-			// 				</div>
-			// 			</div>
-			// 		</form>
-			// 		{this.state.displaySearch && (
-			// 			<div id="SearchDisplay">
-			// 				{this.state.results.map((val, idx) => {
-			// 					return (
-			// 						<div
-			// 							id={idx + "result"}
-			// 							key={"result" + idx}
-			// 							onClick={this.handleAddItem}
-			// 						>
-			// 							{val.name} {val.Calories}
-			// 						</div>
-			// 					);
-			// 				})}
-			// 			</div>
-			// 		)}
-			// 	</div>
-			// 	{this.state.displayCalendar && (
-			// 		<Calendar onChange={this.handleCalendar} value={this.state.date} maxDate={new Date()} />
-			// 	)}
-			// 	{!this.state.displayCalendar && (
-			// 		<div onClick={this.handleToggleCalendar}>{this.state.selectedDate}</div>
-			// 	)}
-			// 	<FoodHistory foodHistory={this.state.selectedDateArr}/>
-			// </div> */}
 		);
 	}
 }
-
-class FoodHistory extends Component {
+class FoodSearchItem extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
-		this.handleScroll = this.handleScroll.bind(this);
+		this.state = { showAdd: false };
 	}
-	componentDidMount() {}
-	handleScroll(e) {
-		let box = e.target;
-		//      console.log(box.scrollTop)
-		console.log(box.scrollTop > box.scrollHeight - box.offsetHeight);
-		//      console.log()
-		if (box.scrollTop > box.scrollHeight - box.offsetHeight) {
-			this.setState({ counter: this.state.counter + 20 });
+
+	toggleAdd = e => {
+		if (e.type === "mouseover" && this.state.showAdd === false) {
+			this.setState({ showAdd: true });
+		} else if (e.type === "mouseleave" && this.state.showAdd === true) {
+			this.setState({ showAdd: false });
 		}
-	}
-
-	handleAddItem() {}
-
+	};
 	render() {
-		if (this.props.foodHistory) {
-			console.log(this.props);
-			return (
-				<div className="row">
-					{this.props.foodHistory.map((val, idx) => {
-						return (
-							<div key={"food" + idx}>
-								{val.name} {moment(val.created_at).fromNow()} {val.created_at}
+		return (
+			<div className="row">
+				<div
+					className="history-items"
+					onMouseOver={this.toggleAdd}
+					onMouseLeave={this.toggleAdd}
+				>
+					{!this.state.expandedView && (
+						<div className="row">
+							<div
+								className="col"
+								onClick={() => this.props.addFoodItem(this.props.data)}
+							>
+								{this.props.data.name} Calories:{this.props.data.calories}
 							</div>
-						);
-					})}
+							<div>
+								{this.state.showAdd && (
+									<div className="col">
+										<div className="add-icons">
+											<FontAwesomeIcon
+												size="lg"
+												icon="plus-circle"
+												style={{ color: "green" }}
+											/>
+										</div>
+									</div>
+								)}
+							</div>
+						</div>
+					)}
+
+					{this.state.expandedView && (
+						<div className="row">
+							<div className="col" onClick={this.toggleView}>
+								<div>
+									{this.props.data.name} Calories:{this.props.data.calories}
+								</div>
+								<div>
+									Fats:{this.props.data.fats} Carbs:{this.props.data.carbs}{" "}
+									Proteins:{this.props.data.proteins}
+								</div>
+							</div>
+						</div>
+					)}
 				</div>
-			);
-		} else {
-			return <div>Loading</div>;
-		}
+			</div>
+		);
 	}
 }
+class FoodHistoryItem extends Component {
+	constructor(props) {
+		super(props);
+		this.state = { expandedView: false, showDelete: false };
+	}
+	toggleView = () => {
+		this.state.expandedView
+			? this.setState({ expandedView: false })
+			: this.setState({ expandedView: true });
+	};
+	toggleDelete = e => {
+		if (e.type === "mouseover" && this.state.showDelete === false) {
+			this.setState({ showDelete: true });
+		} else if (e.type === "mouseleave" && this.state.showDelete === true) {
+			this.setState({ showDelete: false });
+		}
+	};
+	render() {
+		return (
+			<div className="row">
+				<div
+					className="history-items"
+					onMouseOver={this.toggleDelete}
+					onMouseLeave={this.toggleDelete}
+				>
+					{!this.state.expandedView && (
+						<div className="row">
+							<div className="col" onClick={this.toggleView}>
+								{this.props.data.name} Calories:{this.props.data.calories}
+							</div>
+							<div>
+								{this.state.showDelete && (
+									<div className="col">
+										<div
+											className="trash-icons"
+											onClick={() =>
+												this.props.deleteFoodItem(this.props.data.id)
+											}
+										>
+											<FontAwesomeIcon
+												size="lg"
+												icon="trash-alt"
+												style={{ color: "gray" }}
+											/>
+										</div>
+									</div>
+								)}
+							</div>
+						</div>
+					)}
 
+					{this.state.expandedView && (
+						<div className="row">
+							<div className="col" onClick={this.toggleView}>
+								<div>
+									{this.props.data.name} Calories:{this.props.data.calories}
+								</div>
+								<div>
+									Fats:{this.props.data.fats} Carbs:{this.props.data.carbs}{" "}
+									Proteins:{this.props.data.proteins}
+								</div>
+							</div>
+						</div>
+					)}
+				</div>
+			</div>
+		);
+	}
+}
 export default Food;

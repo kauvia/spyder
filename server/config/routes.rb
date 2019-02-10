@@ -8,12 +8,12 @@ Rails.application.routes.draw do
 
   get '/users/validate' => 'users#validate'
 
+  get '/allowance' => 'allowance#index'
+
   get '/foods' => 'foods#index', as: 'foods'
   get '/foods/new' => 'foods#new', as: 'new_food'
   post '/foods' => 'foods#create'
-
-  patch '/foods/:id' => 'foods#update'
-  delete '/foods/:id' => 'foods#destroy'
+  delete '/foods' => 'foods#destroy'
 
 
   get '/exercises' => 'exercises#index', as: 'exercises'

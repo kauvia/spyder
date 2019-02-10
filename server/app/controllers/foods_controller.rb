@@ -18,8 +18,9 @@ class FoodsController < ApplicationController
     end
 
     def create
-       current_user.food.create(name: params[:name], calories: params[:calories], carbs: params[:carbs], proteins: params[:proteins], fats: params[:fats])
-        # :defaults => { :format => 'json' }
+
+       item=current_user.food.create(name: params[:food][:name], calories: params[:food][:calories], carbs: params[:food][:carbs], proteins: params[:food][:proteins], fats: params[:food][:fats])
+       item.update_attribute :created_at, params[:date]
     end
 
     def update
@@ -33,9 +34,8 @@ class FoodsController < ApplicationController
     end
 
     def destroy
-        current_user.food.destroy
+        current_user.food.destroy(params[:id])
 
-        redirect_to food_path
     end
 
   private
