@@ -106,28 +106,31 @@ class AllowanceContainer extends Component {
 			return (
 				<div className="container text-primary border border-dark">
 					<div className="row">
-						<div className="col">{this.state.allowance}</div>
+						<div className="col">
+							<div className="row">{this.state.allowance}</div>
+							<div className="row">allowance</div>
+						</div>
 						<div className="col">
 							<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
 						</div>
-						<div className="col">{this.state.food} </div>
+						<div className="col">
+							<div className="row">{this.state.food} </div>
+							<div className="row">allowance</div>{" "}
+						</div>
 						<div className="col">
 							<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
 						</div>
-						<div className="col">{this.state.exercise}</div>
+						<div className="col">
+							<div className="row">{this.state.exercise}</div>
+							<div className="row">allowance</div>
+						</div>
 						<div className="col">
 							<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
 						</div>
-						<div className="col"> {this.state.left}</div>
-					</div>
-					<div className="row">
-						<div className="col">allowance</div>
-						<div className="col" />
-						<div className="col">food</div>
-						<div className="col" />
-						<div className="col"> exercise</div>
-						<div className="col" />
-						<div className="col"> remaining</div>
+						<div className="col">
+							<div className="row">{this.state.left} </div>
+							<div className="row">allowance</div>
+						</div>
 					</div>
 				</div>
 			);
@@ -136,42 +139,40 @@ class AllowanceContainer extends Component {
 				<div className="container text-primary border border-dark">
 					<div className="row">
 						<div className="col">
-							<div className="row">
-								<div className="col">??</div>
-								<div className="col">
-									<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
-								</div>
-								<div className="col">?? </div>
-								<div className="col">
-									<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
-								</div>
-								<div className="col">??</div>
-								<div className="col">
-									<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
-								</div>
-								<div className="col"> ??</div>
-							</div>
-							<div className="row">
-								<div className="col">allowance</div>
-								<div className="col" />
-								<div className="col">food</div>
-								<div className="col" />
-								<div className="col"> exercise</div>
-								<div className="col" />
-								<div className="col"> remaining</div>
-							</div>
-
+							<div className="row">??</div>
+							<div className="row">allowance</div>
 						</div>
-            <div className="col-1">
-								<FontAwesomeIcon
-									icon="exclamation-triangle"
-									style={{ color: "red"}}
-									size="2x"
-                  onClick={this.handleClick}
-                  line-height="inherit"
-								/>
-								{this.state.showRegistrationForm && <RegistrationForm />}
-							</div>
+						<div className="col">
+							<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+						</div>
+						<div className="col">
+							<div className="row">??</div>
+							<div className="row">food</div>{" "}
+						</div>
+						<div className="col">
+							<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+						</div>
+						<div className="col">
+							<div className="row">??</div>
+							<div className="row">exercise</div>
+						</div>
+						<div className="col">
+							<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+						</div>
+						<div className="col">
+							<div className="row">??</div>
+							<div className="row">remaining</div>
+						</div>
+						<div className="col">
+							<FontAwesomeIcon
+								icon="exclamation-triangle"
+								style={{ color: "red" }}
+								size="2x"
+								onClick={this.handleClick}
+								line-height="inherit"
+							/>
+							{this.state.showRegistrationForm && <RegistrationForm />}
+						</div>
 					</div>
 				</div>
 			);
