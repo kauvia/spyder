@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { api } from '../functions'
 import AllowanceContainer from '../Allowance-Container/AllowanceContainer'
 import EditStats from './EditStats'
+import Navbar from "../navbar"
 
 class Stats extends Component {
     constructor(props){
@@ -28,7 +29,8 @@ class Stats extends Component {
         if (Object.keys(this.state.statHistory).length > 0) {
             return (
                 <div>
-                    <header style={{border: '2px solid black'}}><AllowanceContainer statHistory={this.state.statHistory}/></header>
+                    <Navbar/>
+                    <AllowanceContainer statHistory={this.state.statHistory}/>
 
                     Height: {this.state.statHistory[0].height}cm<br/>
                     Weight: {this.state.statHistory[0].weight}kg<br />
@@ -44,7 +46,9 @@ class Stats extends Component {
         } else {
             return (
                 <div>
-                    <header style={{border: '2px solid black'}}><AllowanceContainer /></header>
+                                        <Navbar/>
+                                        <AllowanceContainer/>
+                    <header style={{border: '2px solid black'}}></header>
 
                     Loading stats...
                 </div>

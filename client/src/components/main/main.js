@@ -14,10 +14,8 @@ class Main extends Component {
 		super(props);
 		this.state = {
 			userData: {food:null,exercise:null,stat:null},
-			doRedirect: false,
 			loading: false
 		};
-		this.handleLogout = this.handleLogout.bind(this);
 	}
 	componentDidMount() {
 		api("GET", "/users/validate").then(res => {
@@ -54,38 +52,11 @@ class Main extends Component {
 			});
 	}
 
-	handleLogout() {
-		api("DELETE", "users/sign_out").then(res => {
-			if (res.status === 204) {
-				localStorage.clear();
-				this.setState({ doRedirect: true });
-			}
-		});
-	}
 
 	render() {
-		if (this.state.doRedirect) {
-			return <Redirect to="/login" />;
-		} else {
+
 			return (
 				<div id="main">
-					<button onClick={this.handleLogout}>Log out</button>
-					<header>
-						<ul>
-							<li>
-								<NavLink to={`/`}>Home</NavLink>
-							</li>
-							<li>
-								<NavLink to={`/food`}>Food</NavLink>
-							</li>
-							<li>
-								<NavLink to={`/activity`}>ACTIVITY</NavLink>
-							</li>
-							<li>
-								<NavLink to={`/stats`}>Stats</NavLink>
-							</li>
-						</ul>
-					</header>
 					<Switch>
 						<Route exact path={`/`} component={Home} />
 						<Route path={`/food`} render={props => <Food {...props}/>} />
@@ -94,7 +65,7 @@ class Main extends Component {
 					</Switch>
 				</div>
 			);
-		}
+	
 	}
 }
 const mapStateToProps = state => {
