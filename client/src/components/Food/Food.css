@@ -1,9 +1,38 @@
 #SearchDisplay {
     position: absolute;
-    left: 0px;
+    border: 1px solid black;
+    width:80%;
     /* top:0px; */
-    background-color: grey;
-    height: 400px;
+    background-color: rgba(173, 216, 230,1)
+    /* height: 400px;
     width:400px;
-    border: 5px solid black;
+    border: 5px solid black; */
+}
+
+.history-items{
+    color:black;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding:5px;
+    width:100%;
+    margin: 5px 0 5px 0;
+}
+
+.history-items:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+
+}
+.trash-icons:hover{
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 2px;
+}
+.add-icons:hover{
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+}
+#food-container{
+    border: 1px solid black;
+    border-top: 0;
+    color:black;
+    background-color: rgba(173, 216, 230,0.5)
 }
