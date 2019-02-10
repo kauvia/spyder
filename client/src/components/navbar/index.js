@@ -23,7 +23,7 @@ class Navbar extends Component {
 		} else {
 			return (
 				<div className="container">
-					<nav className="navbar navbar-expand-lg navbar-light">
+					<nav className="navbar navbar-expand-xl navbar-light">
 						<a className="nav-item nav-link" href="/">
 							<FontAwesomeIcon
 								icon="home"
@@ -52,13 +52,13 @@ class Navbar extends Component {
 								style={{ color: "blue" }}
 							/>
 						</a>
-						<a className="nav-item nav-link" onClick={this.handleLogout}>
+						<div className="nav-item nav-link" onClick={this.handleLogout}>
 							<FontAwesomeIcon
 								icon="sign-out-alt"
 								size="2x"
 								style={{ color: "blue" }}
 							/>
-						</a>
+						</div>
 					</nav>
 				</div>
 			);

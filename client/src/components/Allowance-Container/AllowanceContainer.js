@@ -75,12 +75,14 @@ class AllowanceContainer extends Component {
 		let foodCalories = 0;
 		food.map(val => {
 			foodCalories += val.calories;
+			return foodCalories
 		});
 
 		//CALCULATE EXERCISE CALORIES
 		let exerciseCalories = 0;
 		exercise.map(val => {
 			exerciseCalories += val.calories;
+			return exerciseCalories
 		});
 		return {
 			allowance: allowance,

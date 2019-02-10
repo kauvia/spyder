@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { api } from "../functions";
 import axios from "axios";
@@ -13,20 +13,33 @@ class Main extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userData: {food:null,exercise:null,stat:null},
-			loading: false
+			userData: { food: null, exercise: null, stat: null },
+			loading: false,
+			backgroundUrl: ""
 		};
 	}
+	handleBackground() {
+		let path = this.props.location.pathname;
+		if (path === "/food") {
+			this.setState({ backgroundUrl: "./assets/food.jpg" });
+		} else if (path === "/activity") {
+			this.setState({ backgroundUrl: "./assets/exercise.jpg" });
+		} else if (path === "/stats") {
+			this.setState({ backgroundUrl: "./assets/floor.jpg" });
+		} else {
+			this.setState({ backgroundUrl: "./assets/floor.jpg" });
+		}
+	}
 	componentDidMount() {
+		this.handleBackground();
 		api("GET", "/users/validate").then(res => {
 			if (!res.data.success) {
 				this.setState({ doRedirect: true });
 				localStorage.clear();
 			} else {
-				api("GET","/test").then(res=>{
-					this.setState({userData:res.data})
-					console.log(this.state)
-				})
+				api("GET", "/test").then(res => {
+					this.setState({ userData: res.data });
+				});
 			}
 		});
 		// create today's date (save to redux store)
@@ -52,20 +65,30 @@ class Main extends Component {
 			});
 	}
 
-
 	render() {
-
-			return (
-				<div id="main">
-					<Switch>
-						<Route exact path={`/`} component={Home} />
-						<Route path={`/food`} render={props => <Food {...props}/>} />
-						<Route path={`/activity`} component={Activity} />
-						<Route path={`/stats`} render={props => <Stats statHistory={this.state.userData.stat} {...props}/>} />
-					</Switch>
-				</div>
-			);
-	
+		return (
+			<div id="main">
+				<div
+					className="background"
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						width: "100%",
+						height: "100%",
+						zIndex: -1,
+						backgroundImage: `url(${this.state.backgroundUrl})`,
+						backgroundSize: "cover"
+					}}
+				/>
+				<Switch>
+					<Route exact path={`/`} component={Home} />
+					<Route path={`/food`} render={props => <Food {...props} />} />
+					<Route path={`/activity`} component={Activity} />
+					<Route path={`/stats`} render={props => <Stats {...props} />} />
+				</Switch>
+			</div>
+		);
 	}
 }
 const mapStateToProps = state => {

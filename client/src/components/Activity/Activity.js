@@ -141,9 +141,9 @@ class Activity extends Component {
         }
     }
     render(){
-        {/* ==========================================
-                    ACTIVITY HISTORY // LOADING
-        ========================================== */}
+        // {/* ==========================================
+        //             ACTIVITY HISTORY // LOADING
+        // ========================================== */}
         let stuff;
         if(this.props.store.user_log.exercise !== undefined){
             stuff = <ActivityHistory activities={this.props.store.user_log.exercise} />

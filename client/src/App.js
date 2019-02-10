@@ -49,7 +49,6 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-				<Particles />
 				<Router>
 					<Switch>
 						<Route exact path="/login" component={Login} />

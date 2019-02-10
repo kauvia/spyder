@@ -20,24 +20,7 @@ const particleOptions = {
 			random: true
 		}
 	},
-	// polygon: {
-	// 	enable: true,
-	// 	scale: 0.5,
-	// 	type: "inline",
-	// 	move: {
-	// 		radius: 10
-	// 	},
-	// 	url: svg,
-	// 	inline: {
-	// 		arrangement: "equidistant"
-	// 	},
-	// 	draw: {
-	// 		enable: true,
-	// 		stroke: {
-	// 			color: "rgba(255, 255, 255, .2)"
-	// 		}
-	// 	}
-	// },
+
 	interactivity: {
 		events: {
 			onhover: {
@@ -56,17 +39,8 @@ const particleOptions = {
 };
 
 export default () => (
-	<div
-		className="background"
-		style={{
-			position: "absolute",
-			top: 0,
-			left: 0,
-			width: "100%",
-			height: "100%",
-			zIndex: -2
-		}}
-	>
+
+
 		<Particles params={particleOptions} />
-	</div>
+
 );
