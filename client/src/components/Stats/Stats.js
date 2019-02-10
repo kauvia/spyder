@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { api } from '../functions'
 import AllowanceContainer from '../Allowance-Container/AllowanceContainer'
 import EditStats from './EditStats'
@@ -9,7 +8,7 @@ class Stats extends Component {
     constructor(props){
         super(props)
         this.state = {
-            statHistory: {},
+            allowance:{},
             showEditForm: false
         }
 
@@ -18,28 +17,32 @@ class Stats extends Component {
     }
 
     componentDidMount() {
-        api("GET", "stats").then(val => {this.setState({ statHistory: val.data.stat }); console.log(this.state)})
-    }
-
+		this.updateFromDb();
+	}
+    updateFromDb() {
+		api("GET", "allowance").then(val => {
+			this.setState({ allowance: val.data });
+		});
+	}
     handleClick(e) {
         this.setState({ showEditForm: true })
     }
 
     render(){
-        if (Object.keys(this.state.statHistory).length > 0) {
+        if (Object.keys(this.state.allowance).length > 0) {
             return (
                 <div>
                     <Navbar/>
-                    <AllowanceContainer statHistory={this.state.statHistory}/>
+                    <AllowanceContainer data={this.state.allowance}/>
 
-                    Height: {this.state.statHistory[0].height}cm<br/>
-                    Weight: {this.state.statHistory[0].weight}kg<br />
-                    Target Weight: {this.state.statHistory[0].target_weight}kg<br />
-                    Activity Level: {this.state.statHistory[0].activity_level}<br />
+                    Height: {this.state.allowance.stat[0].height}cm<br/>
+                    Weight: {this.state.allowance.stat[0].weight}kg<br />
+                    Target Weight: {this.state.allowance.stat[0].target_weight}kg<br />
+                    Activity Level: {this.state.allowance.stat[0].activity_level}<br />
 
                     <button onClick={this.handleClick}>Edit Stats</button>
 
-                    {this.state.showEditForm && <EditStats statHistory={this.state.statHistory[0]}/>}
+                    {this.state.showEditForm && <EditStats statHistory={this.state.allowance.stat[0]}/>}
 
                 </div>
             )

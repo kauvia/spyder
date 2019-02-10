@@ -90,7 +90,7 @@ class AllowanceContainer extends Component {
 	}
 
 	render() {
-		if (this.props.data) {
+		if (this.props.data && this.props.data.stat.length > 0) {
 			let {
 				allowance,
 				foodCalories,

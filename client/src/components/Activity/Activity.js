@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import Moment from 'moment'
+import { api } from "../functions";
 import ActivityHistory from './ActivityHistory'
 import Navbar from "../navbar"
 import AllowanceContainer from '../Allowance-Container/AllowanceContainer'
@@ -10,6 +10,8 @@ class Activity extends Component {
     constructor(props){
         super(props);
         this.state = {
+            allowance: null,
+
             activity:{
                 name: '', repsDuration: '', calories_burnt: '', reps: false,
                 disable: false, useModel: false, selectModel: false
@@ -20,6 +22,14 @@ class Activity extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.models = this.models.bind(this);
     }
+    componentDidMount() {
+		this.updateFromDb();
+	}
+    updateFromDb() {
+		api("GET", "allowance").then(val => {
+			this.setState({ allowance: val.data });
+		});
+	}
     handleChange(e){
         switch (e.target.name) {
             case "name":
@@ -143,7 +153,7 @@ class Activity extends Component {
         return(
             <div id="activity">
             <Navbar/>
-            <AllowanceContainer/>
+            <AllowanceContainer data={this.state.allowance}/>
                 <div>
                 {/* ==========================================
                                 NEW ACTIVITY FORM
