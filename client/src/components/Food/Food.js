@@ -238,7 +238,7 @@ class Food extends Component {
 								className="history-items"
 								data-id="search"
 							>
-								<FontAwesomeIcon icon="plus-circle" style={{ color: "gray" }} />{" "}
+								<FontAwesomeIcon icon="plus-circle" style={{ color: "black" }} />{" "}
 								Add Food Item
 							</div>
 
@@ -429,7 +429,7 @@ class FoodHistoryItem extends Component {
 											<FontAwesomeIcon
 												size="lg"
 												icon="trash-alt"
-												style={{ color: "gray" }}
+												style={{ color: "red" }}
 											/>
 										</div>
 									</div>
