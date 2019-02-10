@@ -99,7 +99,7 @@ class AllowanceContainer extends Component {
 				exerciseCalories
 			} = this.calculateAllowance();
 			return (
-				<div className="container text-primary border border-dark">
+				<div className="container border border-dark">
 					<div className="row">
 						<div className="col">
 							<div className="row justify-content-center">{allowance}</div>

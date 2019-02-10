@@ -1,7 +1,7 @@
 #SearchDisplay {
     position: absolute;
     border: 1px solid black;
-    width:80%;
+    width:50%;
     /* top:0px; */
     background-color: rgba(173, 216, 230,1)
     /* height: 400px;
@@ -16,9 +16,9 @@
     color:black;
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    padding:5px;
+    padding:2px;
     width:100%;
-    margin: 5px 0 5px 0;
+    margin: 2px 0 2px 0;
 }
 
 .history-items:hover{

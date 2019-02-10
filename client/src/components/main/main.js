@@ -15,23 +15,9 @@ class Main extends Component {
 		this.state = {
 			userData: { food: null, exercise: null, stat: null },
 			loading: false,
-			backgroundUrl: ""
 		};
 	}
-	handleBackground() {
-		let path = this.props.location.pathname;
-		if (path === "/food") {
-			this.setState({ backgroundUrl: "./assets/food.jpg" });
-		} else if (path === "/activity") {
-			this.setState({ backgroundUrl: "./assets/exercise.jpg" });
-		} else if (path === "/stats") {
-			this.setState({ backgroundUrl: "./assets/floor.jpg" });
-		} else {
-			this.setState({ backgroundUrl: "./assets/floor.jpg" });
-		}
-	}
 	componentDidMount() {
-		this.handleBackground();
 		api("GET", "/users/validate").then(res => {
 			if (!res.data.success) {
 				this.setState({ doRedirect: true });
@@ -68,25 +54,14 @@ class Main extends Component {
 	render() {
 		return (
 			<div id="main">
-				<div
-					className="background"
-					style={{
-						position: "absolute",
-						top: 0,
-						left: 0,
-						width: "100%",
-						height: "100%",
-						zIndex: -1,
-						backgroundImage: `url(${this.state.backgroundUrl})`,
-						backgroundSize: "cover"
-					}}
-				/>
-				<Switch>
-					<Route exact path={`/`} component={Home} />
-					<Route path={`/food`} render={props => <Food {...props} />} />
-					<Route path={`/activity`} component={Activity} />
-					<Route path={`/stats`} render={props => <Stats {...props} />} />
-				</Switch>
+				<div className="container" style={{maxWidth:"1000px"}}>
+					<Switch>
+						<Route exact path={`/`} component={Home} />
+						<Route path={`/food`} render={props => <Food {...props} />} />
+						<Route path={`/activity`} component={Activity} />
+						<Route path={`/stats`} render={props => <Stats {...props} />} />
+					</Switch>
+				</div>
 			</div>
 		);
 	}

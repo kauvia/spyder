@@ -151,6 +151,19 @@ class Food extends Component {
 	render() {
 		return (
 			<div>
+				<div
+					className="background"
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						width: "100%",
+						height: "100%",
+						zIndex: -1,
+						backgroundImage: `url(./assets/food.jpg)`,
+						backgroundSize: "cover"
+					}}
+				/>
 				{/* NAVBAR AND ALLOWANCE */}
 				<Navbar />
 				<AllowanceContainer data={this.state.allowance} />

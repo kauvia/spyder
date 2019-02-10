@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { api } from "../functions";
 class Navbar extends Component {
@@ -23,35 +23,36 @@ class Navbar extends Component {
 		} else {
 			return (
 				<div className="container">
-					<nav className="navbar navbar-expand-xl navbar-light">
-						<a className="nav-item nav-link" href="/">
+					<nav className="navbar">
+						<NavLink to="/">
 							<FontAwesomeIcon
 								icon="home"
 								size="2x"
 								style={{ color: "blue" }}
 							/>
-						</a>
-						<a className="nav-item nav-link" href="/food">
+						</NavLink>
+
+						<NavLink to="/food">
 							<FontAwesomeIcon
 								icon="utensils"
 								size="2x"
 								style={{ color: "blue" }}
 							/>
-						</a>
-						<a className="nav-item nav-link" href="/activity">
+						</NavLink>
+						<NavLink to="/activity">
 							<FontAwesomeIcon
 								icon="dumbbell"
 								size="2x"
 								style={{ color: "blue" }}
 							/>
-						</a>
-						<a className="nav-item nav-link" href="/stats">
+						</NavLink>
+						<NavLink to="/stats">
 							<FontAwesomeIcon
 								icon="user-circle"
 								size="2x"
 								style={{ color: "blue" }}
 							/>
-						</a>
+						</NavLink>
 						<div className="nav-item nav-link" onClick={this.handleLogout}>
 							<FontAwesomeIcon
 								icon="sign-out-alt"
