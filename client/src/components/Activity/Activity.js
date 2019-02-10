@@ -9,7 +9,7 @@ class Activity extends Component {
         super(props);
         this.state = {
             activity:{
-                name: null, repsDuration: null, calories_burnt: null, reps: false,
+                name: '', repsDuration: '', calories_burnt: '', reps: false,
                 disable: false, useModel: false, selectModel: false
             },
             model: {}
@@ -18,12 +18,7 @@ class Activity extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.models = this.models.bind(this);
     }
-    componentDidUpdate(){
-        if(this.props.store.date !== undefined && this.state.currentDate == ''){
-            this.setState({...this.state, currentDate: this.props.store.date})
-        }
-    }
-    handleChange = (e) => {
+    handleChange(e){
         switch (e.target.name) {
             case "name":
                 this.setState({...this.state, activity:{
@@ -49,16 +44,19 @@ class Activity extends Component {
                 }})
                 break;
             case "reps":
-                this.setState({...this.state, activity:{
-                    ...this.state.activity, reps: e.target.checked
-                }})
+                if(this.state.activity.disable === 'readonly'){
+                }else{
+                    this.setState({...this.state, activity:{
+                        ...this.state.activity, reps: e.target.checked
+                    }})
+                }
                 break;
             case "useModel":
-                if(e.target.checked == true){
+                if(e.target.checked === true){
                     this.setState({...this.state, activity:{
                     ...this.state.activity, useModel: true, disable: "readonly", selectModel: true
                     }})
-                }else if(e.target.checked == false){
+                }else if(e.target.checked === false){
                     this.setState({...this.state, activity:{
                     ...this.state.activity, useModel: false, disable: false, selectModel: false
                     }})
@@ -72,7 +70,7 @@ class Activity extends Component {
                         }})
                 }else {
                     this.setState({...this.state, activity:{
-                        ...this.state.activity, selectModel: true, useModel: true, disable: "readonly", selectModel: true
+                        ...this.state.activity, selectModel: true, useModel: true, disable: "readonly"
                         }})
                 }
                 break;
@@ -82,26 +80,44 @@ class Activity extends Component {
                 this.setState({...this.state, activity:{
                         ...this.state.activity, selectModel: false, name: model.name, repsDuration: 1, calories_burnt: model.calories_burnt_perunit, reps: reps
                         }, model: model })
-                console.log(this.state)
                 break;
             default:
                 break;
         }
     }
-    handleSubmit = (e) => {
+    handleSubmit(e){
         e.preventDefault()
         switch (e.target.id) {
             case "newActivityForm":
-                this.setState({...this.state, activity:{
-                    ...this.state.activity, name:'', repsDuration: '', calories_burnt:'', reps: false
-                }})
-                // axios.post()
+                let reps = this.state.activity.repsDuration
+                let cal = this.state.activity.calories_burnt
+                let rORd = this.state.activity.reps
+                let name = this.state.activity.name
+                let type;
+                if(rORd){type = 'reps'}else{type = 'duration'}
+                let activityNew = {
+                    name: name, [type]:reps, calories: cal
+                }
+                if(Number.isInteger(parseInt(reps)) && Number.isInteger(parseInt(cal))){
+                    // NOT DONE! work on the response... need to include 
+                    // created_at (change to moment object)/ calories_burnt / duration / reps / id / name / user_id
+                    axios.post('/activity/add', activityNew)
+                    .then( res => {
+                        this.props.redux(1, res)
+                    })
+                    this.setState({...this.state, activity:{ ...this.state.activity,
+                        name: '', repsDuration: '', calories_burnt: '', reps: false,
+                        disable: false, useModel: false, selectModel: false
+                        },
+                        model: {}
+                    })
+                }
                 break;
             default:
                 break;
         }
     }
-    models = () => {
+    models(){
         if(this.state.activity.selectModel){
             return this.props.store.food_exercise_models.exercise.map( (ele, num) => {
                 return(
@@ -113,36 +129,86 @@ class Activity extends Component {
         }
     }
     render(){
+        {/* ==========================================
+                    ACTIVITY HISTORY // LOADING
+        ========================================== */}
         let stuff;
-        if(this.props.store.user_log.exercise !==undefined ){
+        if(this.props.store.user_log.exercise !== undefined){
             stuff = <ActivityHistory activities={this.props.store.user_log.exercise} />
+        }else{
+            stuff = <h2>loading...</h2>
         }
         return(
             <div id="activity">
                 <div>
+                {/* ==========================================
+                                NEW ACTIVITY FORM
+                ========================================== */}
                     <form id="newActivityForm" onSubmit={this.handleSubmit}>
-                        <input readonly={this.state.activity.disable} type="text" name="name" onChange={this.handleChange} value={this.state.activity.name} />
+                    {/* input fields */}
+                        <input 
+                            className={this.state.activity.disable}
+                            readonly={this.state.activity.disable}
+                            type="text"
+                            name="name"
+                            onChange={this.handleChange} value={this.state.activity.name}
+                        />
                         <label>Activity</label><br />
-                        <input type="text" name="repsDuration" onChange={this.handleChange} value={this.state.activity.repsDuration} />
+
+                        <input 
+                            type="text" 
+                            name="repsDuration" 
+                            onChange={this.handleChange} 
+                            value={this.state.activity.repsDuration} 
+                        />
                         <label>Reps / Duration (mins)</label><br />
-                        <input readonly={this.state.activity.disable} type="text" name="calories_burnt" onChange={this.handleChange} value={this.state.activity.calories_burnt} />
+
+                        <input 
+                            className={this.state.activity.disable} 
+                            readonly={this.state.activity.disable} 
+                            type="text" 
+                            name="calories_burnt" 
+                            onChange={this.handleChange} 
+                            value={this.state.activity.calories_burnt} 
+                        />
                         <label>Calories</label><br />
+                    {/* REPS TOGGLE */}
                         <label> REPS ACTIVITY </label>
                         <label class="switch">
-                        <input readonly={this.state.activity.disable} type="checkbox" name="reps" onChange={this.handleChange} checked={this.state.activity.reps}  />
+                        <input 
+                            type="checkbox" 
+                            name="reps" 
+                            onChange={this.handleChange} 
+                            checked={this.state.activity.reps}  
+                        />
                         <span class="slider"></span>
                         </label><br />
+                    {/* SUBMIT BUTTON */}
                         <input type="submit" value="+" />
                     </form>
+                    {/* MODELS TOGGLE */}
                     <label> Use Models </label>
                         <label class="switch">
-                        <input type="checkbox" name="useModel" onChange={this.handleChange} checked={this.state.activity.useModel}  />
+                        <input 
+                            type="checkbox" 
+                            name="useModel" 
+                            onChange={this.handleChange} 
+                            checked={this.state.activity.useModel}  
+                        />
                         <span class="slider"></span>
                     </label><br />
-                    <button name="selectModel" onClick={this.handleChange}>Choose Another Exercise</button> <br />
+                    {/* CALL MODEL BUTTONS */}
+                    <button 
+                        name="selectModel" 
+                        onClick={this.handleChange}>Choose Another Exercise</button> <br />
+            {/* ==========================================
+                            MODEL BUTTONS
+            ========================================== */}
                     { this.models() }
-                    {/* <button onClick={this.models}>model</button> */}
-                    { stuff }
+            {/* ==========================================
+                            ACTIVITY HISTORY // RENDER
+            ========================================== */}
+                    {stuff}
                 </div>
             </div>
         )
@@ -153,7 +219,7 @@ const mapDispatchToProps = dispatch => {
 		redux: (key, data) => {
 			switch (key) {
 				case 1:
-					dispatch({ type: "FOOD_PACKAGE", data });
+					dispatch({ type: "ADD_ACTIVITY", data });
 					break;
 				default:
 					break;
