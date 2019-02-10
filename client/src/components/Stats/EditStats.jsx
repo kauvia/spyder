@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { api } from "../functions";
-import AllowanceContainer from "../Allowance-Container/AllowanceContainer";
 
 class EditStats extends Component {
   constructor(props) {

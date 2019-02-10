@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { api } from "../functions";
-import { ETIME } from "constants";
 
 class RegistrationForm extends Component {
   constructor(props) {

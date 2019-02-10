@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { api } from "../functions";
 import axios from "axios";
@@ -13,8 +13,8 @@ class Main extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userData: {food:null,exercise:null,stat:null},
-			loading: false
+			userData: { food: null, exercise: null, stat: null },
+			loading: false,
 		};
 	}
 	componentDidMount() {
@@ -23,10 +23,9 @@ class Main extends Component {
 				this.setState({ doRedirect: true });
 				localStorage.clear();
 			} else {
-				api("GET","/test").then(res=>{
-					this.setState({userData:res.data})
-					console.log(this.state)
-				})
+				api("GET", "/test").then(res => {
+					this.setState({ userData: res.data });
+				});
 			}
 		});
 		// create today's date (save to redux store)
@@ -52,20 +51,19 @@ class Main extends Component {
 			});
 	}
 
-
 	render() {
-
-			return (
-				<div id="main">
+		return (
+			<div id="main">
+				<div className="container" style={{maxWidth:"1000px"}}>
 					<Switch>
 						<Route exact path={`/`} component={Home} />
-						<Route path={`/food`} render={props => <Food {...props}/>} />
+						<Route path={`/food`} render={props => <Food {...props} />} />
 						<Route path={`/activity`} component={Activity} />
-						<Route path={`/stats`} render={props => <Stats statHistory={this.state.userData.stat} {...props}/>} />
+						<Route path={`/stats`} render={props => <Stats {...props} />} />
 					</Switch>
 				</div>
-			);
-	
+			</div>
+		);
 	}
 }
 const mapStateToProps = state => {

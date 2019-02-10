@@ -75,12 +75,14 @@ class AllowanceContainer extends Component {
 		let foodCalories = 0;
 		food.map(val => {
 			foodCalories += val.calories;
+			return foodCalories
 		});
 
 		//CALCULATE EXERCISE CALORIES
 		let exerciseCalories = 0;
 		exercise.map(val => {
 			exerciseCalories += val.calories;
+			return exerciseCalories
 		});
 		return {
 			allowance: allowance,
@@ -97,7 +99,7 @@ class AllowanceContainer extends Component {
 				exerciseCalories
 			} = this.calculateAllowance();
 			return (
-				<div className="container text-primary border border-dark">
+				<div className="container border border-dark">
 					<div className="row">
 						<div className="col">
 							<div className="row justify-content-center">{allowance}</div>

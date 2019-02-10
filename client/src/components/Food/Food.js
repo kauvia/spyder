@@ -151,6 +151,19 @@ class Food extends Component {
 	render() {
 		return (
 			<div>
+				<div
+					className="background"
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						width: "100%",
+						height: "100%",
+						zIndex: -1,
+						backgroundImage: `url(./assets/food.jpg)`,
+						backgroundSize: "cover"
+					}}
+				/>
 				{/* NAVBAR AND ALLOWANCE */}
 				<Navbar />
 				<AllowanceContainer data={this.state.allowance} />
@@ -225,7 +238,7 @@ class Food extends Component {
 								className="history-items"
 								data-id="search"
 							>
-								<FontAwesomeIcon icon="plus-circle" style={{ color: "gray" }} />{" "}
+								<FontAwesomeIcon icon="plus-circle" style={{ color: "black" }} />{" "}
 								Add Food Item
 							</div>
 
@@ -416,7 +429,7 @@ class FoodHistoryItem extends Component {
 											<FontAwesomeIcon
 												size="lg"
 												icon="trash-alt"
-												style={{ color: "gray" }}
+												style={{ color: "red" }}
 											/>
 										</div>
 									</div>

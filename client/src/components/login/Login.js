@@ -15,14 +15,15 @@ class Login extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	componentDidMount() {
-		if (localStorage.length >0 ){
-		api("GET", "/users/validate").then(res => {
-			if (res.data.success){
-				this.setState({ isLoggedIn: true });
-			} else {
-				localStorage.clear()
-			}
-		});}
+		if (localStorage.length > 0) {
+			api("GET", "/users/validate").then(res => {
+				if (res.data.success) {
+					this.setState({ isLoggedIn: true });
+				} else {
+					localStorage.clear();
+				}
+			});
+		}
 	}
 
 	handleSubmit(e) {
@@ -115,10 +116,23 @@ class Login extends Component {
 					className="d-flex justify-content-center align-items-center"
 					style={{ height: 100 + "vh" }}
 				>
+					<div
+						className="background"
+						style={{
+							position: "absolute",
+							top: 0,
+							left: 0,
+							width: "100%",
+							height: "100%",
+							zIndex: -2,
+							backgroundImage: "url(./assets/splash.jpg)",
+							backgroundSize: "cover"
+						}}
+					/>
 					<form
 						onSubmit={this.handleSubmit}
 						onChange={this.handleChange}
-						style={{ width: 250 + "px" }}
+						style={{ width: 250 + "px", border: "2px solid black",borderRadius:"10px",padding: "5px",backgroundColor: "rgba(150,150,150,0.5)" }}
 					>
 						<div className="form-group">
 							<label htmlFor="inputUsername">Username</label>

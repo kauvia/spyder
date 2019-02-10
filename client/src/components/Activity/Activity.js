@@ -141,9 +141,9 @@ class Activity extends Component {
         }
     }
     render(){
-        {/* ==========================================
-                    ACTIVITY HISTORY // LOADING
-        ========================================== */}
+        // {/* ==========================================
+        //             ACTIVITY HISTORY // LOADING
+        // ========================================== */}
         let stuff;
         if(this.props.store.user_log.exercise !== undefined){
             stuff = <ActivityHistory activities={this.props.store.user_log.exercise} />
@@ -152,6 +152,19 @@ class Activity extends Component {
         }
         return(
             <div id="activity">
+            				<div
+					className="background"
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						width: "100%",
+						height: "100%",
+						zIndex: -1,
+						backgroundImage: `url(./assets/exercise.jpg)`,
+						backgroundSize: "cover"
+					}}
+				/>
             <Navbar/>
             <AllowanceContainer data={this.state.allowance}/>
                 <div>
