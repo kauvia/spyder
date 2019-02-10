@@ -100,31 +100,39 @@ class AllowanceContainer extends Component {
 				<div className="container text-primary border border-dark">
 					<div className="row">
 						<div className="col">
-							<div className="row">{allowance}</div>
-							<div className="row">allowance</div>
+							<div className="row justify-content-center">{allowance}</div>
+							<div className="row justify-content-center">allowance</div>
 						</div>
 						<div className="col">
-							<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
+								<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+							</div>
 						</div>
 						<div className="col">
-							<div className="row">{foodCalories} </div>
-							<div className="row">allowance</div>{" "}
+							<div className="row justify-content-center">{foodCalories} </div>
+							<div className="row justify-content-center">allowance</div>{" "}
 						</div>
 						<div className="col">
-							<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
+								<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+							</div>
 						</div>
 						<div className="col">
-							<div className="row">{exerciseCalories}</div>
-							<div className="row">allowance</div>
+							<div className="row justify-content-center">
+								{exerciseCalories}
+							</div>
+							<div className="row justify-content-center">allowance</div>
 						</div>
 						<div className="col">
-							<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
+								<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+							</div>
 						</div>
 						<div className="col">
-							<div className="row">
+							<div className="row justify-content-center">
 								{allowance - foodCalories + exerciseCalories}{" "}
 							</div>
-							<div className="row">allowance</div>
+							<div className="row justify-content-center">allowance</div>
 						</div>
 					</div>
 				</div>

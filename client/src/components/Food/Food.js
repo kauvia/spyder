@@ -12,9 +12,9 @@ class Food extends Component {
 		super(props);
 		this.state = {
 			foodHistory: null,
-			allowance:null,
+			allowance: null,
 			query: "",
-			results:[],
+			results: [],
 			displaySearch: false,
 			foodArr: [],
 			selectedDateArr: [],
@@ -34,7 +34,9 @@ class Food extends Component {
 			this.updateSelectedDateHistory(this.state.selectedDate);
 		});
 
-		api("GET", "allowance").then(val=>{this.setState({allowance:val.data})})
+		api("GET", "allowance").then(val => {
+			this.setState({ allowance: val.data });
+		});
 	}
 	addFoodItem = e => {
 		console.log(e);
@@ -43,7 +45,7 @@ class Food extends Component {
 			date: this.state.selectedDate
 		}).then(val => {
 			this.updateFromDb();
-			this.setState({ displaySearch: false,results:[] });
+			this.setState({ displaySearch: false, results: [] });
 		});
 	};
 	deleteFoodItem = e => {
@@ -55,7 +57,7 @@ class Food extends Component {
 		let target = e.target;
 		if ("query" === target.name) {
 			this.setState({ [target.name]: target.value });
-			console.log(this.state)
+			console.log(this.state);
 		}
 		if ("arrowBack" === target.dataset.id) {
 			let newDate = moment(this.state.selectedDate)
@@ -72,9 +74,8 @@ class Food extends Component {
 			this.updateSelectedDateHistory(newDate);
 		}
 		if ("search" === target.dataset.id) {
-
 			this.state.displaySearch
-				? this.setState({ displaySearch: false,results:[] })
+				? this.setState({ displaySearch: false, results: [] })
 				: this.setState({ displaySearch: true });
 		}
 		if ("toggleCalendar" === target.dataset.id) {
@@ -88,7 +89,7 @@ class Food extends Component {
 		this.setState({
 			results: dummy
 		});
-	}
+	};
 	handleCalendar = e => {
 		this.setState({ selectedDate: `${e}` });
 		let tempArr = [];
@@ -313,13 +314,9 @@ class Food extends Component {
 class FoodSearchItem extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { expandedView: false, showAdd: false };
+		this.state = { showAdd: false };
 	}
-	toggleView = () => {
-		this.state.expandedView
-			? this.setState({ expandedView: false })
-			: this.setState({ expandedView: true });
-	};
+
 	toggleAdd = e => {
 		if (e.type === "mouseover" && this.state.showAdd === false) {
 			this.setState({ showAdd: true });
@@ -337,20 +334,20 @@ class FoodSearchItem extends Component {
 				>
 					{!this.state.expandedView && (
 						<div className="row">
-							<div className="col" onClick={this.toggleView}>
+							<div
+								className="col"
+								onClick={() => this.props.addFoodItem(this.props.data)}
+							>
 								{this.props.data.name} Calories:{this.props.data.calories}
 							</div>
 							<div>
 								{this.state.showAdd && (
 									<div className="col">
-										<div
-											className="add-icons"
-											onClick={() => this.props.addFoodItem(this.props.data)}
-										>
+										<div className="add-icons">
 											<FontAwesomeIcon
 												size="lg"
 												icon="plus-circle"
-												style={{ color: "gray" }}
+												style={{ color: "green" }}
 											/>
 										</div>
 									</div>
