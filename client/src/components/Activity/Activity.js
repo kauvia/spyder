@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import Moment from 'moment'
 import ActivityHistory from './ActivityHistory'
+import Navbar from "../navbar"
+import AllowanceContainer from '../Allowance-Container/AllowanceContainer'
 
 class Activity extends Component {
     constructor(props){
@@ -140,6 +142,8 @@ class Activity extends Component {
         }
         return(
             <div id="activity">
+            <Navbar/>
+            <AllowanceContainer/>
                 <div>
                 {/* ==========================================
                                 NEW ACTIVITY FORM
