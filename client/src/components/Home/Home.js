@@ -101,8 +101,8 @@ class Home extends Component {
 	}
 	render() {
 		return (
-			<div className="row">
-				<div
+			<div>
+				{/* <div
 					className="background"
 					style={{
 						position: "absolute",
@@ -113,9 +113,10 @@ class Home extends Component {
 						zIndex: -1,
 						backgroundColor: "#C5E7F1"
 					}}
-				/>
+				/> */}
 
-				{/* <Navbar /> */}
+				<Navbar />
+
 				<AllowanceContainer data={this.state.allowance} />
 
 				<div className="container" style={{ border: "1px solid black" }}>

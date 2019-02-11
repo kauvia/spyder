@@ -120,7 +120,7 @@ class AllowanceContainer extends Component {
 			}
 
 			return (
-				<div className="container border border-dark sticky-top">
+				<div className="container border border-dark">
 					<div className="row">
 						<div className="col">
 							<div className="row justify-content-center">{allowance}</div>
@@ -171,8 +171,6 @@ class AllowanceContainer extends Component {
 						</div>
 					</div>
 
-
-					<Navbar />
 
 
 
@@ -255,9 +253,6 @@ class AllowanceContainer extends Component {
 							{this.state.showRegistrationForm && <RegistrationForm />}
 						</div>
 					</div>
-
-
-					<Navbar />
 
 
 					

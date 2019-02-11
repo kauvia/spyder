@@ -49,7 +49,7 @@ class Stats extends Component {
 							backgroundSize: "cover"
 						}}
 					/>
-					{/* <Navbar /> */}
+					<Navbar />
 					<AllowanceContainer data={this.state.allowance} />
 					<b>Height</b>: {this.state.allowance.stat[0].height}cm
 					<br />
@@ -125,7 +125,7 @@ class Stats extends Component {
 							backgroundSize: "cover"
 						}}
 					/>
-					{/* <Navbar /> */}
+					<Navbar />
 					<AllowanceContainer />
 					<header style={{ border: "2px solid black" }} />
 					Loading stats...

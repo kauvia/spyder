@@ -172,7 +172,7 @@ class Food extends Component {
 					}}
 				/>
 				{/* NAVBAR AND ALLOWANCE */}
-				{/* <Navbar /> */}
+				<Navbar />
 				<AllowanceContainer data={this.state.allowance} />
 
 				<div id="history-container" className="container">

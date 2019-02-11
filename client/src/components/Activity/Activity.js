@@ -456,7 +456,7 @@ class Activity extends Component {
 					}}
 				/>
 			<div id="activity">
-				{/* <Navbar /> */}
+				<Navbar />
 				<AllowanceContainer data={this.state.allowance} />
 				<div id="history-container" className="container">
 					{/* ==========================================
