@@ -153,7 +153,7 @@ class AllowanceContainer extends Component {
 			);
 		} else {
 			return (
-				<div className="container text-primary border border-dark">
+				<div className="container text border border-dark">
 					<div className="row">
 						<div className="col">
 							<div className="row">??</div>
@@ -188,6 +188,24 @@ class AllowanceContainer extends Component {
 								onClick={this.handleClick}
 								line-height="inherit"
 							/>
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong">
+							!!
+							</button>
+							<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Registration Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  <RegistrationForm />
+      </div>
+    </div>
+  </div>
+</div>
 							{this.state.showRegistrationForm && <RegistrationForm />}
 						</div>
 					</div>

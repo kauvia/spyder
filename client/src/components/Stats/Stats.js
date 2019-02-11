@@ -45,8 +45,10 @@ class Stats extends Component {
 							backgroundSize: "cover"
 						}}
 					/>
-					<Navbar />
+					
 					<AllowanceContainer data={this.state.allowance} />
+					<Navbar />
+					
 					Height: {this.state.allowance.stat[0].height}cm
 					<br />
 					Weight: {this.state.allowance.stat[0].weight}kg
