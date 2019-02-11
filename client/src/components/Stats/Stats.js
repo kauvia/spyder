@@ -41,12 +41,14 @@ class Stats extends Component {
 							width: "100%",
 							height: "100%",
 							zIndex: -1,
-							backgroundImage: `url(./assets/splash.jpg)`,
+							// backgroundImage: `url(./assets/splash.jpg)`,
 							backgroundSize: "cover"
 						}}
 					/>
+					
 					<Navbar />
 					<AllowanceContainer data={this.state.allowance} />
+					
 					Height: {this.state.allowance.stat[0].height}cm
 					<br />
 					Weight: {this.state.allowance.stat[0].weight}kg
@@ -79,6 +81,7 @@ class Stats extends Component {
 					/>
 					<AllowanceContainer />
 					<Navbar />
+
 					<header style={{ border: "2px solid black" }} />
 					Loading stats...
 				</div>

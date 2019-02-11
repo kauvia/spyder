@@ -423,6 +423,7 @@ class Activity extends Component {
 					{/* ==========================================
                             MODEL BUTTONS
             ========================================== */}
+
 					{this.models()}
 				</div>
 			);
@@ -438,6 +439,7 @@ class Activity extends Component {
 				<AllowanceContainer data={this.state.allowance} />
 				<div id="history-container" className="container">
 					{/* ==========================================
+
                             ACTIVITY HISTORY // RENDER
             ========================================== */}
 						<div

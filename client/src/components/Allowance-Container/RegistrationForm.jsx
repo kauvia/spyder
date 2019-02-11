@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { api } from "../functions";
 import Calendar from "react-calendar";
 import moment from "moment";
+import "./RegistrationForm.css";
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -16,10 +17,10 @@ class RegistrationForm extends Component {
       activity_level: " ",
       heightMessage: "",
       weightMessage: "",
-      targetWeightMessage: "If your target weight is lower than your current weight, we assume a goal of losing approximately 0.5kg/wk. We then take this assumption into consideration when calculating your daily calorie allowance. If your target weight is higher than your current weight, we assume a goal of gaining approximately 0.5kg/wk.",
+      targetWeightMessage: "",
       ageMessage: "",
       genderMessage: "",
-      activityLevelMessage: "Low: sedentary (little or no exercise).\nMedium: Moderate exercise/sports 3-5 times a week.\nHigh: Very hard exercise/sports, physical job.",
+      activityLevelMessage: "",
       displayCalendar: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -190,7 +191,7 @@ class RegistrationForm extends Component {
             </div>
             
             <label>
-              Gender:
+              Gender: 
               <select name="gender" onChange={this.handleGender}>
                 <option value=" "> </option>
                 <option value="male">Male</option>
@@ -214,29 +215,38 @@ class RegistrationForm extends Component {
             <div style={{ fontSize: "12px", height: "15px" }}>
               {this.state.weightMessage}
             </div>
-            <label>
+            <label id="activityhover">
               Activity Level:
+
               <select name="activity_level" onChange={this.handleActivityLevel}>
                 <option value=" "> </option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
               </select>
-            </label>
-            <div style={{ fontSize: "12px", height: "15px" }}>
+
+              <span><b>Low</b>: Sedentary (little or no exercise).<br /><b>Medium</b>: Moderate exercise/sports 3-5 times a week.<br /><b>High</b>: Very hard exercise/sports, physical job.</span>
+              
+              <div style={{ fontSize: "12px", height: "15px" }}>
               {this.state.activityLevelMessage}
-            </div>
+              </div>
+
+            </label>
+            
             <hr />
             <h5>Set your goal!</h5>
-            Target Weight: <input name="target_weight" type="text" />
-            kg
-            <br />
+            <label id="targetwthover">Target Weight: <input name="target_weight" type="text" />kg
+            
+            <span>If your target weight is lower than your current weight, we assume a goal of losing approximately 0.5kg/wk. We then take this assumption into consideration when calculating your daily calorie allowance. If your target weight is higher than your current weight, we assume a goal of gaining approximately 0.5kg/wk.</span>
+
             <div style={{ fontSize: "12px", height: "15px" }}>
               {this.state.targetWeightMessage}
             </div>
             
+            </label>
 
-            <input type="submit" value="Register!" />
+            <br />
+            <button inputType="submit" class="btn btn-primary">Register</button>
           </form>
         </div>
       );
