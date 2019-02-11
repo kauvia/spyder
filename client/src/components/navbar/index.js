@@ -22,7 +22,7 @@ class Navbar extends Component {
 			return <Redirect to="/login" />;
 		} else {
 			return (
-				<div className="container">
+				<div className="container sticky-top navbar-expand-lg navbar-light bg-light">
 					<nav className="navbar">
 						<NavLink to="/">
 							<FontAwesomeIcon

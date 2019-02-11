@@ -107,9 +107,9 @@ class Home extends Component {
               "linear-gradient(to bottom, #bce0ee 0%, #b3dced 50%, #29b8e5 100%)"
           }}
         />
-        
-        <AllowanceContainer data={this.state.allowance} />
+
         <Navbar />
+        <AllowanceContainer data={this.state.allowance} />
         
         <div className="container" style={{ border: "1px solid black" }}>
           <div className="row text-center">
