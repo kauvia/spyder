@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { api } from "../functions";
 import Calendar from "react-calendar";
-import DatePicker from "react-bootstrap-date-picker";
+import moment from "moment";
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -19,8 +19,9 @@ class RegistrationForm extends Component {
       targetWeightMessage: "If your target weight is lower than your current weight, we assume a goal of losing approximately 0.5kg/wk. We then take this assumption into consideration when calculating your daily calorie allowance. If your target weight is higher than your current weight, we assume a goal of gaining approximately 0.5kg/wk.",
       ageMessage: "",
       genderMessage: "",
-      activityLevelMessage: "Low: sedentary (Little or no exercise. Medium: Moderate exercise/sports 3-5 times a week. High: Very hard exercise/sports, physical job.",
-      displayCalendar: false
+      activityLevelMessage: "Low: sedentary (little or no exercise).\nMedium: Moderate exercise/sports 3-5 times a week.\nHigh: Very hard exercise/sports, physical job.",
+      displayCalendar: false,
+      date: new Date()
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -158,8 +159,9 @@ class RegistrationForm extends Component {
   }
 
   handleCalendar(e) {
+    this.setState({ date: e });
+    console.log(e)
     this.setState({ displayCalendar: false });
-
   }
 
   render() {
@@ -176,8 +178,13 @@ class RegistrationForm extends Component {
             <div style={{ fontSize: "12px", height: "15px" }}>
               {this.state.ageMessage}
             </div>
-            Birthday: <input name="birthday" type="text" data-id="toggleCalendar" onClick={this.handleChange} />
-            <DatePicker name="birthday" onChange={this.handleCalendar} value={this.state.date}/><br />
+            Birthday: <input name="birthday" type="text" data-id="toggleCalendar" onClick={this.handleChange} value={moment(this.state.date).format("LL")} />
+            
+
+            
+            {this.state.displayCalendar && <Calendar name="birthday" onChange={this.handleCalendar} value={this.state.date} />}<br />
+            
+            
             <label>
               Gender:
               <select name="gender" onChange={this.handleGender}>
