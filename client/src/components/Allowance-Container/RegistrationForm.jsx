@@ -8,7 +8,6 @@ class RegistrationForm extends Component {
     super(props);
     this.state = {
       date: new Date(),
-      age: null,
       birthday: new Date(),
       gender: " ",
       height: null,
@@ -52,10 +51,22 @@ class RegistrationForm extends Component {
       everythingIsOk = false;
     }
 
-    if (this.state.birthday === " ") {
+    if ( this.state.birthday === new Date() ) {
+      this.setState({ ageMessage: "Please input your birthday!" });
       everythingIsOk = false;
     }
 
+
+    const birthday = moment(this.state.birthday);
+		const today = moment(new Date());
+		let age = today.diff(birthday, "years");
+
+    if ( age < 7 ) {
+      this.setState({ ageMessage: "Sorry! You have to be at least 7 years old to use this app." });
+      everythingIsOk = false;
+    }
+
+    
     if (this.state.activity_level === " ") {
       this.setState({
         activityLevelMessage: "Please select your activity level."
@@ -95,14 +106,6 @@ class RegistrationForm extends Component {
       everythingIsOk = false;
     }
 
-    if (this.state.age < 7) {
-      this.setState({
-        ageMessage:
-          "Sorry! You have to be at least 7 years old to use this app."
-      });
-      everythingIsOk = false;
-    }
-
     console.log(this.state);
 
     if (everythingIsOk) {
@@ -132,10 +135,6 @@ class RegistrationForm extends Component {
     }
     
     if ("activity_level" === e.target.name) {
-      this.setState({ [e.target.name]: e.target.value });
-    }
-    
-    if ("age" === e.target.name) {
       this.setState({ [e.target.name]: e.target.value });
     }
     
@@ -174,18 +173,14 @@ class RegistrationForm extends Component {
             <h5>
               Tell us about yourself! We need this data to calculate your daily
               calorie allowance.
-            </h5>
-            Age*: <input name="age" type="text" />
-            <br />
+            </h5>            
+            Birthday: <input name="birthday" type="text" data-id="toggleCalendar" onClick={this.handleChange} value={moment(this.state.birthday).format("LL")} />
+                        
+            {this.state.displayCalendar && <Calendar name="birthday" onChange={this.handleCalendar} value={this.state.date} />}<br />
+            
             <div style={{ fontSize: "12px", height: "15px" }}>
               {this.state.ageMessage}
             </div>
-            Birthday: <input name="birthday" type="text" data-id="toggleCalendar" onClick={this.handleChange} value={moment(this.state.birthday).format("LL")} />
-            
-
-            
-            {this.state.displayCalendar && <Calendar name="birthday" onChange={this.handleCalendar} value={this.state.date} />}<br />
-            
             
             <label>
               Gender:
