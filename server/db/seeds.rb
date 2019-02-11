@@ -37,7 +37,7 @@ User.create!([
       exdDB.update_attribute :created_at, (rand*365).days.ago
     end
     if coin < 1 
-      stDB = Stat.create(height:111,weight:50+rand(20),target_weight:50+rand(20),age:36,gender:"female",activity_level:activities[rand(3)],:user_id=>1)
+      stDB = Stat.create(height:111,weight:50+rand(20),target_weight:50+rand(20),age:36,gender:"female",activity_level:activities[rand(3)], birthday:"1994-01-01",:user_id=>1)
       stDB.update_attribute :created_at, (rand*365).days.ago
     end
   end  
@@ -46,9 +46,9 @@ User.create!([
   Food.create(name:"apples",calories:500,carbs:20,proteins:20,fats:20,:user_id=>2)
   Exercise.create(name:"Crunches", reps:10, calories_burnt:510,:user_id=>2)
   Exercise.create(name:"Chess", duration:123, calories_burnt:50,:user_id=>2)
-  Stat.create(height:150,weight:55,target_weight:40,age:22,gender:"male",activity_level:"high",:user_id=>2)
+  Stat.create(height:150,weight:55,target_weight:40,age:22,gender:"male",activity_level:"high",birthday:"1990-09-15",:user_id=>2)
 
   Food.create(name:"steak",calories:500,carbs:20,proteins:20,fats:20,:user_id=>3)
   Food.create(name:"lobster",calories:500,carbs:20,proteins:20,fats:20,:user_id=>3)
   Exercise.create(name:"Ice skating", duration:140, calories_burnt:50,:user_id=>3)
-  Stat.create(height:170,weight:55,target_weight:155,age:96,gender:"male",activity_level:"low",:user_id=>3)
+  Stat.create(height:170,weight:55,target_weight:155,age:96,gender:"male",activity_level:"low",birthday:"1994-08-20",:user_id=>3)
