@@ -26,7 +26,7 @@ class AllowanceContainer extends Component {
 		const birthday = moment(currentStat.birthday);
 		const today = moment(new Date());
 		let age = today.diff(birthday, "years");
-		
+
 		// Harris-Benedict Formula
 
 		// check for gender to calculate BMR
@@ -85,6 +85,7 @@ class AllowanceContainer extends Component {
 		food.map(val => {
 			foodCalories += val.calories;
 
+
 			return foodCalories
 		});
 
@@ -93,7 +94,7 @@ class AllowanceContainer extends Component {
 		exercise.map(val => {
 			exerciseCalories += val.calories_burnt;
 
-			return exerciseCalories
+			return exerciseCalories;
 		});
 
 		return {
@@ -155,13 +156,15 @@ class AllowanceContainer extends Component {
 						<div className="col">
 							<div className="row justify-content-center" style={{ color: remainingColour }}>
 								{remaining}{" "}
+
 							</div>
-							<div className="row justify-content-center">remaining</div>
 						</div>
-					</div>
-				</div>
-			);
+					);
+				}
+			}else {			return <div>Loading</div>;
+			}
 		} else {
+
 			return (
 				<div className="container text border border-dark">
 					<div className="row">
@@ -221,6 +224,7 @@ class AllowanceContainer extends Component {
 					</div>
 				</div>
 			);
+
 		}
 	}
 }

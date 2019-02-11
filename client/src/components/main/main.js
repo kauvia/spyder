@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { api } from "../functions";
 import axios from "axios";
@@ -14,7 +14,7 @@ class Main extends Component {
 		super(props);
 		this.state = {
 			userData: { food: null, exercise: null, stat: null },
-			loading: false,
+			loading: false
 		};
 	}
 	componentDidMount() {
@@ -52,18 +52,22 @@ class Main extends Component {
 	}
 
 	render() {
-		return (
-			<div id="main">
-				<div className="container" style={{maxWidth:"1000px"}}>
-					<Switch>
-						<Route exact path={`/`} component={Home} />
-						<Route path={`/food`} render={props => <Food {...props} />} />
-						<Route path={`/activity`} component={Activity} />
-						<Route path={`/stats`} render={props => <Stats {...props} />} />
-					</Switch>
+		if (this.state.doRedirect) {
+			return <Redirect to="/login" />;
+		} else {
+			return (
+				<div id="main">
+					<div className="container" style={{ maxWidth: "1000px" }}>
+						<Switch>
+							<Route exact path={`/`} component={Home} />
+							<Route path={`/food`} render={props => <Food {...props} />} />
+							<Route path={`/activity`} component={Activity} />
+							<Route path={`/stats`} render={props => <Stats {...props} />} />
+						</Switch>
+					</div>
 				</div>
-			</div>
-		);
+			);
+		}
 	}
 }
 const mapStateToProps = state => {
