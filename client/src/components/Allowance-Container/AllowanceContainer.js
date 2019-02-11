@@ -23,7 +23,7 @@ class AllowanceContainer extends Component {
 
 		let currentStat = stat[0];
 
-		const birthday = moment(stat[0].birthday);
+		const birthday = moment(currentStat.birthday);
 		const today = moment(new Date());
 		let age = today.diff(birthday, "years");
 		
@@ -60,6 +60,8 @@ class AllowanceContainer extends Component {
 			maintenance = parseFloat(maintenance);
 		}
 
+		console.log(currentStat)
+
 		// check for user goal (is it to gain, lose or maintain current weight?)
 		let allowance;
 		if (currentStat.target_weight === currentStat.weight) {
@@ -82,6 +84,7 @@ class AllowanceContainer extends Component {
 		let foodCalories = 0;
 		food.map(val => {
 			foodCalories += val.calories;
+
 			return foodCalories
 		});
 
