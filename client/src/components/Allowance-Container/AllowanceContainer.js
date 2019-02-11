@@ -141,7 +141,7 @@ class AllowanceContainer extends Component {
 						</div>
 						<div className="col">
 							<div
-								className="row  justify-content-center"
+								className="row justify-content-center"
 								style={{ position: "absolute", top: "25%", left: "55%" }}
 							>
 								<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
@@ -155,7 +155,7 @@ class AllowanceContainer extends Component {
 						</div>
 						<div className="col">
 							<div
-								className="row  justify-content-center"
+								className="row justify-content-center"
 								style={{ position: "absolute", top: "25%", left: "55%" }}
 							>
 								<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
@@ -182,29 +182,65 @@ class AllowanceContainer extends Component {
 				<div className="container bg-light" style={{marginTop: '20px', height: '90px', marginBottom: '20px'}}>
 					<div className="row">
 						<div className="col">
-							<div className="row">??</div>
-							<div className="row">allowance</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "75%" }}
+							>??</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "75%", left: "55%" }}
+							>allowance</div>
 						</div>
 						<div className="col">
-							<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "45%", left: "55%" }}
+							>
+							<FontAwesomeIcon icon="minus" style={{ color: "blue" }} /></div>
 						</div>
 						<div className="col">
-							<div className="row">??</div>
-							<div className="row">food</div>{" "}
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "60%" }}
+							>??</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "75%", left: "55%" }}
+							>food</div>{" "}
 						</div>
 						<div className="col">
-							<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "45%", left: "55%" }}
+							>
+							<FontAwesomeIcon icon="plus" style={{ color: "blue" }} /></div>
 						</div>
 						<div className="col">
-							<div className="row">??</div>
-							<div className="row">exercise</div>
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "65%" }}
+							>??</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "75%", left: "55%" }}
+							>exercise</div>
 						</div>
 						<div className="col">
-							<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "45%", left: "55%" }}
+							>
+							<FontAwesomeIcon icon="equals" style={{ color: "blue" }} /></div>
 						</div>
 						<div className="col">
-							<div className="row">??</div>
-							<div className="row">remaining</div>
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "75%" }}
+							>??</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "75%", left: "55%" }}
+							>remaining</div>
 						</div>
 						<div className="col">
 							{/* <FontAwesomeIcon
