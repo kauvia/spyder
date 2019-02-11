@@ -57,7 +57,7 @@ class Main extends Component {
 		} else {
 			return (
 				<div id="main">
-					<div className="container" style={{ maxWidth: "1000px" }}>
+					<div className="container">
 						<Switch>
 							<Route exact path={`/`} component={Home} />
 							<Route path={`/food`} render={props => <Food {...props} />} />

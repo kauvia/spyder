@@ -101,8 +101,8 @@ class Home extends Component {
 	}
 	render() {
 		return (
-			<div className="row">
-				<div
+			<div>
+				{/* <div
 					className="background"
 					style={{
 						position: "absolute",
@@ -111,12 +111,12 @@ class Home extends Component {
 						width: "100%",
 						height: "100%",
 						zIndex: -1,
-						background:
-							"linear-gradient(to bottom, #bce0ee 0%, #b3dced 50%, #29b8e5 100%)"
+						backgroundColor: "#C5E7F1"
 					}}
-				/>
+				/> */}
 
 				<Navbar />
+
 				<AllowanceContainer data={this.state.allowance} />
 
 				<div className="container" style={{ border: "1px solid black" }}>
@@ -124,7 +124,7 @@ class Home extends Component {
 						<div className="col">30 days</div>
 						<div className="col">60 days</div>
 						<div className="col">180 days</div>
-						<div className="col">Max</div>
+						<div className="col">max</div>
 					</div>
 					<div
 						className="row"

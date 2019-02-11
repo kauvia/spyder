@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import RegistrationForm from "./RegistrationForm";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Navbar from "../navbar";
 
 class AllowanceContainer extends Component {
 	constructor(props) {
@@ -119,7 +120,8 @@ class AllowanceContainer extends Component {
 			}
 
 			return (
-				<div className="container border border-dark">
+				<div className="container bg-light" style={{marginTop: '20px', height: '90px', marginBottom: '20px'}}>
+					{/* <div className="row pl-5 my-3">Calories remaining:</div> */}
 					<div className="row">
 						<div className="col">
 							<div className="row justify-content-center">{allowance}</div>
@@ -127,7 +129,7 @@ class AllowanceContainer extends Component {
 						</div>
 						<div className="col">
 							<div
-								className="row  justify-content-center"
+								className="row justify-content-center"
 								style={{ position: "absolute", top: "25%", left: "55%" }}
 							>
 								<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
@@ -139,7 +141,7 @@ class AllowanceContainer extends Component {
 						</div>
 						<div className="col">
 							<div
-								className="row  justify-content-center"
+								className="row justify-content-center"
 								style={{ position: "absolute", top: "25%", left: "55%" }}
 							>
 								<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
@@ -153,7 +155,7 @@ class AllowanceContainer extends Component {
 						</div>
 						<div className="col">
 							<div
-								className="row  justify-content-center"
+								className="row justify-content-center"
 								style={{ position: "absolute", top: "25%", left: "55%" }}
 							>
 								<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
@@ -166,47 +168,88 @@ class AllowanceContainer extends Component {
 							>
 								{remaining}{" "}
 							</div>
+							<div className="row justify-content-center">remaining</div>
 						</div>
 					</div>
+
+
+
+
 				</div>
 			);
 		} else {
 			return (
-				<div className="container text border border-dark">
+				<div className="container bg-light" style={{marginTop: '20px', height: '90px', marginBottom: '20px'}}>
 					<div className="row">
 						<div className="col">
-							<div className="row">??</div>
-							<div className="row">allowance</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "75%" }}
+							>??</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "75%", left: "55%" }}
+							>allowance</div>
 						</div>
 						<div className="col">
-							<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "45%", left: "55%" }}
+							>
+							<FontAwesomeIcon icon="minus" style={{ color: "blue" }} /></div>
 						</div>
 						<div className="col">
-							<div className="row">??</div>
-							<div className="row">food</div>{" "}
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "60%" }}
+							>??</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "75%", left: "55%" }}
+							>food</div>{" "}
 						</div>
 						<div className="col">
-							<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "45%", left: "55%" }}
+							>
+							<FontAwesomeIcon icon="plus" style={{ color: "blue" }} /></div>
 						</div>
 						<div className="col">
-							<div className="row">??</div>
-							<div className="row">exercise</div>
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "65%" }}
+							>??</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "75%", left: "55%" }}
+							>exercise</div>
 						</div>
 						<div className="col">
-							<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "45%", left: "55%" }}
+							>
+							<FontAwesomeIcon icon="equals" style={{ color: "blue" }} /></div>
 						</div>
 						<div className="col">
-							<div className="row">??</div>
-							<div className="row">remaining</div>
+						<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "75%" }}
+							>??</div>
+							<div
+								className="row justify-content-center"
+								style={{ position: "absolute", top: "75%", left: "55%" }}
+							>remaining</div>
 						</div>
 						<div className="col">
-							<FontAwesomeIcon
+							{/* <FontAwesomeIcon
 								icon="exclamation-triangle"
 								style={{ color: "red" }}
 								size="2x"
 								onClick={this.handleClick}
 								line-height="inherit"
-							/>
+							/> */}
 							<button
 								type="button"
 								class="btn btn-danger"
@@ -247,6 +290,9 @@ class AllowanceContainer extends Component {
 							{this.state.showRegistrationForm && <RegistrationForm />}
 						</div>
 					</div>
+
+
+					
 				</div>
 			);
 		}

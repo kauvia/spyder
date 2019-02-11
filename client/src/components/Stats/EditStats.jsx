@@ -163,7 +163,7 @@ class EditStats extends Component {
 
             <hr />
 
-            <input type="submit" value="Edit Stats" />
+            <button inputType="submit" class="btn btn-primary">Update</button>
           </form>
         </div>
       );
