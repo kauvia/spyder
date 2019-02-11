@@ -9,13 +9,22 @@
 /* =====================================================
                     react actions
 ===================================================== */
+body{
+  background-image: 
+  url("https://media.gettyimages.com/photos/close-up-of-barbell-weights-on-floor-of-dark-gym-picture-id554370953");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+}
 .hidden {
     visibility: hidden;
 }
 
 #activityList{
     overflow: scroll;
-    height: 700px;
+    height: 400px;
+
 }
 .timestamp{
     font-size: 30px;
@@ -49,6 +58,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  border-radius: 20px;
   background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
@@ -62,6 +72,7 @@
   left: 4px;
   bottom: 4px;
   background-color: white;
+  border-radius: 20px;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -78,5 +89,35 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+/* =====================================================
+                    CSS ACTIVITY
+===================================================== */
+
+#activityStuff{
+  margin: 0 auto;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+
+}
+#activityHistory{
+  background: rgba(0, 241, 52, 0.3);
+  border-radius: 10px;
+}
+#activity{
+  color: rgb(16, 82, 51);
+}
+#newActivityForm{
+  background: rgba(17, 67, 114, 0.4);
+  padding: 40px;
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  color: rgb(144, 255, 70);
+  font-weight: 900;
+  border-radius: 10px;
+  font-size: 150%;
 }
 

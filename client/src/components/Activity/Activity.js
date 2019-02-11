@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { api } from "../functions";
+import { Calendar } from 'react-calendar'
 import ActivityHistory from './ActivityHistory'
 import Navbar from "../navbar"
 import AllowanceContainer from '../Allowance-Container/AllowanceContainer'
+import { duration } from 'moment';
 
 class Activity extends Component {
     constructor(props){
@@ -16,11 +18,13 @@ class Activity extends Component {
                 name: '', repsDuration: '', calories_burnt: '', reps: false,
                 disable: false, useModel: false, selectModel: false
             },
-            model: {}
+            model: {},
+            form: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.models = this.models.bind(this);
+        this.form = this.form.bind(this);
     }
     componentDidMount() {
 		this.updateFromDb();
@@ -93,6 +97,13 @@ class Activity extends Component {
                         ...this.state.activity, selectModel: false, name: model.name, repsDuration: 1, calories_burnt: model.calories_burnt_perunit, reps: reps
                         }, model: model })
                 break;
+            case "form":
+                if(this.state.form){
+                    this.setState({...this.state, form: false})
+                }else{
+                    this.setState({...this.state, form: true})
+                }
+                break;
             default:
                 break;
         }
@@ -101,19 +112,20 @@ class Activity extends Component {
         e.preventDefault()
         switch (e.target.id) {
             case "newActivityForm":
-                let reps = this.state.activity.repsDuration
-                let cal = this.state.activity.calories_burnt
+                let number = this.state.activity.repsDuration
                 let rORd = this.state.activity.reps
-                let name = this.state.activity.name
-                let type;
-                if(rORd){type = 'reps'}else{type = 'duration'}
+                let reps;
+                let duration;
+                if(rORd){reps = number; duration = null;}else{duration = number; reps = null;}
                 let activityNew = {
-                    name: name, [type]:reps, calories: cal
+                    name: name, reps: reps, duration: duration, calories: cal
                 }
-                if(Number.isInteger(parseInt(reps)) && Number.isInteger(parseInt(cal))){
+                let cal = this.state.activity.calories_burnt
+                let name = this.state.activity.name
+                if(Number.isInteger(parseInt(number)) && Number.isInteger(parseInt(cal))){
                     // NOT DONE! work on the response... need to include 
                     // created_at (change to moment object)/ calories_burnt / duration / reps / id / name / user_id
-                    axios.post('/activity/add', activityNew)
+                    axios.post('/exercises/new', activityNew)
                     .then( res => {
                         this.props.redux(1, res)
                     })
@@ -140,6 +152,82 @@ class Activity extends Component {
             })
         }
     }
+    form(){
+        if(this.state.form){
+            return(
+        <div>
+            {/* ==========================================
+                                NEW ACTIVITY FORM
+                ========================================== */}
+                <form id="newActivityForm" onSubmit={this.handleSubmit}>
+                    {/* input fields */}
+                        <input 
+                            className={this.state.activity.disable.toString()}
+                            readOnly={this.state.activity.disable}
+                            type="text"
+                            name="name"
+                            autoComplete="off"
+                            onChange={this.handleChange} value={this.state.activity.name}
+                        />
+                        <label>Activity</label><br />
+
+                        <input 
+                            type="text" 
+                            name="repsDuration" 
+                            onChange={this.handleChange} 
+                            value={this.state.activity.repsDuration} 
+                            autoComplete="off"
+                        />
+                        <label>Reps / Duration (mins)</label><br />
+
+                        <input 
+                            className={this.state.activity.disable.toString()} 
+                            readOnly={this.state.activity.disable} 
+                            type="text" 
+                            name="calories_burnt" 
+                            autoComplete="off"
+                            onChange={this.handleChange} 
+                            value={this.state.activity.calories_burnt.toString()} 
+                        />
+                        <label>Calories</label><br />
+                    {/* REPS TOGGLE */}
+                    <div>
+                        <label> Reps </label>
+                        <label className="switch">
+                        <input 
+                            type="checkbox" 
+                            name="reps" 
+                            onChange={this.handleChange} 
+                            checked={this.state.activity.reps}  
+                        />
+                        <span className="slider"></span>
+                        </label> <label> Duration </label></div><br />
+                    {/* SUBMIT BUTTON */}
+                        <input type="submit" value="SUBMIT" />
+                    </form>
+                    {/* MODELS TOGGLE */}
+                    
+                    <label> Use Models </label>
+                        <label className="switch">
+                        <input 
+                            type="checkbox" 
+                            name="useModel" 
+                            onChange={this.handleChange} 
+                            checked={this.state.activity.useModel}  
+                        />
+                        <span className="slider"></span>
+                    </label><br />
+                    {/* CALL MODEL BUTTONS */}
+                    <button 
+                        name="selectModel" 
+                        onClick={this.handleChange}>Choose Another Exercise</button> <br />
+            {/* ==========================================
+                            MODEL BUTTONS
+            ========================================== */}
+                    { this.models() }
+        </div>
+            )}
+    }
     render(){
         // {/* ==========================================
         //             ACTIVITY HISTORY // LOADING
@@ -152,86 +240,13 @@ class Activity extends Component {
         }
         return(
             <div id="activity">
-            				<div
-					className="background"
-					style={{
-						position: "absolute",
-						top: 0,
-						left: 0,
-						width: "100%",
-						height: "100%",
-						zIndex: -1,
-						backgroundImage: `url(./assets/exercise.jpg)`,
-						backgroundSize: "cover"
-					}}
-				/>
             <Navbar/>
             <AllowanceContainer data={this.state.allowance}/>
-                <div>
-                {/* ==========================================
-                                NEW ACTIVITY FORM
-                ========================================== */}
-                    <form id="newActivityForm" onSubmit={this.handleSubmit}>
-                    {/* input fields */}
-                        <input 
-                            className={this.state.activity.disable}
-                            readonly={this.state.activity.disable}
-                            type="text"
-                            name="name"
-                            onChange={this.handleChange} value={this.state.activity.name}
-                        />
-                        <label>Activity</label><br />
-
-                        <input 
-                            type="text" 
-                            name="repsDuration" 
-                            onChange={this.handleChange} 
-                            value={this.state.activity.repsDuration} 
-                        />
-                        <label>Reps / Duration (mins)</label><br />
-
-                        <input 
-                            className={this.state.activity.disable} 
-                            readonly={this.state.activity.disable} 
-                            type="text" 
-                            name="calories_burnt" 
-                            onChange={this.handleChange} 
-                            value={this.state.activity.calories_burnt} 
-                        />
-                        <label>Calories</label><br />
-                    {/* REPS TOGGLE */}
-                        <label> REPS ACTIVITY </label>
-                        <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="reps" 
-                            onChange={this.handleChange} 
-                            checked={this.state.activity.reps}  
-                        />
-                        <span class="slider"></span>
-                        </label><br />
-                    {/* SUBMIT BUTTON */}
-                        <input type="submit" value="+" />
-                    </form>
-                    {/* MODELS TOGGLE */}
-                    <label> Use Models </label>
-                        <label class="switch">
-                        <input 
-                            type="checkbox" 
-                            name="useModel" 
-                            onChange={this.handleChange} 
-                            checked={this.state.activity.useModel}  
-                        />
-                        <span class="slider"></span>
-                    </label><br />
-                    {/* CALL MODEL BUTTONS */}
-                    <button 
-                        name="selectModel" 
-                        onClick={this.handleChange}>Choose Another Exercise</button> <br />
-            {/* ==========================================
-                            MODEL BUTTONS
-            ========================================== */}
-                    { this.models() }
+                <div id="activityStuff">
+                    <button name="form" onClick={this.handleChange}>ADD ACTIVITY</button>
+                    { this.form() }
+                
+                    
             {/* ==========================================
                             ACTIVITY HISTORY // RENDER
             ========================================== */}
