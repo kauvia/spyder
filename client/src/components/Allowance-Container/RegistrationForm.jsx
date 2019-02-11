@@ -6,6 +6,7 @@ class RegistrationForm extends Component {
     super(props);
     this.state = {
       age: null,
+      birthday: " ",
       gender: " ",
       height: null,
       weight: null,
@@ -41,6 +42,10 @@ class RegistrationForm extends Component {
 
     if (this.state.gender === " ") {
       this.setState({ genderMessage: "Please select your gender." });
+      everythingIsOk = false;
+    }
+
+    if (this.state.birthday === " ") {
       everythingIsOk = false;
     }
 
@@ -98,7 +103,8 @@ class RegistrationForm extends Component {
         target_weight: this.state.target_weight,
         activity_level: this.state.activity_level,
         gender: this.state.gender,
-        age: this.state.age
+        age: this.state.age,
+        birthday: this.state.birthday
       });
     }
   }
@@ -115,6 +121,8 @@ class RegistrationForm extends Component {
     } else if ("age" === e.target.name) {
       this.setState({ [e.target.name]: e.target.value });
     } else if ("gender" === e.target.name) {
+      this.setState({ [e.target.name]: e.target.value });
+    } else if ("birthday" === e.target.name) {
       this.setState({ [e.target.name]: e.target.value });
     }
   }
@@ -141,6 +149,7 @@ class RegistrationForm extends Component {
             <div style={{ fontSize: "12px", height: "15px" }}>
               {this.state.ageMessage}
             </div>
+            Birthday: <input name="birthday" type="text" /><br />
             <label>
               Gender:
               <select name="gender" onChange={this.handleGender}>

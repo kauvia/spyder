@@ -81,7 +81,8 @@ class AllowanceContainer extends Component {
 		//CALCULATE EXERCISE CALORIES
 		let exerciseCalories = 0;
 		exercise.map(val => {
-			exerciseCalories += val.calories;
+			exerciseCalories += val.calories_burnt;
+			console.log(val)
 			return exerciseCalories
 		});
 		return {
