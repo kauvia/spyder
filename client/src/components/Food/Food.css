@@ -35,9 +35,9 @@
     border-radius: 4px;
 }
 #history-container{
-    border: 1px solid black;
-    border-top: 0;
+    /* border: 1px solid black;
+    border-top: 0; */
     color:black;
     /* background-image: url("../../food.jpg") */
-    background-color: rgba(198, 207, 201, 0.5)
+    background-color: rgba(198, 207, 201, 0.5);
 }
