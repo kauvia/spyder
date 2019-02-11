@@ -60,7 +60,6 @@ class AllowanceContainer extends Component {
 			maintenance = parseFloat(maintenance);
 		}
 
-
 		// check for user goal (is it to gain, lose or maintain current weight?)
 		let allowance;
 		if (currentStat.target_weight === currentStat.weight) {
@@ -84,8 +83,7 @@ class AllowanceContainer extends Component {
 		food.map(val => {
 			foodCalories += val.calories;
 
-
-			return foodCalories
+			return foodCalories;
 		});
 
 		//CALCULATE EXERCISE CALORIES
@@ -115,9 +113,9 @@ class AllowanceContainer extends Component {
 			let remainingColour;
 
 			if (remaining < 0) {
-				remainingColour = 'red';
+				remainingColour = "red";
 			} else {
-				remainingColour = 'black';
+				remainingColour = "black";
 			}
 
 			return (
@@ -128,7 +126,10 @@ class AllowanceContainer extends Component {
 							<div className="row justify-content-center">allowance</div>
 						</div>
 						<div className="col">
-							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
+							<div
+								className="row  justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "55%" }}
+							>
 								<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
 							</div>
 						</div>
@@ -137,7 +138,10 @@ class AllowanceContainer extends Component {
 							<div className="row justify-content-center">food</div>{" "}
 						</div>
 						<div className="col">
-							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
+							<div
+								className="row  justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "55%" }}
+							>
 								<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
 							</div>
 						</div>
@@ -148,22 +152,25 @@ class AllowanceContainer extends Component {
 							<div className="row justify-content-center">exercise</div>
 						</div>
 						<div className="col">
-							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
+							<div
+								className="row  justify-content-center"
+								style={{ position: "absolute", top: "25%", left: "55%" }}
+							>
 								<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
 							</div>
 						</div>
 						<div className="col">
-							<div className="row justify-content-center" style={{ color: remainingColour }}>
+							<div
+								className="row justify-content-center"
+								style={{ color: remainingColour }}
+							>
 								{remaining}{" "}
-
 							</div>
 						</div>
-					);
-				}
-			}else {			return <div>Loading</div>;
-			}
+					</div>
+				</div>
+			);
 		} else {
-
 			return (
 				<div className="container text border border-dark">
 					<div className="row">
@@ -200,30 +207,48 @@ class AllowanceContainer extends Component {
 								onClick={this.handleClick}
 								line-height="inherit"
 							/>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong">
-							!!
+							<button
+								type="button"
+								class="btn btn-danger"
+								data-toggle="modal"
+								data-target="#exampleModalLong"
+							>
+								!!
 							</button>
-							<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Registration Form</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-	  <RegistrationForm />
-      </div>
-    </div>
-  </div>
-</div>
+							<div
+								class="modal fade"
+								id="exampleModalLong"
+								tabindex="-1"
+								role="dialog"
+								aria-labelledby="exampleModalLongTitle"
+								aria-hidden="true"
+							>
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLongTitle">
+												Registration Form
+											</h5>
+											<button
+												type="button"
+												class="close"
+												data-dismiss="modal"
+												aria-label="Close"
+											>
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<RegistrationForm />
+										</div>
+									</div>
+								</div>
+							</div>
 							{this.state.showRegistrationForm && <RegistrationForm />}
 						</div>
 					</div>
 				</div>
 			);
-
 		}
 	}
 }
