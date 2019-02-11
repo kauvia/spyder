@@ -71,31 +71,31 @@ class Navbar extends Component {
 
 
 
-				<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
-					<a class="navbar-brand" href="/">
-						<img src={Logo} width="30" height="30" alt="" />
-					</a>
+				<nav class="navbar navbar-expand-sm navbar-light sticky-top bg-light">
+					<NavLink class="navbar-brand" to="/">
+						<img src={Logo} style={{width:"50px", height:"50px"}} alt="" />
+					</NavLink>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-						<div class="collapse navbar-collapse">
+					
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item active">
-									<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+									<NavLink class="nav-link" to="/">Home <span class="sr-only">(current)</span></NavLink>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/food">Food</a>
+									<NavLink class="nav-link" to="/food">Food</NavLink>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/activity">Exercises</a>
+									<NavLink class="nav-link" to="/activity">Exercises</NavLink>
 								</li>
 							</ul>
-						</div>
+					
 
 						<ul className="navbar-nav ml-auto">
 							<li class="nav-item nav-link">
-								<a class="nav-link" href="/stats">My Profile</a>
+								<NavLink class="nav-link" to="/stats">My Profile</NavLink>
 							</li>
 							<li className="nav-item nav-link" onClick={this.handleLogout}>
 								<a class="nav-link">Logout</a>

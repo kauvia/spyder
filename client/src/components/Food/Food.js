@@ -239,7 +239,7 @@ class Food extends Component {
 
 					{/* SEARCH AND ADD FOOD ITEMS */}
 
-					<div className="container">
+					<div className="container text-center">
 						<div className="row">
 							<div
 								onClick={this.handleChange}
@@ -425,12 +425,28 @@ class FoodHistoryItem extends Component {
 				>
 					{!this.state.expandedView && (
 						<div className="row">
+							{this.state.showDelete && (
+								<div className="col-1">
+									<div
+										className="trash-icons"
+										onClick={() =>
+											this.props.deleteFoodItem(this.props.data.id)
+										}
+									>
+										<FontAwesomeIcon
+											size="lg"
+											icon="caret-down"
+											style={{ color: "green" }}
+										/>
+									</div>
+								</div>
+							)}
 							<div className="col" onClick={this.toggleView}>
 								{this.props.data.name} Calories:{this.props.data.calories}
 							</div>
 							<div>
 								{this.state.showDelete && (
-									<div className="col">
+									<div className="col-1">
 										<div
 											className="trash-icons"
 											onClick={() =>
@@ -451,6 +467,22 @@ class FoodHistoryItem extends Component {
 
 					{this.state.expandedView && (
 						<div className="row">
+							{this.state.showDelete && (
+								<div className="col-1">
+									<div
+										className="trash-icons"
+										onClick={() =>
+											this.props.deleteFoodItem(this.props.data.id)
+										}
+									>
+										<FontAwesomeIcon
+											size="lg"
+											icon="caret-up"
+											style={{ color: "green" }}
+										/>
+									</div>
+								</div>
+							)}
 							<div className="col" onClick={this.toggleView}>
 								<div>
 									{this.props.data.name} Calories:{this.props.data.calories}
@@ -460,6 +492,22 @@ class FoodHistoryItem extends Component {
 									Proteins:{this.props.data.proteins}
 								</div>
 							</div>
+							{this.state.showDelete && (
+									<div className="col-1">
+										<div
+											className="trash-icons"
+											onClick={() =>
+												this.props.deleteFoodItem(this.props.data.id)
+											}
+										>
+											<FontAwesomeIcon
+												size="lg"
+												icon="trash-alt"
+												style={{ color: "red" }}
+											/>
+										</div>
+									</div>
+								)}
 						</div>
 					)}
 				</div>

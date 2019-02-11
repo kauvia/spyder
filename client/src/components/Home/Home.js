@@ -58,6 +58,7 @@ class Home extends Component {
 			if (val.data.success === false) {
 				return;
 			} else {
+				this.setState({rawStat:val.data.stat})
 				this.sortStats(val.data.stat, this.state.dateRange);
 			}
 		});
@@ -69,6 +70,26 @@ class Home extends Component {
 			}
 		});
 	}
+	handleChange = e => {
+		let target = e.target;
+		if ("30days" === target.dataset.id) {
+			this.setState({ dateRange: 30 });
+			this.sortStats(this.state.rawStat, 30);
+		}
+		if ("60days" === target.dataset.id) {
+			this.setState({ dateRange: 60 });
+			this.sortStats(this.state.rawStat, 60);
+		}
+		if ("180days" === target.dataset.id) {
+			this.setState({ dateRange: 180 });
+
+			this.sortStats(this.state.rawStat, 180);
+		}
+		if ("max" === target.dataset.id) {
+			this.setState({ dateRange: 36500 });
+			this.sortStats(this.state.rawStat, 36500);
+		}
+	};
 	sortStats(dataArr, val) {
 		if (dataArr.length > 0) {
 			let tempArr = [];
@@ -120,11 +141,19 @@ class Home extends Component {
 				<AllowanceContainer data={this.state.allowance} />
 
 				<div className="container" style={{ border: "1px solid black" }}>
-					<div className="row text-center">
-						<div className="col">30 days</div>
-						<div className="col">60 days</div>
-						<div className="col">180 days</div>
-						<div className="col">max</div>
+				<div className="row text-center" onClick={this.handleChange}>
+						<div className="col" data-id="30days">
+							30 days
+						</div>
+						<div className="col" data-id="60days">
+							60 days
+						</div>
+						<div className="col" data-id="180days">
+							180 days
+						</div>
+						<div className="col" data-id="max">
+							Max
+						</div>
 					</div>
 					<div
 						className="row"

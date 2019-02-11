@@ -24,7 +24,9 @@ import {
 	faAngleDoubleRight,
 	faCalendarAlt,
 	faTrashAlt,
-	faTimesCircle
+	faTimesCircle,
+	faCaretDown,
+	faCaretUp
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -43,7 +45,10 @@ library.add(
 	faAngleDoubleRight,
 	faCalendarAlt,
 	faTrashAlt,
-	faTimesCircle
+	faTimesCircle,
+	faCaretDown,
+	faCaretUp
+
 );
 class App extends Component {
 	render() {
