@@ -110,6 +110,16 @@ class AllowanceContainer extends Component {
 				foodCalories,
 				exerciseCalories
 			} = this.calculateAllowance();
+
+			let remaining = allowance - foodCalories + exerciseCalories;
+			let remainingColour;
+
+			if (remaining < 0) {
+				remainingColour = 'red';
+			} else {
+				remainingColour = 'black';
+			}
+
 			return (
 				<div className="container border border-dark">
 					<div className="row">
@@ -143,8 +153,8 @@ class AllowanceContainer extends Component {
 							</div>
 						</div>
 						<div className="col">
-							<div className="row justify-content-center">
-								{allowance - foodCalories + exerciseCalories}{" "}
+							<div className="row justify-content-center" style={{ color: remainingColour }}>
+								{remaining}{" "}
 							</div>
 							<div className="row justify-content-center">remaining</div>
 						</div>
