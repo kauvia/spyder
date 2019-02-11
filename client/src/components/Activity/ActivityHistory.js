@@ -63,7 +63,6 @@ class ActivityHistory extends Component{
                     <input type="text" onChange={this.handleChange} value={this.state.searchHistory} placeholder="Search" />
                     <input type="submit" value="Search" />
                 </form>
-                <button onClick={ this.getDates }>get dates</button>
                 {/* <form onSubmit = {this.handleSubmit}>
                     <select>
                         {this.generateOptions()}
