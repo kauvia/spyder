@@ -41,7 +41,7 @@ class Stats extends Component {
 							width: "100%",
 							height: "100%",
 							zIndex: -1,
-							backgroundImage: `url(./assets/splash.jpg)`,
+							// backgroundImage: `url(./assets/splash.jpg)`,
 							backgroundSize: "cover"
 						}}
 					/>
