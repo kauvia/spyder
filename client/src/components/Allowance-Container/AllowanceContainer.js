@@ -60,7 +60,6 @@ class AllowanceContainer extends Component {
 			maintenance = parseFloat(maintenance);
 		}
 
-		console.log(currentStat)
 
 		// check for user goal (is it to gain, lose or maintain current weight?)
 		let allowance;
