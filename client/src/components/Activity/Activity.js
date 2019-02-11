@@ -46,12 +46,20 @@ class Activity extends Component {
 	}
 	updateFromDb() {
 		api("GET", "allowance").then(val => {
-			this.setState({ allowance: val.data });
+			if (val.data.success === false) {
+				return;
+			} else {
+				this.setState({ allowance: val.data });
+			}
 		});
 		api("GET", "exercises").then(val => {
-			this.setState({ exerciseHistory: val.data.exercise });
-			this.sortExerciseHistory();
-			this.updateSelectedDateHistory(this.state.selectedDate);
+			if (val.data.success === false) {
+				return;
+			} else {
+				this.setState({ exerciseHistory: val.data.exercise });
+				this.sortExerciseHistory();
+				this.updateSelectedDateHistory(this.state.selectedDate);
+			}
 		});
 	}
 	deleteExerciseItem = e => {
@@ -423,7 +431,6 @@ class Activity extends Component {
 					{/* ==========================================
                             MODEL BUTTONS
             ========================================== */}
-
 					{this.models()}
 				</div>
 			);
@@ -442,106 +449,101 @@ class Activity extends Component {
 
                             ACTIVITY HISTORY // RENDER
             ========================================== */}
+					<div
+						className="row text-center"
+						style={{ display: "flex" }}
+						onClick={this.handleClick}
+					>
+						<div className="col-3" data-id="arrowBack">
+							<FontAwesomeIcon
+								icon="angle-double-left"
+								style={{ color: "gray" }}
+								size="2x"
+								data-id="arrowBack"
+							/>
+						</div>
 						<div
-							className="row text-center"
-							style={{ display: "flex" }}
+							id="date-navigator"
+							className="col-6"
+							data-id="toggleCalendar"
 							onClick={this.handleClick}
 						>
-							<div className="col-3" data-id="arrowBack">
-								<FontAwesomeIcon
-									icon="angle-double-left"
-									style={{ color: "gray" }}
-									size="2x"
-									data-id="arrowBack"
-								/>
-							</div>
-							<div
-								id="date-navigator"
-								className="col-6"
-								data-id="toggleCalendar"
-								onClick={this.handleClick}
-							>
-								{moment(this.state.selectedDate).diff(
-									moment(new Date()),
-									"days"
-								) === 0 && "Today"}
-								{moment(this.state.selectedDate).diff(
-									moment(new Date()),
-									"days"
-								) !== 0 &&
-									`${moment(this.state.selectedDate).format("LL")}`}{" "}
-								<FontAwesomeIcon
-									icon="calendar-alt"
-									style={{ color: "gray" }}
-								/>
-							</div>
 							{moment(this.state.selectedDate).diff(
 								moment(new Date()),
 								"days"
-							) !== 0 && (
-								<div className="col-3" data-id="arrowNext">
-									<FontAwesomeIcon
-										icon="angle-double-right"
-										style={{ color: "gray" }}
-										size="2x"
-										data-id="arrowNext"
+							) === 0 && "Today"}
+							{moment(this.state.selectedDate).diff(
+								moment(new Date()),
+								"days"
+							) !== 0 && `${moment(this.state.selectedDate).format("LL")}`}{" "}
+							<FontAwesomeIcon icon="calendar-alt" style={{ color: "gray" }} />
+						</div>
+						{moment(this.state.selectedDate).diff(
+							moment(new Date()),
+							"days"
+						) !== 0 && (
+							<div className="col-3" data-id="arrowNext">
+								<FontAwesomeIcon
+									icon="angle-double-right"
+									style={{ color: "gray" }}
+									size="2x"
+									data-id="arrowNext"
+								/>
+							</div>
+						)}
+						{/* SHOW CALENDAR */}
+						{this.state.displayCalendar && (
+							<div
+								className="row text-center"
+								style={{ position: "absolute", zIndex: 1 }}
+							>
+								<div className="col-12">
+									<Calendar
+										onChange={this.handleCalendar}
+										value={this.state.date}
+										maxDate={new Date()}
 									/>
 								</div>
-							)}
-							{/* SHOW CALENDAR */}
-							{this.state.displayCalendar && (
-								<div
-									className="row text-center"
-									style={{ position: "absolute", zIndex: 1 }}
-								>
-									<div className="col-12">
-										<Calendar
-											onChange={this.handleCalendar}
-											value={this.state.date}
-											maxDate={new Date()}
-										/>
-									</div>
-								</div>
-							)}
-							{/* SEARCH AND ADD FOOD ITEMS */}
-
-							<div className="container">
-								<div className="row">
-									<div
-										onClick={this.handleChange}
-										className="history-items"
-										data-id="search"
-									>
-										<FontAwesomeIcon
-											icon="plus-circle"
-											style={{ color: "black" }}
-										/>{" "}
-										Add Exercise Item
-									</div>
-									{/* SEARCH BOX */}
-									{this.form()}
-								</div>
-
-								{/* SHOW FOOD HISTORY OF SELECTED DATE					 */}
-
-								{this.state.selectedDateArr && (
-									<div>
-										{this.state.selectedDateArr.map((val, idx) => {
-											return (
-												<ExerciseHistoryItem
-													data={val}
-													key={"exercise" + idx}
-													deleteExerciseItem={this.deleteExerciseItem}
-												/>
-											);
-										})}
-									</div>
-								)}
 							</div>
+						)}
+						{/* SEARCH AND ADD FOOD ITEMS */}
+
+						<div className="container">
+							<div className="row">
+								<div
+									onClick={this.handleChange}
+									className="history-items"
+									data-id="search"
+								>
+									<FontAwesomeIcon
+										icon="plus-circle"
+										style={{ color: "black" }}
+									/>{" "}
+									Add Exercise Item
+								</div>
+								{/* SEARCH BOX */}
+								{this.form()}
+							</div>
+
+							{/* SHOW FOOD HISTORY OF SELECTED DATE					 */}
+
+							{this.state.selectedDateArr && (
+								<div>
+									{this.state.selectedDateArr.map((val, idx) => {
+										return (
+											<ExerciseHistoryItem
+												data={val}
+												key={"exercise" + idx}
+												deleteExerciseItem={this.deleteExerciseItem}
+											/>
+										);
+									})}
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
-			
+			</div>
 		);
 	}
 }

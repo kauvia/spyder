@@ -8,7 +8,7 @@ class Stats extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			allowance: {},
+			allowance: { exercise: [], food: [], stat: [] },
 			showEditForm: false
 		};
 
@@ -18,10 +18,14 @@ class Stats extends Component {
 	componentDidMount() {
 		this.updateFromDb();
 	}
-	
+
 	updateFromDb() {
 		api("GET", "allowance").then(val => {
-			this.setState({ allowance: val.data });
+			if (val.data.success === false) {
+				return;
+			} else {
+				this.setState({ allowance: val.data });
+			}
 		});
 	}
 	handleClick(e) {
@@ -29,7 +33,7 @@ class Stats extends Component {
 	}
 
 	render() {
-		if (Object.keys(this.state.allowance).length > 0) {
+		if (this.state.allowance.stat.length > 0) {
 			return (
 				<div>
 					<div
@@ -45,10 +49,8 @@ class Stats extends Component {
 							backgroundSize: "cover"
 						}}
 					/>
-					
 					<Navbar />
 					<AllowanceContainer data={this.state.allowance} />
-					
 					Height: {this.state.allowance.stat[0].height}cm
 					<br />
 					Weight: {this.state.allowance.stat[0].weight}kg
@@ -81,7 +83,6 @@ class Stats extends Component {
 					/>
 					<AllowanceContainer />
 					<Navbar />
-
 					<header style={{ border: "2px solid black" }} />
 					Loading stats...
 				</div>

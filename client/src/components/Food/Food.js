@@ -29,13 +29,21 @@ class Food extends Component {
 	}
 	updateFromDb() {
 		api("GET", "foods").then(val => {
-			this.setState({ foodHistory: val.data.food });
-			this.sortFoodHistory();
-			this.updateSelectedDateHistory(this.state.selectedDate);
+			if (val.data.success === false) {
+				return;
+			} else {
+				this.setState({ foodHistory: val.data.food });
+				this.sortFoodHistory();
+				this.updateSelectedDateHistory(this.state.selectedDate);
+			}
 		});
 
 		api("GET", "allowance").then(val => {
-			this.setState({ allowance: val.data });
+			if (val.data.success === false) {
+				return;
+			} else {
+				this.setState({ allowance: val.data });
+			}
 		});
 	}
 	addFoodItem = e => {
@@ -168,7 +176,6 @@ class Food extends Component {
 				<AllowanceContainer data={this.state.allowance} />
 
 				<div id="history-container" className="container">
-
 					{/* CALENDAR AND CONTROLS */}
 					<div
 						id="food-date-container"
@@ -239,7 +246,10 @@ class Food extends Component {
 								className="history-items"
 								data-id="search"
 							>
-								<FontAwesomeIcon icon="plus-circle" style={{ color: "black" }} />{" "}
+								<FontAwesomeIcon
+									icon="plus-circle"
+									style={{ color: "black" }}
+								/>{" "}
 								Add Food Item
 							</div>
 
