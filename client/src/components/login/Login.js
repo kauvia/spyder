@@ -176,6 +176,8 @@ class Login extends Component {
 							{this.state.message}
 						</div>
 					</form>
+
+					<p style={{color: 'white', fontSize: '12px', position: 'absolute', bottom: '5px'}}>Logo made with <a href="https://www.designevo.com/en/" title="Free Online Logo Maker" style={{color: 'white'}}>DesignEvo</a></p>
 				</div>
 			);
 		}

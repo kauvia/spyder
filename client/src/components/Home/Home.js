@@ -111,8 +111,7 @@ class Home extends Component {
 						width: "100%",
 						height: "100%",
 						zIndex: -1,
-						background:
-							"linear-gradient(to bottom, #bce0ee 0%, #b3dced 50%, #29b8e5 100%)"
+						backgroundColor: "#C5E7F1"
 					}}
 				/>
 
