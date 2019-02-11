@@ -29,10 +29,12 @@ class RegistrationForm extends Component {
     this.handleCalendar = this.handleCalendar.bind(this);
   }
 
-
+  componentDidMount() {
+    console.log(this.props)
+  }
   
   handleSubmit(e) {
-    e.preventDefault();
+   
 
     this.setState({
       heightMessage: "",
@@ -119,6 +121,11 @@ class RegistrationForm extends Component {
         birthday: this.state.birthday
       });
     }
+    
+    if (everythingIsOk === false) {
+      e.preventDefault();
+    }
+    
   }
 
   handleChange(e) {

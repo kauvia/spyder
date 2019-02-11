@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
 
   get '/exercises' => 'exercises#index', as: 'exercises'
-  get '/exercises/new' => 'exercises#new', as: 'new_exercise'
+  post '/exercises/new' => 'exercises#new', as: 'new_exercise'
   post '/exercises' => 'exercises#create'
 
   patch '/exercises/:id' => 'exercises#update'

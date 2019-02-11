@@ -20,7 +20,6 @@ class EditStats extends Component {
   }
 
   handleAddItem(e) {
-    e.preventDefault();
     console.log(e);
 
     this.setState({
@@ -72,6 +71,8 @@ class EditStats extends Component {
       everythingIsOk = false;
     } 
     
+    console.log(this.props)
+    
     if (everythingIsOk) {
       api("POST", "/stats", {
         height: this.state.height,
@@ -79,9 +80,14 @@ class EditStats extends Component {
         target_weight: this.state.target_weight,
         activity_level: this.state.activity_level,
         gender: this.props.statHistory.gender,
-        age: this.props.statHistory.age
+        birthday: this.props.statHistory.birthday
       });
     }
+
+    if (everythingIsOk === false) {
+      e.preventDefault();
+    }
+
   }
 
   handleChange(e) {

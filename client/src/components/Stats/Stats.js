@@ -18,6 +18,7 @@ class Stats extends Component {
 	componentDidMount() {
 		this.updateFromDb();
 	}
+	
 	updateFromDb() {
 		api("GET", "allowance").then(val => {
 			this.setState({ allowance: val.data });
