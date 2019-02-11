@@ -89,7 +89,7 @@ class AllowanceContainer extends Component {
 		let exerciseCalories = 0;
 		exercise.map(val => {
 			exerciseCalories += val.calories_burnt;
-			console.log(val);
+
 			return exerciseCalories
 		});
 
@@ -121,7 +121,7 @@ class AllowanceContainer extends Component {
 						</div>
 						<div className="col">
 							<div className="row justify-content-center">{foodCalories} </div>
-							<div className="row justify-content-center">allowance</div>{" "}
+							<div className="row justify-content-center">food</div>{" "}
 						</div>
 						<div className="col">
 							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
@@ -132,7 +132,7 @@ class AllowanceContainer extends Component {
 							<div className="row justify-content-center">
 								{exerciseCalories}
 							</div>
-							<div className="row justify-content-center">allowance</div>
+							<div className="row justify-content-center">exercise</div>
 						</div>
 						<div className="col">
 							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
@@ -143,7 +143,7 @@ class AllowanceContainer extends Component {
 							<div className="row justify-content-center">
 								{allowance - foodCalories + exerciseCalories}{" "}
 							</div>
-							<div className="row justify-content-center">allowance</div>
+							<div className="row justify-content-center">remaining</div>
 						</div>
 					</div>
 				</div>
