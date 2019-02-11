@@ -7,8 +7,9 @@ class RegistrationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      date: new Date(),
       age: null,
-      birthday: " ",
+      birthday: new Date(),
       gender: " ",
       height: null,
       weight: null,
@@ -20,8 +21,7 @@ class RegistrationForm extends Component {
       ageMessage: "",
       genderMessage: "",
       activityLevelMessage: "Low: sedentary (little or no exercise).\nMedium: Moderate exercise/sports 3-5 times a week.\nHigh: Very hard exercise/sports, physical job.",
-      displayCalendar: false,
-      date: new Date()
+      displayCalendar: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -102,7 +102,9 @@ class RegistrationForm extends Component {
       });
       everythingIsOk = false;
     }
+
     console.log(this.state);
+
     if (everythingIsOk) {
       api("POST", "/stats", {
         height: this.state.height,
@@ -159,7 +161,7 @@ class RegistrationForm extends Component {
   }
 
   handleCalendar(e) {
-    this.setState({ date: e });
+    this.setState({ birthday: e });
     console.log(e)
     this.setState({ displayCalendar: false });
   }
@@ -178,7 +180,7 @@ class RegistrationForm extends Component {
             <div style={{ fontSize: "12px", height: "15px" }}>
               {this.state.ageMessage}
             </div>
-            Birthday: <input name="birthday" type="text" data-id="toggleCalendar" onClick={this.handleChange} value={moment(this.state.date).format("LL")} />
+            Birthday: <input name="birthday" type="text" data-id="toggleCalendar" onClick={this.handleChange} value={moment(this.state.birthday).format("LL")} />
             
 
             
