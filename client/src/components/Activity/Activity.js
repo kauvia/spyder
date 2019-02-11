@@ -240,8 +240,10 @@ class Activity extends Component {
         }
         return(
             <div id="activity">
+            
             <Navbar/>
             <AllowanceContainer data={this.state.allowance}/>
+            
                 <div id="activityStuff">
                     <button name="form" onClick={this.handleChange}>ADD ACTIVITY</button>
                     { this.form() }

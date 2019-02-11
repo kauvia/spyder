@@ -105,105 +105,58 @@ class AllowanceContainer extends Component {
 	}
 
 	render() {
-		if (this.props.data) {
-			if (this.props.data.stat) {
-				if (this.props.data && this.props.data.stat.length > 0) {
-					let {
-						allowance,
-						foodCalories,
-						exerciseCalories
-					} = this.calculateAllowance();
-					return (
-						<div className="container border border-dark">
-							<div className="row">
-								<div className="col">
-									<div className="row justify-content-center">{allowance}</div>
-									<div className="row justify-content-center">allowance</div>
-								</div>
-								<div className="col">
-									<div
-										className="row  justify-content-center"
-										style={{ position: "absolute", top: "25%", left: "55%" }}
-									>
-										<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
-									</div>
-								</div>
-								<div className="col">
-									<div className="row justify-content-center">
-										{foodCalories}{" "}
-									</div>
-									<div className="row justify-content-center">food</div>{" "}
-								</div>
-								<div className="col">
-									<div
-										className="row  justify-content-center"
-										style={{ position: "absolute", top: "25%", left: "55%" }}
-									>
-										<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
-									</div>
-								</div>
-								<div className="col">
-									<div className="row justify-content-center">
-										{exerciseCalories}
-									</div>
-									<div className="row justify-content-center">exercise</div>
-								</div>
-								<div className="col">
-									<div
-										className="row  justify-content-center"
-										style={{ position: "absolute", top: "25%", left: "55%" }}
-									>
-										<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
-									</div>
-								</div>
-								<div className="col">
-									<div className="row justify-content-center">
-										{allowance - foodCalories + exerciseCalories}{" "}
-									</div>
-									<div className="row justify-content-center">remaining</div>
-								</div>
+		if (this.props.data && this.props.data.stat.length > 0) {
+			let {
+				allowance,
+				foodCalories,
+				exerciseCalories
+			} = this.calculateAllowance();
+
+			let remaining = allowance - foodCalories + exerciseCalories;
+			let remainingColour;
+
+			if (remaining < 0) {
+				remainingColour = 'red';
+			} else {
+				remainingColour = 'black';
+			}
+
+			return (
+				<div className="container border border-dark">
+					<div className="row">
+						<div className="col">
+							<div className="row justify-content-center">{allowance}</div>
+							<div className="row justify-content-center">allowance</div>
+						</div>
+						<div className="col">
+							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
+								<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
 							</div>
 						</div>
-					);
-				} else {
-					return (
-						<div className="container text-primary border border-dark">
-							<div className="row">
-								<div className="col">
-									<div className="row">??</div>
-									<div className="row">allowance</div>
-								</div>
-								<div className="col">
-									<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
-								</div>
-								<div className="col">
-									<div className="row">??</div>
-									<div className="row">food</div>{" "}
-								</div>
-								<div className="col">
-									<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
-								</div>
-								<div className="col">
-									<div className="row">??</div>
-									<div className="row">exercise</div>
-								</div>
-								<div className="col">
-									<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
-								</div>
-								<div className="col">
-									<div className="row">??</div>
-									<div className="row">remaining</div>
-								</div>
-								<div className="col">
-									<FontAwesomeIcon
-										icon="exclamation-triangle"
-										style={{ color: "red" }}
-										size="2x"
-										onClick={this.handleClick}
-										line-height="inherit"
-									/>
-									{this.state.showRegistrationForm && <RegistrationForm />}
-								</div>
+						<div className="col">
+							<div className="row justify-content-center">{foodCalories} </div>
+							<div className="row justify-content-center">food</div>{" "}
+						</div>
+						<div className="col">
+							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
+								<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+							</div>
+						</div>
+						<div className="col">
+							<div className="row justify-content-center">
+								{exerciseCalories}
+							</div>
+							<div className="row justify-content-center">exercise</div>
+						</div>
+						<div className="col">
+							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
+								<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+							</div>
+						</div>
+						<div className="col">
+							<div className="row justify-content-center" style={{ color: remainingColour }}>
+								{remaining}{" "}
+
 							</div>
 						</div>
 					);
@@ -211,7 +164,67 @@ class AllowanceContainer extends Component {
 			}else {			return <div>Loading</div>;
 			}
 		} else {
-			return <div>Loading</div>;
+
+			return (
+				<div className="container text border border-dark">
+					<div className="row">
+						<div className="col">
+							<div className="row">??</div>
+							<div className="row">allowance</div>
+						</div>
+						<div className="col">
+							<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+						</div>
+						<div className="col">
+							<div className="row">??</div>
+							<div className="row">food</div>{" "}
+						</div>
+						<div className="col">
+							<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+						</div>
+						<div className="col">
+							<div className="row">??</div>
+							<div className="row">exercise</div>
+						</div>
+						<div className="col">
+							<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+						</div>
+						<div className="col">
+							<div className="row">??</div>
+							<div className="row">remaining</div>
+						</div>
+						<div className="col">
+							<FontAwesomeIcon
+								icon="exclamation-triangle"
+								style={{ color: "red" }}
+								size="2x"
+								onClick={this.handleClick}
+								line-height="inherit"
+							/>
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong">
+							!!
+							</button>
+							<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Registration Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  <RegistrationForm />
+      </div>
+    </div>
+  </div>
+</div>
+							{this.state.showRegistrationForm && <RegistrationForm />}
+						</div>
+					</div>
+				</div>
+			);
+
 		}
 	}
 }

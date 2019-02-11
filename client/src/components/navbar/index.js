@@ -22,7 +22,7 @@ class Navbar extends Component {
 			return <Redirect to="/login" />;
 		} else {
 			return (
-				<div className="container">
+				<div className="container sticky-top navbar-expand-lg navbar-light bg-light">
 					<nav className="navbar">
 						<NavLink to="/">
 							<FontAwesomeIcon
@@ -57,7 +57,9 @@ class Navbar extends Component {
 							<FontAwesomeIcon
 								icon="sign-out-alt"
 								size="2x"
-								style={{ color: "rgba(255,122,14,1)" }}
+
+								style={{ color: "green" }}
+
 							/>
 						</div>
 					</nav>

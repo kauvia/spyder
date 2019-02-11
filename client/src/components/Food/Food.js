@@ -160,13 +160,14 @@ class Food extends Component {
 						width: "100%",
 						height: "100%",
 						zIndex: -1,
-						backgroundImage: `url(./assets/food.jpg)`,
+						// backgroundImage: `url(./assets/food.jpg)`,
 						backgroundSize: "cover"
 					}}
 				/>
 				{/* NAVBAR AND ALLOWANCE */}
 				<Navbar />
 				<AllowanceContainer data={this.state.allowance} />
+
 				<div id="food-container" className="container">
 					{/* CALENDAR AND CONTROLS */}
 					<div
