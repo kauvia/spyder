@@ -12,11 +12,13 @@ class Activity extends Component {
                 name: '', repsDuration: '', calories_burnt: '', reps: false,
                 disable: false, useModel: false, selectModel: false
             },
-            model: {}
+            model: {},
+            form: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.models = this.models.bind(this);
+        this.form = this.form.bind(this);
     }
     handleChange(e){
         switch (e.target.name) {
@@ -81,6 +83,14 @@ class Activity extends Component {
                         ...this.state.activity, selectModel: false, name: model.name, repsDuration: 1, calories_burnt: model.calories_burnt_perunit, reps: reps
                         }, model: model })
                 break;
+            case "form":
+                if(this.state.form){
+                    this.setState({...this.state, form: false })
+                }else if(this.state.form === false){
+                    this.setState({...this.state, form: true })  
+                }
+                
+                break;
             default:
                 break;
         }
@@ -128,19 +138,10 @@ class Activity extends Component {
             })
         }
     }
-    render(){
-        {/* ==========================================
-                    ACTIVITY HISTORY // LOADING
-        ========================================== */}
-        let stuff;
-        if(this.props.store.user_log.exercise !== undefined){
-            stuff = <ActivityHistory activities={this.props.store.user_log.exercise} />
-        }else{
-            stuff = <h2>loading...</h2>
-        }
+    form(){
+        if(this.state.form){
         return(
-            <div id="activity">
-                <div>
+        <div>
                 {/* ==========================================
                                 NEW ACTIVITY FORM
                 ========================================== */}
@@ -150,6 +151,7 @@ class Activity extends Component {
                             className={this.state.activity.disable}
                             readonly={this.state.activity.disable}
                             type="text"
+                            autocomplete="off"
                             name="name"
                             onChange={this.handleChange} value={this.state.activity.name}
                         />
@@ -158,6 +160,7 @@ class Activity extends Component {
                         <input 
                             type="text" 
                             name="repsDuration" 
+                            autocomplete="off"
                             onChange={this.handleChange} 
                             value={this.state.activity.repsDuration} 
                         />
@@ -168,6 +171,7 @@ class Activity extends Component {
                             readonly={this.state.activity.disable} 
                             type="text" 
                             name="calories_burnt" 
+                            autocomplete="off"
                             onChange={this.handleChange} 
                             value={this.state.activity.calories_burnt} 
                         />
@@ -201,6 +205,29 @@ class Activity extends Component {
                     <button 
                         name="selectModel" 
                         onClick={this.handleChange}>Choose Another Exercise</button> <br />
+                </div>
+        )}
+    }
+    render(){
+        {/* ==========================================
+                    ACTIVITY HISTORY // LOADING
+        ========================================== */}
+        let stuff;
+        if(this.props.store.user_log.exercise !== undefined){
+            stuff = <ActivityHistory activities={this.props.store.user_log.exercise} />
+        }else{
+            stuff = <h2>loading...</h2>
+        }
+        return(
+            <div id="activity">
+            {/* ==========================================
+                            Form
+            ========================================== */}
+            <button 
+                onClick={this.handleChange}
+                name="form">ADD ACTIVITY</button>
+                { this.form() }
+                
             {/* ==========================================
                             MODEL BUTTONS
             ========================================== */}
@@ -209,7 +236,7 @@ class Activity extends Component {
                             ACTIVITY HISTORY // RENDER
             ========================================== */}
                     {stuff}
-                </div>
+                
             </div>
         )
     }

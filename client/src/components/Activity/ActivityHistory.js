@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ActivityHistoryItem from './ActivityHistoryItem'
+import Calendar from 'react-calendar'
 import moment from 'moment'
 
 class ActivityHistory extends Component{
@@ -9,14 +10,18 @@ class ActivityHistory extends Component{
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.getDates = this.getDates.bind(this)
+        this.calendarChange = this.calendarChange.bind(this)
         // this.createList = this.createList.bind(this)
         this.state = {
-            searchHistory: '', filteredList: null, dates: {}
+            searchHistory: '', dates: {}, date: new Date(), today: new Date()
         }
     }
     componentDidMount(){
         this.getDates();
     }
+    // ======================================================
+    //        structure dates into days using moment.js
+    // ======================================================
     getDates = () => {
         let results = {}
         this.props.activities.forEach(element => {
@@ -29,7 +34,10 @@ class ActivityHistory extends Component{
         });
         this.setState({...this.state, dates: results})
     }
-    generatelist = () => {
+    // ======================================================
+    //          render Activity History
+    // ======================================================
+    generatelist(){
         return Object.keys(this.state.dates).map( ele => {
             return(
                 <div key={ele}>
@@ -39,30 +47,50 @@ class ActivityHistory extends Component{
             )
         })
     }
-    modelFilter = () => {
-        console.log(this.props.store)
+    handleChange(e){
+        switch (e.target.name) {
+            case "search":
+                this.setState({...this.state, searchHistory: e.target.value})
+                break;
+            case "today":
+                this.setState({...this.state, date: this.state.today})
+                break;
+            default:
+                break;
+        }
     }
-    handleChange = (e) => {
-        this.setState({...this.state, searchHistory: e.target.value})
-        this.modelFilter(e.target.value)
+    calendarChange(date){
+        console.log(date)
+
     }
-    handleSubmit = (e) => {
+    handleSubmit(e){
         e.preventDefault();
-        let filteredList = this.props.activities.filter( ele => {
-            return(
-                ele.name.toLowerCase().replace(' ', '').includes(this.state.searchHistory.toLowerCase().replace(' ', ''))
-            )
-        })
-        this.setState({...this.state, searchHistory: '', filteredList: filteredList})
+        this.setState({...this.state, searchHistory: ''})
     }
     render(){
         return(
             <div id="activityHistory">
                 Activity History<br />
+                {/* SEARCH */}
                 <form onSubmit = {this.handleSubmit}>
-                    <input type="text" onChange={this.handleChange} value={this.state.searchHistory} placeholder="Search" />
+                    <input 
+                        type="text" 
+                        name="search"
+                        onChange={this.handleChange} 
+                        autocomplete="off"
+                        value={this.state.searchHistory} 
+                        placeholder="Search" 
+                    />
                     <input type="submit" value="Search" />
                 </form>
+                {/* CALENDAR */}
+                <div>
+                    <Calendar
+                    onChange={this.calendarChange}
+                    value={this.state.date}
+                    />
+                </div>
+                <div> <button name="today" onChange={this.handleChange}>Today</button> </div>
                 <button onClick={ this.getDates }>get dates</button>
                 {/* <form onSubmit = {this.handleSubmit}>
                     <select>
