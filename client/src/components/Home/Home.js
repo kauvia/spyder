@@ -55,40 +55,65 @@ class Home extends Component {
 	}
 	updateFromDb() {
 		api("GET", "stats").then(val => {
+			this.setState({ rawStat: val.data.stat });
 			this.sortStats(val.data.stat, this.state.dateRange);
 		});
 		api("GET", "allowance").then(val => {
+			console.log(val);
+
 			this.setState({ allowance: val.data });
 		});
 	}
 	sortStats(dataArr, val) {
-		let tempArr = [];
-		let lineArr = [];
-		let highestWeight = 0;
-		let currentDate = moment(new Date()).startOf("day");
-		for (let i in dataArr) {
-			let tempDate = moment(dataArr[i].created_at).startOf("day");
-			let diff = currentDate.diff(tempDate, "days");
-			//	console.log(diff)
-			if (diff <= val) {
-				if (highestWeight < dataArr[i].weight) {
-					highestWeight = dataArr[i].weight;
+		if (dataArr) {
+			let tempArr = [];
+			let lineArr = [];
+			let highestWeight = 0;
+			let currentDate = moment(new Date()).startOf("day");
+			for (let i in dataArr) {
+				let tempDate = moment(dataArr[i].created_at).startOf("day");
+				let diff = currentDate.diff(tempDate, "days");
+				//	console.log(diff)
+				if (diff <= val) {
+					if (highestWeight < dataArr[i].weight) {
+						highestWeight = dataArr[i].weight;
+					}
+					lineArr.push({ y: dataArr[0].weight, x: tempDate.format("LL") });
+					tempArr.push({ y: dataArr[i].weight, x: tempDate.format("LL") });
 				}
-				lineArr.push({ y: dataArr[0].weight, x: tempDate.format("LL") });
-				tempArr.push({ y: dataArr[i].weight, x: tempDate.format("LL") });
 			}
+			this.setState({ highestWeight: highestWeight });
+			this.setState({ targetWeight: dataArr[0].target_weight });
+			this.setState({
+				data: {
+					datasets: [
+						{ data: tempArr, label: "Weight" },
+						{ data: lineArr, label: "Target Weight" }
+					]
+				}
+			});
 		}
-		this.setState({ highestWeight: highestWeight });
-		this.setState({ targetWeight: dataArr[0].target_weight });
-		this.setState({
-			data: {
-				datasets: [
-					{ data: tempArr, label: "Weight" },
-					{ data: lineArr, label: "Target Weight" }
-				]
-			}
-		});
 	}
+	handleChange = e => {
+		let target = e.target;
+		if ("30days" === target.dataset.id) {
+			this.setState({ dateRange: 30 });
+			this.sortStats(this.state.rawStat, 30);
+		}
+		if ("60days" === target.dataset.id) {
+			this.setState({ dateRange: 60 });
+			this.sortStats(this.state.rawStat, 60);
+		}
+		if ("180days" === target.dataset.id) {
+			this.setState({ dateRange: 180 });
+
+			this.sortStats(this.state.rawStat, 180);
+		}
+		if ("max" === target.dataset.id) {
+			this.setState({ dateRange: 36500 });
+			this.sortStats(this.state.rawStat, 36500);
+		}
+	};
 	render() {
 		return (
 			<div className="row">
@@ -108,11 +133,19 @@ class Home extends Component {
 				<Navbar />
 				<AllowanceContainer data={this.state.allowance} />
 				<div className="container" style={{ border: "1px solid black" }}>
-					<div className="row text-center" >
-						<div className="col">30 days</div>
-						<div className="col">60 days</div>
-						<div className="col">180 days</div>
-						<div className="col">Max</div>
+					<div className="row text-center" onClick={this.handleChange}>
+						<div className="col" data-id="30days">
+							30 days
+						</div>
+						<div className="col" data-id="60days">
+							60 days
+						</div>
+						<div className="col" data-id="180days">
+							180 days
+						</div>
+						<div className="col" data-id="max">
+							Max
+						</div>
 					</div>
 					<div
 						className="row"

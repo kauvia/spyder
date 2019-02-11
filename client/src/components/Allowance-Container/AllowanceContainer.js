@@ -26,7 +26,7 @@ class AllowanceContainer extends Component {
 		const birthday = moment(stat[0].birthday);
 		const today = moment(new Date());
 		let age = today.diff(birthday, "years");
-		
+
 		// Harris-Benedict Formula
 
 		// check for gender to calculate BMR
@@ -82,7 +82,7 @@ class AllowanceContainer extends Component {
 		let foodCalories = 0;
 		food.map(val => {
 			foodCalories += val.calories;
-			return foodCalories
+			return foodCalories;
 		});
 
 		//CALCULATE EXERCISE CALORIES
@@ -90,7 +90,7 @@ class AllowanceContainer extends Component {
 		exercise.map(val => {
 			exerciseCalories += val.calories_burnt;
 
-			return exerciseCalories
+			return exerciseCalories;
 		});
 
 		return {
@@ -101,95 +101,113 @@ class AllowanceContainer extends Component {
 	}
 
 	render() {
-		if (this.props.data && this.props.data.stat.length > 0) {
-			let {
-				allowance,
-				foodCalories,
-				exerciseCalories
-			} = this.calculateAllowance();
-			return (
-				<div className="container border border-dark">
-					<div className="row">
-						<div className="col">
-							<div className="row justify-content-center">{allowance}</div>
-							<div className="row justify-content-center">allowance</div>
-						</div>
-						<div className="col">
-							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
-								<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+		if (this.props.data) {
+			if (this.props.data.stat) {
+				if (this.props.data && this.props.data.stat.length > 0) {
+					let {
+						allowance,
+						foodCalories,
+						exerciseCalories
+					} = this.calculateAllowance();
+					return (
+						<div className="container border border-dark">
+							<div className="row">
+								<div className="col">
+									<div className="row justify-content-center">{allowance}</div>
+									<div className="row justify-content-center">allowance</div>
+								</div>
+								<div className="col">
+									<div
+										className="row  justify-content-center"
+										style={{ position: "absolute", top: "25%", left: "55%" }}
+									>
+										<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+									</div>
+								</div>
+								<div className="col">
+									<div className="row justify-content-center">
+										{foodCalories}{" "}
+									</div>
+									<div className="row justify-content-center">food</div>{" "}
+								</div>
+								<div className="col">
+									<div
+										className="row  justify-content-center"
+										style={{ position: "absolute", top: "25%", left: "55%" }}
+									>
+										<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+									</div>
+								</div>
+								<div className="col">
+									<div className="row justify-content-center">
+										{exerciseCalories}
+									</div>
+									<div className="row justify-content-center">exercise</div>
+								</div>
+								<div className="col">
+									<div
+										className="row  justify-content-center"
+										style={{ position: "absolute", top: "25%", left: "55%" }}
+									>
+										<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+									</div>
+								</div>
+								<div className="col">
+									<div className="row justify-content-center">
+										{allowance - foodCalories + exerciseCalories}{" "}
+									</div>
+									<div className="row justify-content-center">remaining</div>
+								</div>
 							</div>
 						</div>
-						<div className="col">
-							<div className="row justify-content-center">{foodCalories} </div>
-							<div className="row justify-content-center">food</div>{" "}
-						</div>
-						<div className="col">
-							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
-								<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+					);
+				} else {
+					return (
+						<div className="container text-primary border border-dark">
+							<div className="row">
+								<div className="col">
+									<div className="row">??</div>
+									<div className="row">allowance</div>
+								</div>
+								<div className="col">
+									<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+								</div>
+								<div className="col">
+									<div className="row">??</div>
+									<div className="row">food</div>{" "}
+								</div>
+								<div className="col">
+									<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+								</div>
+								<div className="col">
+									<div className="row">??</div>
+									<div className="row">exercise</div>
+								</div>
+								<div className="col">
+									<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+								</div>
+								<div className="col">
+									<div className="row">??</div>
+									<div className="row">remaining</div>
+								</div>
+								<div className="col">
+									<FontAwesomeIcon
+										icon="exclamation-triangle"
+										style={{ color: "red" }}
+										size="2x"
+										onClick={this.handleClick}
+										line-height="inherit"
+									/>
+									{this.state.showRegistrationForm && <RegistrationForm />}
+								</div>
 							</div>
 						</div>
-						<div className="col">
-							<div className="row justify-content-center">
-								{exerciseCalories}
-							</div>
-							<div className="row justify-content-center">exercise</div>
-						</div>
-						<div className="col">
-							<div className="row  justify-content-center" style={{position:"absolute",top:"25%",left:"55%"}}>
-								<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
-							</div>
-						</div>
-						<div className="col">
-							<div className="row justify-content-center">
-								{allowance - foodCalories + exerciseCalories}{" "}
-							</div>
-							<div className="row justify-content-center">remaining</div>
-						</div>
-					</div>
-				</div>
-			);
+					);
+				}
+			}else {			return <div>Loading</div>;
+			}
 		} else {
-			return (
-				<div className="container text-primary border border-dark">
-					<div className="row">
-						<div className="col">
-							<div className="row">??</div>
-							<div className="row">allowance</div>
-						</div>
-						<div className="col">
-							<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
-						</div>
-						<div className="col">
-							<div className="row">??</div>
-							<div className="row">food</div>{" "}
-						</div>
-						<div className="col">
-							<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
-						</div>
-						<div className="col">
-							<div className="row">??</div>
-							<div className="row">exercise</div>
-						</div>
-						<div className="col">
-							<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
-						</div>
-						<div className="col">
-							<div className="row">??</div>
-							<div className="row">remaining</div>
-						</div>
-						<div className="col">
-							<FontAwesomeIcon
-								icon="exclamation-triangle"
-								style={{ color: "red" }}
-								size="2x"
-								onClick={this.handleClick}
-								line-height="inherit"
-							/>
-							{this.state.showRegistrationForm && <RegistrationForm />}
-						</div>
-					</div>
-				</div>
-			);
+			return <div>Loading</div>;
 		}
 	}
 }

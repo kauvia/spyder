@@ -57,7 +57,7 @@ class Navbar extends Component {
 							<FontAwesomeIcon
 								icon="sign-out-alt"
 								size="2x"
-								style={{ color: "blue" }}
+								style={{ color: "rgba(255,122,14,1)" }}
 							/>
 						</div>
 					</nav>
