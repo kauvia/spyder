@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { api } from "../functions";
+import Calendar from "react-calendar";
+import moment from "moment";
 
 class RegistrationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      age: null,
+      date: new Date(),
+      birthday: new Date(),
       gender: " ",
       height: null,
       weight: null,
@@ -13,17 +16,21 @@ class RegistrationForm extends Component {
       activity_level: " ",
       heightMessage: "",
       weightMessage: "",
-      targetWeightMessage: "",
+      targetWeightMessage: "If your target weight is lower than your current weight, we assume a goal of losing approximately 0.5kg/wk. We then take this assumption into consideration when calculating your daily calorie allowance. If your target weight is higher than your current weight, we assume a goal of gaining approximately 0.5kg/wk.",
       ageMessage: "",
       genderMessage: "",
-      activityLevelMessage: ""
+      activityLevelMessage: "Low: sedentary (little or no exercise).\nMedium: Moderate exercise/sports 3-5 times a week.\nHigh: Very hard exercise/sports, physical job.",
+      displayCalendar: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleGender = this.handleGender.bind(this);
     this.handleActivityLevel = this.handleActivityLevel.bind(this);
+    this.handleCalendar = this.handleCalendar.bind(this);
   }
 
+
+  
   handleSubmit(e) {
     e.preventDefault();
 
@@ -44,6 +51,22 @@ class RegistrationForm extends Component {
       everythingIsOk = false;
     }
 
+    if ( this.state.birthday === new Date() ) {
+      this.setState({ ageMessage: "Please input your birthday!" });
+      everythingIsOk = false;
+    }
+
+
+    const birthday = moment(this.state.birthday);
+		const today = moment(new Date());
+		let age = today.diff(birthday, "years");
+
+    if ( age < 7 ) {
+      this.setState({ ageMessage: "Sorry! You have to be at least 7 years old to use this app." });
+      everythingIsOk = false;
+    }
+
+    
     if (this.state.activity_level === " ") {
       this.setState({
         activityLevelMessage: "Please select your activity level."
@@ -83,14 +106,8 @@ class RegistrationForm extends Component {
       everythingIsOk = false;
     }
 
-    if (this.state.age < 7) {
-      this.setState({
-        ageMessage:
-          "Sorry! You have to be at least 7 years old to use this app."
-      });
-      everythingIsOk = false;
-    }
     console.log(this.state);
+
     if (everythingIsOk) {
       api("POST", "/stats", {
         height: this.state.height,
@@ -98,7 +115,8 @@ class RegistrationForm extends Component {
         target_weight: this.state.target_weight,
         activity_level: this.state.activity_level,
         gender: this.state.gender,
-        age: this.state.age
+        age: this.state.age,
+        birthday: this.state.birthday
       });
     }
   }
@@ -106,16 +124,30 @@ class RegistrationForm extends Component {
   handleChange(e) {
     if ("height" === e.target.name) {
       this.setState({ [e.target.name]: parseFloat(e.target.value) });
-    } else if ("weight" === e.target.name) {
+    } 
+    
+    if ("weight" === e.target.name) {
       this.setState({ [e.target.name]: parseFloat(e.target.value) });
-    } else if ("target_weight" === e.target.name) {
+    }
+    
+    if ("target_weight" === e.target.name) {
       this.setState({ [e.target.name]: parseFloat(e.target.value) });
-    } else if ("activity_level" === e.target.name) {
+    }
+    
+    if ("activity_level" === e.target.name) {
       this.setState({ [e.target.name]: e.target.value });
-    } else if ("age" === e.target.name) {
+    }
+    
+    if ("gender" === e.target.name) {
       this.setState({ [e.target.name]: e.target.value });
-    } else if ("gender" === e.target.name) {
+    }
+    
+    if ("birthday" === e.target.name) {
       this.setState({ [e.target.name]: e.target.value });
+    }
+    
+    if ("toggleCalendar" === e.target.dataset.id) {
+      this.state.displayCalendar ? this.setState({ displayCalendar: false}) : this.setState({ displayCalendar: true});
     }
   }
 
@@ -127,6 +159,12 @@ class RegistrationForm extends Component {
     this.setState({ activity_level: e.target.value });
   }
 
+  handleCalendar(e) {
+    this.setState({ birthday: e });
+    console.log(e)
+    this.setState({ displayCalendar: false });
+  }
+
   render() {
     if (true) {
       return (
@@ -135,12 +173,15 @@ class RegistrationForm extends Component {
             <h5>
               Tell us about yourself! We need this data to calculate your daily
               calorie allowance.
-            </h5>
-            Age*: <input name="age" type="text" />
-            <br />
+            </h5>            
+            Birthday: <input name="birthday" type="text" data-id="toggleCalendar" onClick={this.handleChange} value={moment(this.state.birthday).format("LL")} />
+                        
+            {this.state.displayCalendar && <Calendar name="birthday" onChange={this.handleCalendar} value={this.state.date} />}<br />
+            
             <div style={{ fontSize: "12px", height: "15px" }}>
               {this.state.ageMessage}
             </div>
+            
             <label>
               Gender:
               <select name="gender" onChange={this.handleGender}>
@@ -186,6 +227,8 @@ class RegistrationForm extends Component {
             <div style={{ fontSize: "12px", height: "15px" }}>
               {this.state.targetWeightMessage}
             </div>
+            
+
             <input type="submit" value="Register!" />
           </form>
         </div>

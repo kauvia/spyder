@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import RegistrationForm from "./RegistrationForm";
+import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 class AllowanceContainer extends Component {
 	constructor(props) {
 		super(props);
@@ -20,6 +22,11 @@ class AllowanceContainer extends Component {
 		let { exercise, food, stat } = this.props.data;
 
 		let currentStat = stat[0];
+
+		const birthday = moment(stat[0].birthday);
+		const today = moment(new Date());
+		let age = today.diff(birthday, "years");
+		
 		// Harris-Benedict Formula
 
 		// check for gender to calculate BMR
@@ -29,14 +36,14 @@ class AllowanceContainer extends Component {
 				66 +
 				currentStat.weight * 6.23 * 2.205 +
 				(currentStat.height * 12.7) / 2.54 -
-				currentStat.age * 6.8;
+				age * 6.8;
 			bmr = parseFloat(bmr);
 		} else {
 			bmr =
 				655 +
 				currentStat.weight * 4.35 * 2.205 +
 				(currentStat.height * 4.7) / 2.54 -
-				currentStat.age * 4.7;
+				age * 4.7;
 			bmr = parseFloat(bmr);
 		}
 
@@ -81,9 +88,11 @@ class AllowanceContainer extends Component {
 		//CALCULATE EXERCISE CALORIES
 		let exerciseCalories = 0;
 		exercise.map(val => {
-			exerciseCalories += val.calories;
+			exerciseCalories += val.calories_burnt;
+			console.log(val);
 			return exerciseCalories
 		});
+
 		return {
 			allowance: allowance,
 			foodCalories: foodCalories,
