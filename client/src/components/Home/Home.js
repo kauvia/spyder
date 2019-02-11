@@ -116,7 +116,7 @@ class Home extends Component {
 					}}
 				/>
 
-				<Navbar />
+				{/* <Navbar /> */}
 				<AllowanceContainer data={this.state.allowance} />
 
 				<div className="container" style={{ border: "1px solid black" }}>

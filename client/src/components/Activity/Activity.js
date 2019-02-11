@@ -441,8 +441,22 @@ class Activity extends Component {
 		//             ACTIVITY HISTORY // LOADING
 		// ========================================== */}
 		return (
+			<div>
+			<div
+					className="background"
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						width: "100%",
+						height: "100%",
+						zIndex: -1,
+						backgroundImage: `url(https://media.gettyimages.com/photos/close-up-of-barbell-weights-on-floor-of-dark-gym-picture-id554370953)`,
+						backgroundSize: "cover"
+					}}
+				/>
 			<div id="activity">
-				<Navbar />
+				{/* <Navbar /> */}
 				<AllowanceContainer data={this.state.allowance} />
 				<div id="history-container" className="container">
 					{/* ==========================================
@@ -543,6 +557,7 @@ class Activity extends Component {
 						</div>
 					</div>
 				</div>
+			</div>
 			</div>
 		);
 	}

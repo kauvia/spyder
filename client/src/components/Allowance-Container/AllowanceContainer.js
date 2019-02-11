@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import RegistrationForm from "./RegistrationForm";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Navbar from "../navbar";
 
 class AllowanceContainer extends Component {
 	constructor(props) {
@@ -119,7 +120,7 @@ class AllowanceContainer extends Component {
 			}
 
 			return (
-				<div className="container border border-dark">
+				<div className="container border border-dark sticky-top">
 					<div className="row">
 						<div className="col">
 							<div className="row justify-content-center">{allowance}</div>
@@ -166,8 +167,15 @@ class AllowanceContainer extends Component {
 							>
 								{remaining}{" "}
 							</div>
+							<div className="row justify-content-center">remaining</div>
 						</div>
 					</div>
+
+
+					<Navbar />
+
+
+
 				</div>
 			);
 		} else {
@@ -247,6 +255,12 @@ class AllowanceContainer extends Component {
 							{this.state.showRegistrationForm && <RegistrationForm />}
 						</div>
 					</div>
+
+
+					<Navbar />
+
+
+					
 				</div>
 			);
 		}
