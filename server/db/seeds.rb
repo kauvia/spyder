@@ -37,7 +37,7 @@ User.create!([
       exdDB.update_attribute :created_at, (rand*365).days.ago
     end
     if coin < 1 
-      stDB = Stat.create(height:111, weight:50+rand(20), target_weight:50+rand(20), age:36 ,gender:"female", activity_level:activities[rand(3)], birthday:1994-01-01, :user_id=>1)
+      stDB = Stat.create(height:111, weight:50+rand(20), target_weight:50+rand(20), age:36 ,gender:"female", activity_level:activities[rand(3)], birthday:"1994-01-01", :user_id=>1)
       stDB.update_attribute :created_at, (rand*365).days.ago
     end
   end  
