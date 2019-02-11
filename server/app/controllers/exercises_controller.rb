@@ -5,8 +5,7 @@ class ExercisesController < ApplicationController
       p current_user.id
       p current_user.stat
       render :json => {
-        "user info"=>current_user.id,
-        "exercise"=>current_user.exercise
+        "exercise"=>current_user.exercise.order(created_at: :desc)
     }
     end
 
@@ -19,8 +18,8 @@ class ExercisesController < ApplicationController
 
     def create
       
-        current_user.exercise.create(name: params[:name], reps: params[:reps], duration: params[:duration], calories_burnt: params[:calories_burnt])
-
+        item=current_user.exercise.create(name: params[:exercise][:name], reps: params[:exercise][:reps], duration: params[:exercise][:duration], calories_burnt: params[:exercise][:calories_burnt])
+        item.update_attribute :created_at, params[:date]
     end
 
     def update
@@ -34,9 +33,8 @@ class ExercisesController < ApplicationController
     end
 
     def destroy
-        current_user.exercise.destroy
+        current_user.exercise.destroy(params[:id])
 
-        redirect_to exercise_path
     end
 
   private

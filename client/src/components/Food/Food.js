@@ -127,7 +127,6 @@ class Food extends Component {
 		let innerArray = [];
 		let currentDate = new Date();
 		currentDate = moment(currentDate).startOf("day");
-		console.log(currentDate);
 
 		for (let i = 0; i < history.length; i++) {
 			let tempDate = moment(history[i].created_at).startOf("day");
@@ -167,7 +166,7 @@ class Food extends Component {
 				{/* NAVBAR AND ALLOWANCE */}
 				<Navbar />
 				<AllowanceContainer data={this.state.allowance} />
-				<div id="food-container" className="container">
+				<div id="history-container" className="container">
 					{/* CALENDAR AND CONTROLS */}
 					<div
 						id="food-date-container"
@@ -266,7 +265,7 @@ class Food extends Component {
 												/>
 												<div className="input-group-append">
 													<button
-														className="btn btn-outline-light"
+														className="btn btn-outline-dark"
 														type="submit"
 													>
 														Search

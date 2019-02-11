@@ -11,17 +11,14 @@ Rails.application.routes.draw do
   get '/allowance' => 'allowance#index'
 
   get '/foods' => 'foods#index', as: 'foods'
-  get '/foods/new' => 'foods#new', as: 'new_food'
   post '/foods' => 'foods#create'
   delete '/foods' => 'foods#destroy'
 
 
   get '/exercises' => 'exercises#index', as: 'exercises'
-  post '/exercises/new' => 'exercises#new', as: 'new_exercise'
   post '/exercises' => 'exercises#create'
+  delete '/exercises' => 'exercises#destroy'
 
-  patch '/exercises/:id' => 'exercises#update'
-  delete '/exercises/:id' => 'exercises#destroy'
 
 
   get '/stats' => 'stats#index', as: 'stats'
