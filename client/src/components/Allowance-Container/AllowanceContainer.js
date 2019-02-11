@@ -208,13 +208,13 @@ class AllowanceContainer extends Component {
 							<div className="row">remaining</div>
 						</div>
 						<div className="col">
-							<FontAwesomeIcon
+							{/* <FontAwesomeIcon
 								icon="exclamation-triangle"
 								style={{ color: "red" }}
 								size="2x"
 								onClick={this.handleClick}
 								line-height="inherit"
-							/>
+							/> */}
 							<button
 								type="button"
 								class="btn btn-danger"
