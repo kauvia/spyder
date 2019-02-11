@@ -125,14 +125,17 @@ class Login extends Component {
 							width: "100%",
 							height: "100%",
 							zIndex: -2,
-							backgroundImage: "url(./assets/splash.jpg)",
-							backgroundSize: "cover"
+							backgroundImage: "url(./assets/logo/logo-fitter-top.png)",
+							backgroundPosition: 'center top',
+							backgroundColor: '#C5E7F1',
+							backgroundRepeat: 'no-repeat',
+							backgroundSize: "300px"
 						}}
 					/>
 					<form
 						onSubmit={this.handleSubmit}
 						onChange={this.handleChange}
-						style={{ width: 250 + "px", border: "2px solid black",borderRadius:"10px",padding: "5px",backgroundColor: "rgba(150,150,150,0.5)" }}
+						style={{ width: '350px', border: "2px solid #2F9476",borderRadius:"10px",padding: "15px",backgroundColor: "rgba(155, 229, 194, 0.5)", marginTop: '200px' }}
 					>
 						<div className="form-group">
 							<label htmlFor="inputUsername">Username</label>
