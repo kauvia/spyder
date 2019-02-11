@@ -120,7 +120,8 @@ class AllowanceContainer extends Component {
 			}
 
 			return (
-				<div className="container border border-dark">
+				<div className="container bg-light" style={{marginTop: '20px', height: '90px', marginBottom: '20px'}}>
+					{/* <div className="row pl-5 my-3">Calories remaining:</div> */}
 					<div className="row">
 						<div className="col">
 							<div className="row justify-content-center">{allowance}</div>
@@ -128,7 +129,7 @@ class AllowanceContainer extends Component {
 						</div>
 						<div className="col">
 							<div
-								className="row  justify-content-center"
+								className="row justify-content-center"
 								style={{ position: "absolute", top: "25%", left: "55%" }}
 							>
 								<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
@@ -178,7 +179,7 @@ class AllowanceContainer extends Component {
 			);
 		} else {
 			return (
-				<div className="container text border border-dark">
+				<div className="container bg-light" style={{marginTop: '20px', height: '90px', marginBottom: '20px'}}>
 					<div className="row">
 						<div className="col">
 							<div className="row">??</div>

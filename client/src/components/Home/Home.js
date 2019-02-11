@@ -124,7 +124,7 @@ class Home extends Component {
 						<div className="col">30 days</div>
 						<div className="col">60 days</div>
 						<div className="col">180 days</div>
-						<div className="col">Max</div>
+						<div className="col">max</div>
 					</div>
 					<div
 						className="row"
