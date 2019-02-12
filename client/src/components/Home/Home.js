@@ -6,6 +6,7 @@ import { Line } from "react-chartjs-2";
 import Navbar from "../navbar";
 import AllowanceContainer from "../Allowance-Container/AllowanceContainer";
 import { api } from "../functions";
+import "./Home.css";
 
 class Home extends Component {
 	constructor(props) {
@@ -58,7 +59,7 @@ class Home extends Component {
 			if (val.data.success === false) {
 				return;
 			} else {
-				this.setState({rawStat:val.data.stat})
+				this.setState({ rawStat: val.data.stat });
 				this.sortStats(val.data.stat, this.state.dateRange);
 			}
 		});
@@ -95,6 +96,8 @@ class Home extends Component {
 			let tempArr = [];
 			let lineArr = [];
 			let highestWeight = 0;
+			console.log(dataArr[0].target_weight);
+			let targetWeight = dataArr[0].target_weight;
 			let currentDate = moment(new Date()).startOf("day");
 			for (let i in dataArr) {
 				let tempDate = moment(dataArr[i].created_at).startOf("day");
@@ -104,12 +107,15 @@ class Home extends Component {
 					if (highestWeight < dataArr[i].weight) {
 						highestWeight = dataArr[i].weight;
 					}
-					lineArr.push({ y: dataArr[0].weight, x: tempDate.format("LL") });
+					if (highestWeight < targetWeight) {
+						highestWeight = targetWeight;
+					}
+					lineArr.push({ y: targetWeight, x: tempDate.format("LL") });
 					tempArr.push({ y: dataArr[i].weight, x: tempDate.format("LL") });
 				}
 			}
 			this.setState({ highestWeight: highestWeight });
-			this.setState({ targetWeight: dataArr[0].target_weight });
+			this.setState({ targetWeight: targetWeight });
 			this.setState({
 				data: {
 					datasets: [
@@ -140,18 +146,37 @@ class Home extends Component {
 
 				<AllowanceContainer data={this.state.allowance} />
 
-				<div className="container" style={{ border: "1px solid black" }}>
-				<div className="row text-center" onClick={this.handleChange}>
-						<div className="col" data-id="30days">
+				<div
+					className="container"
+					style={{ border: "0px solid black", maxWidth: "80%" }}
+				>
+					<div className="row text-center" onClick={this.handleChange}>
+						<div
+							className="col bg-light"
+							data-id="30days"
+							style={{ border: "1px solid black", borderRadius: "5px" }}
+						>
 							30 days
 						</div>
-						<div className="col" data-id="60days">
+						<div
+							className="col bg-light"
+							data-id="60days"
+							style={{ border: "1px solid black", borderRadius: "5px" }}
+						>
 							60 days
 						</div>
-						<div className="col" data-id="180days">
+						<div
+							className="col bg-light"
+							data-id="180days"
+							style={{ border: "1px solid black", borderRadius: "5px" }}
+						>
 							180 days
 						</div>
-						<div className="col" data-id="max">
+						<div
+							className="col bg-light"
+							data-id="max"
+							style={{ border: "1px solid black", borderRadius: "5px" }}
+						>
 							Max
 						</div>
 					</div>

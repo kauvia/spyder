@@ -51,62 +51,63 @@ class Stats extends Component {
 					/>
 					<Navbar />
 					<AllowanceContainer data={this.state.allowance} />
-					<b>Height</b>: {this.state.allowance.stat[0].height}cm
-					<br />
-					<b>Weight</b>: {this.state.allowance.stat[0].weight}kg
-					<br />
-					<b>Target Weight</b>: {this.state.allowance.stat[0].target_weight}kg
-					<br />
-					<b>Activity Level</b>: {this.state.allowance.stat[0].activity_level}
-					<br />
+					<div className="container bg-light" style={{padding:"20px 50px 20px 50px"}}>
+					<div className="row">						<b>Height</b>: {this.state.allowance.stat[0].height}cm
+</div>
+					<div className="row">						<b>Weight</b>: {this.state.allowance.stat[0].weight}kg
+</div>
 
+					<div className="row">						<b>Target Weight</b>: {this.state.allowance.stat[0].target_weight}kg
+</div>
+
+					<div className="row">						<b>Activity Level</b>: {this.state.allowance.stat[0].activity_level}
+</div>
+
+						<div className="row">						<button
+							type="button"
+							class="btn btn-primary"
+							data-toggle="modal"
+							data-target="#exampleModalLong"
+						>
+							Update
+						</button></div>
+
+					</div>
 
 					{/* <button onClick={this.handleClick}>Edit Stats</button>
 					{this.state.showEditForm && (
 						<EditStats statHistory={this.state.allowance.stat[0]} />
 					)} */}
 
-							<button
-								type="button"
-								class="btn btn-primary"
-								data-toggle="modal"
-								data-target="#exampleModalLong"
-							>
-								Update
-							</button>
-							<div
-								class="modal fade"
-								id="exampleModalLong"
-								tabindex="-1"
-								role="dialog"
-								aria-labelledby="exampleModalLongTitle"
-								aria-hidden="true"
-							>
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLongTitle">
-												Update your stats:
-											</h5>
-											<button
-												type="button"
-												class="close"
-												data-dismiss="modal"
-												aria-label="Close"
-											>
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<EditStats statHistory={this.state.allowance.stat[0]}/>
-										</div>
-									</div>
+					<div
+						class="modal fade"
+						id="exampleModalLong"
+						tabindex="-1"
+						role="dialog"
+						aria-labelledby="exampleModalLongTitle"
+						aria-hidden="true"
+					>
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLongTitle">
+										Update your stats:
+									</h5>
+									<button
+										type="button"
+										class="close"
+										data-dismiss="modal"
+										aria-label="Close"
+									>
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<EditStats statHistory={this.state.allowance.stat[0]} />
 								</div>
 							</div>
-
-
-
-
+						</div>
+					</div>
 				</div>
 			);
 		} else {

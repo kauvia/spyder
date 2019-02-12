@@ -122,7 +122,7 @@ class AllowanceContainer extends Component {
 			return (
 				<div
 					className="container bg-light"
-					style={{ marginTop: "20px", marginBottom: "20px" }}
+					style={{ marginTop: "20px", marginBottom: "20px", borderRadius:"5px"}}
 				>
 					{/* <div className="row pl-5 my-3">Calories remaining:</div> */}
 					<div className="row">
@@ -135,7 +135,7 @@ class AllowanceContainer extends Component {
 								className="row justify-content-center"
 								style={{ position: "absolute", top: "25%", left: "55%" }}
 							>
-								<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+								<FontAwesomeIcon icon="minus" style={{ color: "rgb(244,82,73)" }} />
 							</div>
 						</div>
 						<div className="col">
@@ -147,7 +147,7 @@ class AllowanceContainer extends Component {
 								className="row justify-content-center"
 								style={{ position: "absolute", top: "25%", left: "55%" }}
 							>
-								<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+								<FontAwesomeIcon icon="plus" style={{ color: "rgb(244,82,73)" }} />
 							</div>
 						</div>
 						<div className="col">
@@ -161,7 +161,7 @@ class AllowanceContainer extends Component {
 								className="row justify-content-center"
 								style={{ position: "absolute", top: "25%", left: "55%" }}
 							>
-								<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+								<FontAwesomeIcon icon="equals" style={{ color: "rgb(244,82,73)" }} />
 							</div>
 						</div>
 						<div className="col">
@@ -180,7 +180,7 @@ class AllowanceContainer extends Component {
 			return (
 				<div
 					className="container bg-light"
-					style={{ marginTop: "20px", marginBottom: "20px" }}
+					style={{ marginTop: "20px", marginBottom: "20px", borderRadius:"5px" }}
 				>
 					<div className="row">
 						<div className="col">
@@ -202,7 +202,7 @@ class AllowanceContainer extends Component {
 								className="row justify-content-center"
 								style={{ position: "absolute", top: "35%", left: "55%" }}
 							>
-								<FontAwesomeIcon icon="minus" style={{ color: "blue" }} />
+								<FontAwesomeIcon icon="minus" style={{ color: "rgb(244,82,73)" }} />
 							</div>
 						</div>
 						<div className="col">
@@ -224,7 +224,7 @@ class AllowanceContainer extends Component {
 								className="row justify-content-center"
 								style={{ position: "absolute", top: "35%", left: "55%" }}
 							>
-								<FontAwesomeIcon icon="plus" style={{ color: "blue" }} />
+								<FontAwesomeIcon icon="plus" style={{ color: "rgb(244,82,73)" }} />
 							</div>
 						</div>
 						<div className="col">
@@ -246,7 +246,7 @@ class AllowanceContainer extends Component {
 								className="row justify-content-center"
 								style={{ position: "absolute", top: "35%", left: "55%" }}
 							>
-								<FontAwesomeIcon icon="equals" style={{ color: "blue" }} />
+								<FontAwesomeIcon icon="equals" style={{ color:"rgb(244,82,73)" }} />
 							</div>
 						</div>
 						<div className="col">

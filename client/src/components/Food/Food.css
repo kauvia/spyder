@@ -4,7 +4,7 @@
     border: 1px solid black;
     width:50%;
     /* top:0px; */
-    background-color: rgb(221, 221, 221)
+    background-color: rgba(130, 230, 195, 1);
     /* height: 400px;
     width:400px;
     border: 5px solid black; */
@@ -39,5 +39,5 @@
     border-top: 0; */
     color:black;
     /* background-image: url("../../food.jpg") */
-    background-color: rgba(198, 207, 201, 0.5);
+    background-color: rgba(130, 230, 195, 0.5);
 }
