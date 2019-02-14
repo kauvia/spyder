@@ -28,7 +28,6 @@ import {
 	faCaretDown,
 	faCaretUp
 } from "@fortawesome/free-solid-svg-icons";
-
 library.add(
 	faDumbbell,
 	faHome,

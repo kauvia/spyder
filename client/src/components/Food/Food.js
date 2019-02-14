@@ -427,12 +427,7 @@ class FoodHistoryItem extends Component {
 						<div className="row">
 							{this.state.showDelete && (
 								<div className="col-1">
-									<div
-										className="trash-icons"
-										onClick={() =>
-											this.props.deleteFoodItem(this.props.data.id)
-										}
-									>
+									<div className="trash-icons">
 										<FontAwesomeIcon
 											size="lg"
 											icon="caret-down"
@@ -442,31 +437,57 @@ class FoodHistoryItem extends Component {
 								</div>
 							)}
 							<div className="col" onClick={this.toggleView}>
-								{this.props.data.name} Calories:{this.props.data.calories}
-							</div>
-							<div>
-								{this.state.showDelete && (
-									<div className="col-1">
-										<div
-											className="trash-icons"
-											onClick={() =>
-												this.props.deleteFoodItem(this.props.data.id)
-											}
-										>
-											<FontAwesomeIcon
-												size="lg"
-												icon="trash-alt"
-												style={{ color: "red" }}
-											/>
-										</div>
+								<div className="row">
+									<div className="col">{this.props.data.name} </div>
+									<div className="col">
+										{" "}
+										Calories:{this.props.data.calories}
 									</div>
-								)}
+								</div>
 							</div>
+							<div />
 						</div>
 					)}
 
 					{this.state.expandedView && (
 						<div className="row">
+							{this.state.showDelete && (
+								<div className="col-1">
+									<div className="trash-icons">
+										<FontAwesomeIcon
+											size="lg"
+											icon="caret-up"
+											style={{ color: "green" }}
+										/>
+									</div>
+								</div>
+							)}
+							<div className="col" onClick={this.toggleView}>
+								<div className="row">
+									<div className="col">{this.props.data.name} </div>
+									<div className="col">
+										{" "}
+										Calories:{this.props.data.calories}
+									</div>
+								</div>
+								<div className="row">
+									{" "}
+									<div className="col" />
+									<div className="col">Fats: {this.props.data.fats} </div>
+								</div>
+								<div className="row">
+									{" "}
+									<div className="col" />
+									<div className="col">Carbs: {this.props.data.carbs} </div>
+								</div>
+								<div className="row">
+									{" "}
+									<div className="col" />
+									<div className="col">
+										Proteins: {this.props.data.proteins}{" "}
+									</div>
+								</div>
+							</div>
 							{this.state.showDelete && (
 								<div className="col-1">
 									<div
@@ -477,37 +498,12 @@ class FoodHistoryItem extends Component {
 									>
 										<FontAwesomeIcon
 											size="lg"
-											icon="caret-up"
-											style={{ color: "green" }}
+											icon="trash-alt"
+											style={{ color: "red" }}
 										/>
 									</div>
 								</div>
 							)}
-							<div className="col" onClick={this.toggleView}>
-								<div>
-									{this.props.data.name} Calories:{this.props.data.calories}
-								</div>
-								<div>
-									Fats:{this.props.data.fats} Carbs:{this.props.data.carbs}{" "}
-									Proteins:{this.props.data.proteins}
-								</div>
-							</div>
-							{this.state.showDelete && (
-									<div className="col-1">
-										<div
-											className="trash-icons"
-											onClick={() =>
-												this.props.deleteFoodItem(this.props.data.id)
-											}
-										>
-											<FontAwesomeIcon
-												size="lg"
-												icon="trash-alt"
-												style={{ color: "red" }}
-											/>
-										</div>
-									</div>
-								)}
 						</div>
 					)}
 				</div>
