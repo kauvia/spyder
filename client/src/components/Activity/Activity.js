@@ -451,7 +451,7 @@ class Activity extends Component {
 						width: "100%",
 						height: "100%",
 						zIndex: -1,
-						backgroundImage: `url(https://media.gettyimages.com/photos/close-up-of-barbell-weights-on-floor-of-dark-gym-picture-id554370953)`,
+		//				backgroundImage: `url(https://media.gettyimages.com/photos/close-up-of-barbell-weights-on-floor-of-dark-gym-picture-id554370953)`,
 						backgroundSize: "cover"
 					}}
 				/>
